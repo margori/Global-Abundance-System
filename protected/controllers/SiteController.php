@@ -29,7 +29,9 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+		
+		$model = new LoginForm();
+		$this->render('index', array('model'=>$model));
 	}
 
 	/**
@@ -45,27 +47,7 @@ class SiteController extends Controller
 	        	$this->render('error', $error);
 	    }
 	}
-
-	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
-	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
-		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
-		}
-		$this->render('contact',array('model'=>$model));
-	}
-
+	
 	/**
 	 * Displays the login page
 	 */
@@ -73,23 +55,17 @@ class SiteController extends Controller
 	{
 		$model=new LoginForm;
 
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
 		// collect user input data
-		if(isset($_POST['LoginForm']))
+		if(isset($_POST))
 		{
-			$model->attributes=$_POST['LoginForm'];
+			$model->username=$_POST['username'];
+			$model->password=$_POST['password'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect(Yii::app()->createUrl('interaction'));
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('index',array('model'=>$model));
 	}
 
 	/**
@@ -101,10 +77,15 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
         
-        public function actionLanguage()
-        {
-            $language = Yii::app()->request->getParam('l');
-            Yii::app()->user->setState('language', $language);            
-            $this->redirect(Yii::app()->homeUrl);
-        }
+  public function actionLanguage()
+  {
+      $language = Yii::app()->request->getParam('l');
+      Yii::app()->user->setState('language', $language);            
+      $this->redirect(Yii::app()->homeUrl);
+  }
+	
+	public function actionSuggestions()
+	{
+		$this->render('suggestions');
+	}
 }

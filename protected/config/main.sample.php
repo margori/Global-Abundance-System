@@ -36,12 +36,13 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 
-                'urlManager'=>array(
+    'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
-                                '<l:(es|en)>'=>'site/language',
+        '<l:(es|en)>'=>'site/language',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+				'<controller:\w+>/<action:\w+>/<id:\d+>/<returnId:\d+>'=>'<controller>/<action>',
                         ),
 		),
 
@@ -51,10 +52,10 @@ return array(
 		),
 		*/
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=gas',
+			'connectionString' => 'mysql:host=*****;dbname=*****',
 			'emulatePrepare' => true,
-			'username' => 'gas',
-			'password' => 'qTrVND8h-7k-dioR',
+			'username' => '*****',
+			'password' => '*****',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -82,7 +83,16 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'ing.mbriones@gmail.com',
+		'adminEmail'=>'*****',
+		'notify emails'=>'yes', // yes or no
+		'smtp_server' => '*****',
+		'smtp_port' => 25,
+		'smtp_username' => '*****',
+		'smtp_password' => '*****',
+		'smtp_from_email' => '*****',
+		'smtp_from_name' => 'Global Abundance System',
+		'smtp_secure' => 'ssl',  // '','ssl','tls'
+		'smtp_timeout' => 20,  // seconds
 	),
-        'sourceLanguage' => 'en',
 );
+?>

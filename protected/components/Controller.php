@@ -23,6 +23,14 @@ class Controller extends CController
         
         function __construct($id,$module=null) {
             parent::__construct($id,$module=null);
-            Yii::app()->language = Yii::app()->user->getState('language');
+						
+						$currentLaguage = Yii::app()->user->getState('language');
+            if ($currentLaguage == '')
+							Yii::app()->language = 'en';
+						else
+							Yii::app()->language = $currentLaguage;
+						
+						if (Yii::app()->user->isGuest && $_SERVER['REQUEST_URI'] == $this->createUrl('.'))
+							$this->redirect(Yii::app()->homeUrl);
         }
 }
