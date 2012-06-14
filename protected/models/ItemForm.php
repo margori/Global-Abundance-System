@@ -43,7 +43,7 @@ class ItemForm extends CFormModel
 		$sql .= "and i.shared = $shared ";
 		if (isset($tags) && trim($tags) != '')
 		{
-			$splitTags = split(' ', $tags);
+			$splitTags = explode(' ', $tags);
 			foreach($splitTags as $splitTag)
 			{
 				if (substr($splitTag, 0, 1) == '+')
@@ -87,7 +87,7 @@ class ItemForm extends CFormModel
 		$sql .= "and i.shared = $shared ";
 		if (isset($tags) && trim($tags) != '')
 		{
-			$splitTags = split(' ', $tags);
+			$splitTags = explode(' ', $tags);
 			foreach($splitTags as $splitTag)
 			{
 				if (substr($splitTag, 0) == '+')

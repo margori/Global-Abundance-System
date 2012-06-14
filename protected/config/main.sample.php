@@ -82,8 +82,10 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'*****',
+		'development url'=>'https://github.com/margori/Global-Abundance-System',
+		'blog url'=>'http://gasystem.wordpress.com/',
+		'contact email'=>'gasdemo@yahoo.com',
+
 		'notify emails'=>'yes', // yes or no
 		'smtp_server' => '*****',
 		'smtp_port' => 25,

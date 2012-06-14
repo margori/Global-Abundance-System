@@ -29,7 +29,7 @@ class ArchiveForm extends CFormModel
 	
 		if (isset($tags) && trim($tags) != '')
 		{
-			$splitTags = split(' ', $tags);
+			$splitTags = explode(' ', $tags);
 			foreach($splitTags as $splitTag)
 			{
 				if (substr($splitTag, 0, 1) == '+')
@@ -54,7 +54,7 @@ class ArchiveForm extends CFormModel
 		$sql .= 'from solution_archive i where 1 = 1 ';
 		if (isset($tags) && trim($tags) != '')
 		{
-			$splitTags = split(' ', $tags);
+			$splitTags = explode(' ', $tags);
 			foreach($splitTags as $splitTag)
 			{
 				if (substr($splitTag, 0, 1) == '+')
