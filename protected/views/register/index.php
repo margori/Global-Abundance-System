@@ -26,19 +26,19 @@
 		<?= Yii::t('register','username') ?>
 	</div>
 	<div class="span-5">
-		<?= CHtml::textField('username', $model->username, array('class'=>'span-5')) ?>
+		<?= CHtml::textField('username', $model->username, array('class'=>'span-5', 'maxlength'=>50)) ?>
 	</div>
 	<div class="span-2">
 		<?= Yii::t('register','password') ?>
 	</div>
 	<div class="span-5">
-	<?= CHtml::passwordField('password', '', array('class'=>'span-5')) ?>
+	<?= CHtml::passwordField('password', '', array('class'=>'span-5', 'maxlength'=>50)) ?>
 	</div>
 	<div class="span-2">
 		<?= Yii::t('register','confirmation') ?>	
 	</div>
 	<div class="span-5 last">
-		<?= CHtml::passwordField('confirmation', $model->confirmation, array('class'=>'span-5')) ?>
+		<?= CHtml::passwordField('confirmation', $model->confirmation, array('class'=>'span-5', 'maxlength'=>50)) ?>
 	</div>
 	<div class="span-15">
 			<?php echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); ?>

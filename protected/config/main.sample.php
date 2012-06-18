@@ -19,14 +19,6 @@ return array(
 	),
 
 	'modules'=>array(
-            /*
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'password',
-		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
-             */
 	),
 
 	// application components
@@ -39,18 +31,13 @@ return array(
     'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
-        '<l:(es|en)>'=>'site/language',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<returnId:\d+>'=>'<controller>/<action>',
+				'<l:\w+>'=>'site/language',
                         ),
 		),
 
-                /*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		*/
 		'db'=>array(
 			'connectionString' => 'mysql:host=*****;dbname=*****',
 			'emulatePrepare' => true,
@@ -82,6 +69,11 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		'languages' => array(
+				'en' => 'English',
+				'es' => 'Español',
+			),	
+
 		'development url'=>'https://github.com/margori/Global-Abundance-System',
 		'blog url'=>'http://gasystem.wordpress.com/',
 		'contact email'=>'gasdemo@yahoo.com',

@@ -25,7 +25,7 @@ function toggle(id)
 		<span id="descriptionHint" style="display: none">
 			<?= Yii::t('items','need description hint'); ?>
 		</span>
-		<?= $form->textArea($model,'description', array('class' => 'span-22','rows'=>'10',)); ?>
+		<?= $form->textArea($model,'description', array('class' => 'span-22','rows'=>'10', 'maxlength'=>5000,)); ?>
 	</div>
 	<div class="row">
 		<?= Yii::t('items','expiration date'); ?>

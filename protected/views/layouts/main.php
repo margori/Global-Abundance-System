@@ -61,9 +61,9 @@
 			<div class="right append-1">
 				<?= CHtml::beginForm($this->createUrl('site/login')) ?>
 				<?= CHtml::label(Yii::t('register','username'),false,array('class'=>'span-2')); ?>
-				<?= CHtml::textField('username','',array('class'=>'span-2')) ?>
+				<?= CHtml::textField('username','',array('class'=>'span-2', 'maxlength'=>50)) ?>
 				<?= CHtml::label(Yii::t('register','password'),false,array('class'=>'span-2')); ?>
-				<?= CHtml::passwordField('password','',array('class'=>'span-2')) ?>
+				<?= CHtml::passwordField('password','',array('class'=>'span-2', 'maxlength'=>50)) ?>
 				<?= CHtml::submitButton(Yii::t('global','Login')); ?>
 				<?= CHtml::endForm() ?>
 			</div>
@@ -76,10 +76,10 @@
 			<?php } ?>
 		</div>
 		<div class="span-12 last">
-			<div class="span-9 last">
+			<div class="span-8 last">
 				<div id="languages" class="right" style="display: none" >
-					<a href="<?= Yii::app()->createUrl('en', array()) ?>">English</a>
-					<a href="<?= Yii::app()->createUrl('es', array()) ?>">Español</a>
+					<?php foreach (Yii::app()->params['languages'] as $iso => $language)
+							echo CHtml::link($language, Yii::app()->createUrl($iso)) . ' '; ?>
 				</div>
 			</div>
 			<div class="right append-1" >

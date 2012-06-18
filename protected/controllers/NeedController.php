@@ -107,11 +107,11 @@ class NeedController extends Controller
 			$model->attributes=$_POST['ItemForm'];
 			$model->description=  strip_tags($model->description);
 			if($model->save())
-				$this->redirect($this->createUrl('need/solution/' . $model->id));				
+				$this->redirect($this->createUrl('need/view/' . $model->id));				
 		} 
 		else if(isset($_POST['cancel'])) 
 		{
-			$this->redirect($this->createUrl('need/solution/' . $model->id));				
+			$this->redirect($this->createUrl('need/view/' . $model->id));				
 		}
 
 		$this->render('edit',array(
@@ -129,14 +129,14 @@ class NeedController extends Controller
 	
 	// ------------------
 
-	public function actionSolution($id)
+	public function actionView($id)
 	{
 		$userId = Yii::app()->user->getState('user_id');
 		$need = $this->loadNeed($id);
 		$solutions = $this->loadSolutions($id);
 		$comments = $this->loadComments($id);
 
-		$this->render('solution',array(
+		$this->render('view',array(
 			'need'=>$need,
 			'solutions' => $solutions,
 			'comments' => $comments,
@@ -148,14 +148,14 @@ class NeedController extends Controller
 	{
 		$itemForm = new ItemForm();
 		$itemForm->newSolution($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$id"));
+		$this->redirect(Yii::app()->createUrl("need/view/$id"));
 	}
 
 	public function actionDeleteSolution($id, $returnId)
 	{
 		$itemForm = new ItemForm();
 		$itemForm->deleteSolution($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	public function actionAddItem($id, $returnId)
@@ -194,7 +194,7 @@ class NeedController extends Controller
 			$this->addSessionItems();
 			$this->addItems($solutionId);
 			Yii::app()->user->setState('addItems', null);
-			$this->redirect(Yii::app()->createUrl("need/solution/$needId"));
+			$this->redirect(Yii::app()->createUrl("need/view/$needId"));
 		}
 		if (isset($_POST['addContinue']))
 		{
@@ -205,7 +205,7 @@ class NeedController extends Controller
 		else if (isset($_POST['cancel']))
 		{
 			Yii::app()->user->setState('addItems', null);
-			$this->redirect(Yii::app()->createUrl("need/solution/$needId"));
+			$this->redirect(Yii::app()->createUrl("need/view/$needId"));
 		}
 
 		$model = new ItemForm();
@@ -237,21 +237,21 @@ class NeedController extends Controller
 	{
 		$itemForm = new ItemForm();
 		$itemForm->deleteSolutionItem($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 	
 	public function actionDraft($id, $returnId)
 	{
 		$itemForm = new ItemForm();
 		$itemForm->markAsDraft($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	public function actionComplete($id, $returnId)
 	{
 		$itemForm = new ItemForm();
 		$itemForm->markAsComplete($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	public function actionTake($id, $returnId)
@@ -271,14 +271,14 @@ class NeedController extends Controller
 			$userId = Yii::app()->user->getState('user_id');
 			$itemForm->comment($id,$userId, $comment);
 		}
-		$this->redirect(Yii::app()->createUrl("need/solution/$id"));
+		$this->redirect(Yii::app()->createUrl("need/view/$id"));
 	}
 
 	public function actionDeleteComment($id, $returnId)
 	{
 		$itemForm = new ItemForm();
 		$itemForm->deleteComment($id);
-		$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	// ------------------

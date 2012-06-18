@@ -53,7 +53,7 @@
 	<div class="span-20">
 		<?= CHtml::link(
 						$item['description']
-						, $this->createUrl('need/solution/' . $item['id'])
+						, $this->createUrl('need/view/' . $item['id'])
 						) ?>
 	</div>
 	<div class="span-3 last">

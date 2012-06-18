@@ -26,6 +26,7 @@ function toggle(id)
 		<?= CHtml::textArea('description',$defaultTags,array(
 				'class'=>'span-9',
 				'rows'=>'10',
+				'maxlength'=>5000,
 				)) ?>
 		<?= CHtml::hiddenField('shared','0') ?>
 		<div class="span-7">
@@ -51,6 +52,7 @@ function toggle(id)
 		<?= CHtml::textArea('description',$defaultTags,array(
 				'class'=>'span-9',
 				'rows'=>'10',
+				'maxlength'=>5000,
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
 		<div class="span-7">

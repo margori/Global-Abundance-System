@@ -255,7 +255,7 @@ class ItemForm extends CFormModel
 								i.id = '.$needId)
 					->queryRow();
 		
-		$needUrl = 'http://'.$_SERVER["HTTP_HOST"] . Yii::app()->baseUrl . '/need/solution/' . $need['need_id'];
+		$needUrl = 'http://'.$_SERVER["HTTP_HOST"] . Yii::app()->baseUrl . '/need/view/' . $need['need_id'];
 
 		$subjectTemplate = Yii::t('interaction', 'subject complete template');
 		$headerTemplate = Yii::t('interaction', 'header template');

@@ -1,16 +1,5 @@
 <h1><?= Yii::t('items','share') ?></h1>
 <script type="text/javascript">
-
-function showCurrent(){
-		document.getElementById('currentDescription').style.display = 'block'; 
-		document.getElementById('originalDescription').style.display = 'none'; 
-	}
-
-function showOriginal(){
-		document.getElementById('currentDescription').style.display = 'none'; 
-		document.getElementById('originalDescription').style.display = 'block'; 
-	}
-
 function toggleN(id)	
 	{
 		element = document.getElementById('delete' + id);
@@ -32,9 +21,9 @@ function toggleN(id)
 				.' ('. Yii::t('items', 'available').' '. $share->quantity .')'; ?>
 	</div>
 	<div class="span-4 last">
-		<a onclick="showCurrent()"><?= Yii::t('item','current') ?></a>		
+		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','current') ?></a>		
 		&nbsp;
-		<a onclick="showOriginal()"><?= Yii::t('item','original') ?></a>		
+		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','original') ?></a>		
 		&nbsp;
 		<?= CHtml::link(Yii::t('item','edit'), $this->createUrl('share/edit/' . $share->id)) ?>
 	</div>
@@ -74,12 +63,13 @@ function toggleN(id)
 		if (!Yii::app()->user->isGuest)
 		{
 	?>
-	<div class="span-13">
+	<div class="span-22">
 	<?php	
 			echo CHtml::beginForm($this->createUrl('share/comment/'.$share->id)); 		
 			echo CHtml::textArea('comment','',array(
-				'class'=>'span-12',
+				'class'=>'span-21',
 				'rows'=>'5',
+				'maxlength'=>1000,
 				));
 			echo CHtml::submitButton(Yii::t('interaction','comment'), array('name'=>'comment_button'));
 			echo CHtml::endForm(); 
