@@ -34,7 +34,7 @@ return array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<returnId:\d+>'=>'<controller>/<action>',
-				'<l:\w+>'=>'site/language',
+				'<controller:\w+>/<action:\w+>/<data:\w+>'=>'<controller>/<action>',
                         ),
 		),
 

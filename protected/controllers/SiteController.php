@@ -77,10 +77,10 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
         
-  public function actionLanguage($l)
+  public function actionLanguage($data)
   {		
 		foreach (Yii::app()->params['languages'] as $iso => $language)
-			if ($iso == $l)
+			if ($iso == $data)
 				Yii::app()->user->setState('language', $iso);            
     $this->redirect(Yii::app()->homeUrl);
   }

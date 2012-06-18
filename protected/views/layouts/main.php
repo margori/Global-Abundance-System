@@ -79,7 +79,7 @@
 			<div class="span-8 last">
 				<div id="languages" class="right" style="display: none" >
 					<?php foreach (Yii::app()->params['languages'] as $iso => $language)
-							echo CHtml::link($language, Yii::app()->createUrl($iso)) . ' '; ?>
+							echo CHtml::link($language, Yii::app()->createUrl('site/language/'.$iso)) . ' '; ?>
 				</div>
 			</div>
 			<div class="right append-1" >
