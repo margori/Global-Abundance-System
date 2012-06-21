@@ -255,7 +255,7 @@ class ItemForm extends CFormModel
 								i.id = '.$needId)
 					->queryRow();
 		
-		$needUrl = 'http://'.$_SERVER["HTTP_HOST"] . Yii::app()->baseUrl . '/need/view/' . $need['need_id'];
+		$needUrl = 'http://'.$_SERVER["HTTP_HOST"] . Yii::app()->baseUrl . '/index.php/need/view/' . $need['need_id'];
 
 		$subjectTemplate = Yii::t('interaction', 'subject complete template');
 		$headerTemplate = Yii::t('interaction', 'header template');
@@ -280,6 +280,8 @@ class ItemForm extends CFormModel
 	
 	public function take($solutionId)
 	{
+		$notified = array();
+		
 		$command = Yii::app()->db->createCommand();		
 		$needId = $command->select('item_id')
 						->from('solution')
@@ -314,7 +316,7 @@ class ItemForm extends CFormModel
 			where si.solution_id = ' . $solutionId)
 						->queryAll();
 		
-		$subjectTemplate = Yii::t('interaction', 'subject template');
+		$subjectTemplate = Yii::t('interaction', 'subject taken template');
 		$headerTemplate = Yii::t('interaction', 'header template');
 		$takeTemplate = Yii::t('interaction', 'take template');
 		$needTemplate = Yii::t('interaction', 'need template');
@@ -354,21 +356,35 @@ class ItemForm extends CFormModel
 		$mailFooter = $footerTemplate;
 		
 		$mail = $mailHeader . $mailBody . $mailFooter;
-		
+				
 		$this->mailTo($need['email'], $need['user_name'], $subjectTemplate, $mail);
+		$notified[] = $need['email'];
 		
 		//Solution mail
 		$mailHeader = sprintf($headerTemplate, $solution['user_name']). "\n";		
 		$mail = $mailHeader . $mailBody . $mailFooter;
 		
-		$this->mailTo($need['email'], $need['user_name'], $subjectTemplate, $mail);
+		$alreadyNotified = false;
+		foreach($notified as $m)
+			if ($m == $solution['email'])
+				$alreadyNotified = true;
+
+		if (!$alreadyNotified)
+			$this->mailTo($solution['email'], $solution['user_name'], $subjectTemplate, $mail);
 				
 		//Solution mails
 		foreach($solutionItems as $solutionItem)
 		{
 			$mailHeader = sprintf($headerTemplate, $solutionItem['user_name']);
 			$mail = $mailHeader. "\n" . $mailBody . "\n" . $mailFooter;
-			$this->mailTo($solutionItem['email'], $solutionItem['user_name'], $subjectTemplate, $mail);
+			
+			$alreadyNotified = false;
+			foreach($notified as $m)
+				if ($m == $solutionItem['email'])
+					$alreadyNotified = true;
+				
+			if (!$alreadyNotified)
+				$this->mailTo($solutionItem['email'], $solutionItem['user_name'], $subjectTemplate, $mail);
 		}
 		
 		//Archive solution
@@ -462,7 +478,7 @@ class ItemForm extends CFormModel
 	{
 		$allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ "; 
 
-		$tags = split(' ', $tags);
+		$tags = explode(' ', $tags);
 		$sharpTags = '';
 		foreach($tags as $tag)
 		{
