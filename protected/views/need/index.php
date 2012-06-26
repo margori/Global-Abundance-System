@@ -23,7 +23,7 @@
 <?php
 	if ($pageCount > 1)
 	{
-		echo '<div class="span-23">';
+		echo '<div class="span-23 append-bottom">';
 		if ($pageCurrent > 1)
 		{
 			echo CHtml::link('<<', $this->createUrl('?p=1')) . '  ';
@@ -49,7 +49,7 @@
 	}	
 ?>
 <?php foreach($items as $item) { ?>
-<div class="prepend-top span-23">
+<div class="span-23 append-bottom">
 	<div class="span-20">
 		<?= CHtml::link(
 						$item['description']
@@ -74,3 +74,4 @@
 	</div>
 </div>
 <?php } ?>
+
