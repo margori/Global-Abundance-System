@@ -20,11 +20,8 @@ return array (
 	'cancel'=> 'Cancelar',
 	'show' => 'Mostrar',
 
-	'terms' => 'Términos y condiciones: eres libre de usar este sitio como quieras, pero aquí hay <a href="'.
-		Yii::app()->createUrl('site/suggestions')
-		.'">algunas recomendaciones</a>',
-	'powered by' => 'Potenciado por',
-	'and love' => 'y Amor.',
+	'terms' => 'Términos y condiciones: eres libre de usar este sitio como quieras, pero aquí hay <a href="%s">algunas recomendaciones</a>',
+	'powered by' => 'Potenciado por %s y Amor.',
 	'contact' => 'Contacto',
 	'development'=>'Desarrollo',
 
