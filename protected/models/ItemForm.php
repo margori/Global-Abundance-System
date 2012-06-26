@@ -370,7 +370,10 @@ class ItemForm extends CFormModel
 				$alreadyNotified = true;
 
 		if (!$alreadyNotified)
+		{
 			$this->mailTo($solution['email'], $solution['user_name'], $subjectTemplate, $mail);
+			$notified[] = $need['email'];
+		}
 				
 		//Solution mails
 		foreach($solutionItems as $solutionItem)
@@ -384,7 +387,10 @@ class ItemForm extends CFormModel
 					$alreadyNotified = true;
 				
 			if (!$alreadyNotified)
+			{
 				$this->mailTo($solutionItem['email'], $solutionItem['user_name'], $subjectTemplate, $mail);
+				$notified[] = $need['email'];
+			}
 		}
 		
 		//Archive solution
