@@ -82,7 +82,9 @@ class SiteController extends Controller
 		foreach (Yii::app()->params['languages'] as $iso => $language)
 			if ($iso == $data)
 				Yii::app()->user->setState('language', $iso);            
-    $this->redirect(Yii::app()->homeUrl);
+		
+		$previousUrl = Yii::app()->user->getState('previous url');
+    $this->redirect($previousUrl);
   }
 	
 	public function actionSuggestions()

@@ -73,6 +73,7 @@ return array(
 				'en' => 'English',
 				'es' => 'Español',
 			),	
+		'default language'=>'en',
 
 		'development url'=>'https://github.com/margori/Global-Abundance-System',
 		'blog url'=>'http://gasystem.wordpress.com/',

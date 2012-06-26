@@ -21,16 +21,24 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
         
-        function __construct($id,$module=null) {
-            parent::__construct($id,$module=null);
-						
-						$currentLaguage = Yii::app()->user->getState('language');
-            if ($currentLaguage == '')
-							Yii::app()->language = 'en';
-						else
-							Yii::app()->language = $currentLaguage;
-						
-						if (Yii::app()->user->isGuest && $_SERVER['REQUEST_URI'] == $this->createUrl('.'))
-							$this->redirect(Yii::app()->homeUrl);
-        }
+	function __construct($id,$module=null) {
+			parent::__construct($id,$module=null);
+
+			// Setting history
+			$previousUrl = Yii::app()->user->getState('current url');
+			Yii::app()->user->setState('previous url', $previousUrl);
+			$currentUrl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			Yii::app()->user->setState('current url', $currentUrl);
+
+			// Setting language
+			$currentLaguage = Yii::app()->user->getState('language');
+			if ($currentLaguage == '')
+				Yii::app()->language = Yii::app()->params['default language'];
+			else
+				Yii::app()->language = $currentLaguage;
+
+			if (Yii::app()->user->isGuest && $_SERVER['REQUEST_URI'] == $this->createUrl('.'))
+				$this->redirect(Yii::app()->homeUrl);
+			
+	}
 }
