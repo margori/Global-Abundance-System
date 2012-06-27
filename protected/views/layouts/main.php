@@ -28,11 +28,6 @@
 
 <body>
 <div class="container" id="page">
-	<div id="languages" style="position: fixed; margin-left: 950px; margin-top: -1px;padding: 10px; background: #C9E0ED;">
-					<?php foreach (Yii::app()->params['languages'] as $iso => $language)
-							echo CHtml::link($language, Yii::app()->createUrl('site/language/'.$iso)) . '<br />'; ?>
-				</div>
-
 	<div id="header">
 		<div class="span-12">
 			<div id="logo" >
@@ -80,9 +75,27 @@
 		</div>
 		<div class="span-12 last">
 			<div class="right append-1" >
+				<span onclick="toggle('languages')">					
+					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/locale-alternate.png" />
+					<?php
+						$currentLanguage = Yii::app()->language;
+						foreach (Yii::app()->params['languages'] as $iso => $language) 
+						{
+							if ($iso == $currentLanguage)
+								echo $language;
+						}
+					?>
+				</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="<?= Yii::app()->user->isGuest ? Yii::app()->createUrl('register', array()) : Yii::app()->createUrl('site/logout', array()) ?>">
 					<?= Yii::app()->user->isGuest ? Yii::t('global', 'register') : Yii::t('global', 'logout') ?>
-				</a> 
+				</a>
+				<div id="languages" class="right" style="position: fixed; display: none; background: #ffffff; padding: 4px 10px 5px 10px; border: 1px solid #C9E0ED" >
+					<?php 
+						foreach (Yii::app()->params['languages'] as $iso => $language) 
+							echo CHtml::link($language, Yii::app()->createUrl('site/language/'.$iso)) . '<br />'; 
+					?>
+				</div>
 			</div>
 		</div>	
 	</div><!-- header -->
@@ -96,12 +109,12 @@
 		<div class="span-7">
 			<?= sprintf(Yii::t('global','terms'), Yii::app()->createUrl('site/suggestions')) ?>
 		</div>
-		<div class="span-7 prepend-2 append-bottom">
+		<div class="span-7 prepend-1 append-bottom">
 			Copyleft &copy; <?php echo date('Y'); ?> by <a href="http://www.margori.com.ar/" target="_blank" >Margori</a>.<br/>
 			All Wrongs Reserved.<br/>
 			<?= sprintf(Yii::t('global', 'powered by'), CHtml::link('Yii framework', 'http://www.yiiframework.com/', array('target'=>'_blank'))) ?>
 		</div>
-		<div class="span-4 prepend-2 last">
+		<div class="span-4 prepend-3 last">
 			<p>
 				<a target="_blank" href="<?= Yii::app()->params['development url'] ?>"><?= Yii::t('global', 'development') ?></a>
 				<a target="_blank"href="<?= Yii::app()->params['blog url'] ?>">Blog</a>

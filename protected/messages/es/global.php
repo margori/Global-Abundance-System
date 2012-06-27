@@ -21,7 +21,7 @@ return array (
 	'show' => 'Mostrar',
 
 	'terms' => 'Términos y condiciones: eres libre de usar este sitio como quieras, pero aquí hay <a href="%s">algunas recomendaciones</a>',
-	'powered by' => 'Potenciado por %s y Amor.',
+	'powered by' => 'Basado en %s y motivado por Amor.',
 	'contact' => 'Contacto',
 	'development'=>'Desarrollo',
 

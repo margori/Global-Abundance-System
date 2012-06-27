@@ -25,7 +25,7 @@ function toggle(id)
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',$defaultTags,array(
 				'class'=>'span-9',
-				'rows'=>'10',
+				'rows'=>'14',
 				'maxlength'=>5000,
 				)) ?>
 		<?= CHtml::hiddenField('shared','0') ?>
@@ -51,7 +51,7 @@ function toggle(id)
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',$defaultTags,array(
 				'class'=>'span-9',
-				'rows'=>'10',
+				'rows'=>'14',
 				'maxlength'=>5000,
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
