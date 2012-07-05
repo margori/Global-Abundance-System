@@ -106,7 +106,7 @@ class ShareController extends Controller
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
 
 		$tags = Yii::app()->user->getState('share tags');		
-		$shareCount = $model->browseCount($tags, 0, $options);  
+		$shareCount = $model->browseCount($tags, 1, $options);  
 		$pageCount = ceil($shareCount / $pageSize);
 		if ($pageCurrent > $pageCount)
 		{
@@ -190,6 +190,12 @@ class ShareController extends Controller
 			order by id
 			")->queryAll();
 		
+		
+		$command = Yii::app()->db->createCommand();
+		$command->setText("update item_comment
+				set `read` = 1
+				where item_id = $itemId")->execute();
+
 		return $comments;
 	}
 

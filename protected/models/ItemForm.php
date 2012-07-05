@@ -35,8 +35,8 @@ class ItemForm extends CFormModel
 		$command = Yii::app()->db->createCommand();
 		$offset = ($pageCurrent - 1) * $pageSize;
 		
-		$sql = "select * ";
-		$sql .= 'from item i ';
+		$sql = "select i.*, coalesce(u.real_name, username) as user_name ";
+		$sql .= 'from item i inner join user u on u.id = i.user_id ';
 		
 		$sql .= 'where i.quantity > 0 ';
 		$sql .= "and i.expiration_date >= curdate() ";
@@ -90,7 +90,7 @@ class ItemForm extends CFormModel
 			$splitTags = explode(' ', $tags);
 			foreach($splitTags as $splitTag)
 			{
-				if (substr($splitTag, 0) == '+')
+				if (substr($splitTag, 0, 1) == '+')
 					$sql .= 'and i.description like \'%'.substr($splitTag, 1, strlen ($splitTag) - 1) .'%\' ';
 				else
 					$sql .= 'and i.description not like \'%'.substr($splitTag, 1, strlen ($splitTag) - 1) .'%\' ';				
@@ -105,8 +105,6 @@ class ItemForm extends CFormModel
 				$sql .= "or not exists(select 1 from solution s where s.item_id = i.id) ";
 			if (substr_count($options,'draftSolutions') > 0)
 				$sql .= "or exists(select 1 from solution s where s.status = 1 and s.item_id = i.id) ";
-			if (substr_count($options,'completeSolutions') > 0)
-				$sql .= "or exists(select 1 from solution s where s.status = 2 and s.item_id = i.id) ";
 			if (substr_count($options,'mine') > 0)
 				$sql .= "or i.user_id = " . Yii::app()->user->getState('user_id') .' ';
 

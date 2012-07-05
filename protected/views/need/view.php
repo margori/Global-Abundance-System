@@ -3,24 +3,25 @@
 	<div class="span-18">		
 		<?= '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ' . Yii::t('items', 'user needs'); ?>
 	</div>
-	<div class="span-4 last">
-		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','current') ?></a>		
-		&nbsp;
-		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','original') ?></a>		
-		&nbsp;
-		<?= CHtml::link(Yii::t('item','edit'), $this->createUrl('need/edit/' . $need->id)) ?>
+	<?php if (!Yii::app()->user->isGuest) { ?>
+	<div class="right">		
+		<a href="<?= $this->createUrl('need/edit/' . $need->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
 	</div>
-	<div id="currentDescription" class="span-23">
+	<?php } ?>
+	<div id="currentDescription" class="span-22">
 		<?= '<strong>'. $need->description .'</strong>'?>
 	</div>
-	<div id="originalDescription" class="span-23" style="display: none">
+	<div class="right last">
+		<span id="originalLabel" onclick="toggle('originalDescription');"><?= Yii::t('items','original') ?></span>		
+	</div>
+	<div id="originalDescription" class="span-22" style="display: none">
 		<?= $need->original_description ?>
 	</div>
 </div>
 <!-- Solutions -->
 <?php foreach($solutions as $solution) { ?>
-<div class="span-22 box last">
-	<div class="span-19">
+<div class="push-1 span-20 box last">
+	<div class="span-17">
 		<?= CHtml::link($solution['user_name'], $this->createUrl('user/' . $solution['user_id'])) . ' ' . Yii::t('items', 'proposes') ?>
 	</div>
 	<div class="span-3 last">
@@ -43,14 +44,16 @@
 		if (isset($solution['items']))
 			foreach($solution['items'] as $solutionItem) {
 	?>
-	<div class="span-21">
-		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/block.png" alt="-" />
+	<div class="span-19">
+		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/puzzle.png" alt="-" />
 		<?= ' ' . $solutionItem['description'] ?>
 	</div>
 	<div class="span-1 last">
+		<?php if($userId == $solution['user_id']) { ?> 
 		<a href="<?= $this->createUrl('need/deleteSolutionItem/' . $solutionItem['id'] . '/' . $need->id) ?>" >
 			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/minus-button.png" alt="-" />
 		</a>
+		<?php } ?> 
 	</div>
 	<?php 
 			} // foreach $solutionItem 
@@ -62,20 +65,21 @@
 			<a href="<?= $this->createUrl('need/addItem/' . $solution['id'] . '/' . $need->id) ?>?p=1" ><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/plus-button.png" alt="-" /></a>
 			<?php if (count($solution['items']) == 0 ) echo Yii::t('items', '< add items'); ?>
 		</div>
-		<div class="prepend-11 span-3">
+		<div class="prepend-9 span-5">
 			<?php  
 				if($solution['status'] == 1) // Draft
 					echo '<strong>';
 				echo CHtml::link(Yii::t('items', 'draft'), $this->createUrl('need/draft/' . $solution['id'] . '/' . $need->id)) . '&nbsp;';
 				if($solution['status'] == 1)
-					echo '</strong>';
+					echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/hard-hat.png') . '&nbsp;</strong>';
 				if($solution['status'] == 2)
 					echo '<strong>';
-				echo CHtml::link(Yii::t('items', 'complete'), $this->createUrl('need/complete/' . $solution['id'] . '/' . $need->id)) . '&nbsp;';
+				echo CHtml::link(Yii::t('items', 'complete'), $this->createUrl('need/complete/' . $solution['id'] . '/' . $need->id)) ;
 				if($solution['status'] == 2)
-					echo '</strong>';
+					echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/light-bulb.png') . '</strong>';
 				if ($need->user_id == Yii::app()->user->getState('user_id'))
-					echo CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id));
+					echo '&nbsp;'. CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id))
+							.'&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/thumb-up.png');
 			?>
 		</div>
 	</div> 
@@ -83,7 +87,7 @@
 </div>
 <?php } // foreach $solution ?>
 <?php if (isset($userId)) { ?>
-<div>
+<div class="clear push-1">
 	<a href="<?= $this->createUrl('need/newSolution/' . $need->id) ?>" >
 		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/exclamation-button.png" alt="-" />
 		<?= Yii::t('items','solution new') ?>
@@ -91,7 +95,7 @@
 </div>
 <?php } ?>
 <!-- Comments -->
-<div class="prepend-top prepend-1 span-20 last">
+<div class="prepend-1 span-20 last">
 <?php
 	$userId = Yii::app()->user->getState('user_id');
 	foreach($comments as $comment)

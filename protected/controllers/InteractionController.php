@@ -41,7 +41,7 @@ class InteractionController extends Controller
 		{
 			$model->description = $_POST['description'];
 			$model->shared = $_POST['shared'];
-			$model->quantity = 1;
+			$model->quantity = $_POST['quantity'] ?: 1;
 			$today = new DateTime();
 			$model->expiration_date = $today->add(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
 						

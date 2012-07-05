@@ -1,14 +1,14 @@
 <?php
 return array (
-		'needs' => 'Se necesita',
-		'shares'=> 'Se comparte',
+		'needs' => 'Necesidades',
+		'shares'=> 'Contribuciones',
 		'solution' => 'Solución',
 		'need' => 'Necesidad',
-		'share'=> 'Compartido',
+		'share'=> 'Contribución',
 		
-		'add items' => 'Se nececita - agregar artículos',
-		'my needs' => 'Lo que necesito',
-		'my shares'=> 'Lo que comparto',
+		'add items' => 'Necesidad - agregando contribución a solución',
+		'my needs' => 'Mis necesidades',
+		'my shares'=> 'Mis contribuciones',
 
 		'tags' => 'Etiquetas:',
 		'filter'=> 'Filtrar',
@@ -22,12 +22,12 @@ return array (
 		
 		'need new' => 'Nueva necesidad',
 		'need edit' => 'Editando necesidad',
-		'share new' => 'Nueva compartición?',
-		'share edit' => 'Editando compartición?',
+		'share new' => 'Nueva contribución',
+		'share edit' => 'Editando contribución',
 		'solution for' => 'Solución para',
 		'solution new' => 'Nueva solución',
 		'user needs' => 'necesita',
-		'user shares' => 'comparte',
+		'user shares' => 'contribuye con',
 
 		'description' => 'Descripción',
 		'quantity' => 'Cantidad',
@@ -38,7 +38,7 @@ return array (
 		'quantity hint' => 'Cantidad de soluciones en la que se puede aplicar',
 		'need expiration hint' => 'Este necesidad está disponible hasta esta fecha',
 		'share expiration hint' => 'Este compartimiento está disponible hasta esta fecha',
-		'tag hint' => 'use # frente a palabras claves',
+		'tag hint' => 'use # frente a palabras claves para crear etiquetas',
 		
 		'new items' => 'Sin soluciones',
 		'draft solutions' => 'Soluciones en borrador',
@@ -51,5 +51,13 @@ return array (
 		'draft' => 'borrador',
 		'complete' => 'completo',
 		'take' => 'tomar',
-	);
+
+		'original' => 'Ver original',
+		'made a comment' => 'hizo un comentario',
+
+		'no needs' => 'No hay necesidades con esas etiquetas.',
+		'no shares' => 'No hay contribuciones con esas etiquetas.',
+		
+		'use -' => "Use '-' para excluir esas etiquetas del resultado",
+);
 ?>

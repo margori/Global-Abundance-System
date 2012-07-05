@@ -235,6 +235,8 @@ class NeedController extends Controller
 
 	public function actionDeleteSolutionItem($id, $returnId)
 	{
+		if (Yii::app()->user->isGuest)
+			$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 		$itemForm = new ItemForm();
 		$itemForm->deleteSolutionItem($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
@@ -327,6 +329,12 @@ class NeedController extends Controller
 			$solutions[$i]['items'] = $solutionItems;
 		}
 		
+		
+		$command = Yii::app()->db->createCommand();
+		$command->setText("update solution
+				set `read` = 1
+				where item_id = $itemId")->execute();
+
 		return $solutions;
 	}
 	
@@ -340,6 +348,11 @@ class NeedController extends Controller
 			order by id
 			")->queryAll();
 		
+		$command = Yii::app()->db->createCommand();
+		$command->setText("update item_comment
+				set `read` = 1
+				where item_id = $itemId")->execute();
+
 		return $comments;
 	}
 	

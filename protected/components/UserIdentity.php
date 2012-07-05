@@ -12,11 +12,6 @@ class UserIdentity extends CUserIdentity
 		return $this->getState('user_id');
 	}
 					
-	public function getName()
-	{
-		return $this->getState('user_real_name');
-	}
-	
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -46,8 +41,10 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_NONE;
 			$this->setState('user_id', $row['id']);
 			$this->setState('user_real_name', $row['real_name'] ?: $row['username']);
+			$this->setState('user_email', $row['email']);
 			$this->setState('user_default_tags', $row['default_tags']);
 			$this->setState('pageSize', 10);
+			$this->setState('language', $row['language']);
 		}
 		else
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;

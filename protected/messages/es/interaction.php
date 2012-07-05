@@ -31,11 +31,12 @@ Lo invitamos a que se comunique con ellos para definir los detalles.',
 		'solution item template' =>'%s (%s) ofrece: %s',
 				
 		'advanced' => 'Avanzado',
-		'browse' => 'Listar',
+		'browse' => 'Ver todos',
 		'comment' => 'Comentar',
 		'date'=> 'Fecha',
 		'proposed'=>'propuso',
 		'needed'=>'necesitaba',
 		'shared'=>'compartió',
+		'dont forget tags' => 'No olvide las etiquetas en la descripción'
 	);
 ?>

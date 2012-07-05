@@ -6,7 +6,7 @@
 			<?= Yii::t('user','username') ?>
 		</div>
 		<div class="span-16 last">
-			<?= CHtml::textField('username', $model->username, array('class'=>'span-17')) ?>
+			<?= CHtml::textField('username', $model->username, array('style'=>'width: 658px')) ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -14,7 +14,7 @@
 			<?= Yii::t('user','password') ?>
 		</div>
 		<div class="span-16 last">
-		<?= CHtml::passwordField('password', '', array('class'=>'span-17')) ?>
+		<?= CHtml::passwordField('password', '', array('style'=>'width: 658px')) ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -22,7 +22,7 @@
 			<?= Yii::t('user','confirmation') ?>
 		</div>
 		<div class="span-16 last">
-			<?= CHtml::passwordField('confirmation', $model->confirmation, array('class'=>'span-17')) ?>
+			<?= CHtml::passwordField('confirmation', $model->confirmation, array('style'=>'width: 658px')) ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -30,7 +30,7 @@
 			<?= Yii::t('user','real name') ?>
 		</div>
 		<div class="span-16 last">
-			<?= CHtml::textField('realName', $model->realName, array('class'=>'span-17')) ?>
+			<?= CHtml::textField('realName', $model->realName, array('style'=>'width: 658px')) ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -38,7 +38,7 @@
 			<?= Yii::t('user','email') ?>
 		</div>
 		<div class="span-16 last">
-			<?= CHtml::textField('email', $model->email, array('class'=>'span-17')) ?>
+			<?= CHtml::textField('email', $model->email, array('style'=>'width: 658px')) ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -46,7 +46,15 @@
 			<?= Yii::t('user','default tags') ?>
 		</div>
 		<div class="span-16 last">
-			<?= CHtml::textField('defaultTags', $model->defaultTags, array('class'=>'span-17')) ?>
+			<?= CHtml::textField('defaultTags', $model->defaultTags, array('style'=>'width: 658px')) ?>
+		</div>
+	</div>
+	<div class="span-22 append-bottom">
+		<div class="span-4">
+			<?= Yii::t('user','language') ?>
+		</div>
+		<div class="span-16 last">
+			<?= CHtml::dropDownList('language', $model->language, $languages) ?>
 		</div>
 	</div>
 	<div class="span-22">

@@ -76,7 +76,7 @@ class RegisterForm extends CFormModel
 		if (!isset($this->confirmation) || $this->confirmation == '')
 			return Yii::t('register', 'confirmation required');
 		if ($this->password != $this->confirmation)
-			return Yii::t('register', 'password differs confirmation');
+			return Yii::t('register', 'password confirmation');
 		
 		$command = Yii::app()->db->createCommand();
 		$count = $command->select('count(*)')

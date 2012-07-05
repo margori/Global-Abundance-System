@@ -1,13 +1,3 @@
-<script type="text/javascript" >
-function toggle(id)	
-	{
-		element = document.getElementById(id);
-		if (element.style.display == 'none')
-			element.style.display = 'inline';
-		else
-			element.style.display = 'none';
-	}
-</script>
 <?php if ($message != '') { ?>
 <div class="span-16 prepend-2 last append-bottom">
 	<?= $message ?>
@@ -16,11 +6,7 @@ function toggle(id)
 <div class="clear"></div>
 <div class="span-9">
 	<?= Yii::t('interaction','I need:') ?>
-	<img src="../images/icons/16x16/question-small-white.png" alt="?" onmouseover="toggle('needHint')"
-				onmouseout="toggle('needHint')"/>
-	<span id="needHint" style="display: none">
-		<?= Yii::t('items','tag hint'); ?>
-	</span>
+	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',$defaultTags,array(
@@ -35,18 +21,15 @@ function toggle(id)
 				<a href="<?= Yii::app()->createUrl('need/') ?>"><?= Yii::t('interaction','browse') ?></a>
 			</p>
 		</div>
-		<div class="span-1">
-			<?php echo CHtml::submitButton(Yii::t('interaction','ask'), array('name'=>'save')); ?>
+		<div class="right">
+			<?php echo CHtml::submitButton(Yii::t('interaction','ask'), array('name'=>'save',
+					'title'=>Yii::t('interaction', 'dont forget tags'))); ?>
 		</div>
 	<?php echo CHtml::endForm(); ?>
 </div>
 <div class="span-9">
 	<?= Yii::t('interaction','I give:') ?>
-	<img src="../images/icons/16x16/question-small-white.png" alt="?" onmouseover="toggle('shareHint')"
-				onmouseout="toggle('shareHint')"/>
-	<span id="shareHint" style="display: none">
-		<?= Yii::t('items','tag hint'); ?>
-	</span>
+	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',$defaultTags,array(
@@ -55,14 +38,17 @@ function toggle(id)
 				'maxlength'=>5000,
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
-		<div class="span-7">
+		<div class="span-4">
 			<p>
 				<a href="<?= Yii::app()->createUrl('share/new') ?>"><?= Yii::t('interaction','advanced') ?></a><br />
 				<a href="<?= Yii::app()->createUrl('share/') ?>"><?= Yii::t('interaction','browse') ?></a>
 			</p>
 		</div>
-		<div class="span-1">
-			<?php echo CHtml::submitButton(Yii::t('interaction','share'), array('name'=>'save')); ?>
+		<div class="right">
+			<?= Yii::t('items','quantity'); ?>
+			<?= CHtml::textField('quantity', 1, array('style'=>'width:20px', 'maxlength'=>'2')) ?>
+			<?= CHtml::submitButton(Yii::t('interaction','share'), array('name'=>'save',
+					'title'=>Yii::t('interaction', 'dont forget tags'))); ?>
 		</div>
 	<?php echo CHtml::endForm(); ?>
 </div>

@@ -12,12 +12,12 @@
 	$s = Yii::t('register','clause'.$count);
 	while($s != 'clause'.$count)
 	{	
-		$count++;
 ?>
 <div class="span-22 box">
-	<?= $s ?>
+	<?= $count <= 2 ? '<b>'.$s.'</b>' : $s ?>
 </div>
 <?php	
+		$count++;
 		$s = Yii::t('register','clause'.$count);
 	} ?>	
 
@@ -40,13 +40,14 @@
 	<div class="span-5 last">
 		<?= CHtml::passwordField('confirmation', $model->confirmation, array('class'=>'span-5', 'maxlength'=>50)) ?>
 	</div>
-	<div class="span-15">
-			<?php echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); ?>
-			<?php if (isset($message)) { ?>
+	<div class="span-21" style="text-align: right;">
+		<?php if (isset($message)) { ?>
 				<span class="errorMessage">
 					<?= $message ?>
 				</span>
-			<?php } ?>
+			<?php }?>
+			<?php echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); ?>
+	
 	</div>
 <?php $this->endWidget(); ?>
 </div>

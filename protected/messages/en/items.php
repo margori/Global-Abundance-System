@@ -1,5 +1,19 @@
 <?php
 return array (
+		// Dear translator. These are guidance comments for a better translation experience.
+		// This file is going to be proccessed by a computer, so structure is required.
+		// Lines that start with '//' (double back slashes) are comments as you can see,
+		// and they are not proccesed by computer.
+		// Followig lines has to parts: key and text, separated by '=>'
+		// Key is used to look for a text. So it has not to be changed.
+		// '=>' also has to remain intact. It's used by computer.
+		// Text is what is going to be actually shown in user screen. So it should be translated
+		// to target language.
+		// Symbols like '%s', '<br />', '<a href="*****">...</a>', '\n' should remain instact. They are going to be 
+		// replaced by another text. 
+		// Last too lines are also required. Computer use them to know where file ends.
+		// That's all. Happy translating.
+
 		'needs' => 'Needs',
 		'shares'=> 'Shares',
 		'solution' => 'Solution',
@@ -38,7 +52,7 @@ return array (
 		'quantity hint' => 'Quantity',
 		'expiration hint need' => 'This need is available until this date',
 		'expiration hint share' => 'This share is available until this date',
-		'tag hint' => 'use # in front of keywords',
+		'tag hint' => 'Use # in front of keywords to create tags.',
 
 		'new items' => 'Without solutions',
 		'draft solutions' => 'Draft solutions',
@@ -52,5 +66,13 @@ return array (
 		'draft' => 'draft',
 		'complete' => 'complete',
 		'take' => 'take',
-		);
+		
+		'original' => 'Show original',
+		'made a comment' => 'made a comment',
+		
+		'no needs' => 'No needs were found for those tags.',
+		'no shares' => 'No shares were found for those tags.',
+
+		'use -' => "Use '-' to exclude those tags from result",
+);
 ?>

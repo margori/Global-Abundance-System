@@ -44,7 +44,7 @@
 	}	
 ?>
 <?php foreach($users as $user) { ?>
-<div class="span-5 box">
+<div class="box" style="display: inline-block">
 	<?= CHtml::link($user['real_name'], $this->createUrl('user/' . $user['id'])) ?>
 </div>
 <?php } ?>

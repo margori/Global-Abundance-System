@@ -3,7 +3,7 @@
 	<?php echo CHtml::beginForm($this->createUrl('./share')) ?>
 	<div class="span-22">
 		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
-		<?= CHtml::textField('tags', $tags,array('class'=>'span-18') ) ?>
+		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('items', 'use -')) ) ?>
 		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
 	</div>
 	<?php if (!Yii::app()->user->isGuest) { ?>
@@ -48,13 +48,15 @@
 		echo '</div>';
 	}	
 ?>
-<?php foreach($items as $item) { ?>
+<?php
+	if (count($items) == 0)
+		echo Yii::t('items', 'no shares');
+	foreach($items as $item) { ?>
 <div class="span-23 append-bottom">
 	<div class="span-20">
-		<?= CHtml::link(
-						$item['description']
-						, $this->createUrl('share/view/' . $item['id'])
-						) ?>
+		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
+				Yii::t('items', 'user shares') . ' ' .
+				CHtml::link($item['description'], $this->createUrl('share/view/' . $item['id'])) ?>
 	</div>
 	<div class="span-3 last">
 		<?php if ($item['user_id'] == Yii::app()->user->getState('user_id')) { ?>

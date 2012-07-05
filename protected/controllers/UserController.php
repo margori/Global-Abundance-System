@@ -70,9 +70,11 @@ class UserController extends Controller
 		$model->attributes = $_POST;
 		$model->username = strip_tags($model->username);
 		$model->realName = strip_tags($model->realName);
+		if ($model->realName == '')
+			$model->realName = null;
 		$model->email = strip_tags($model->email);
 		$model->defaultTags = strip_tags($model->defaultTags);
-		
+				
 		if (isset($_POST['save']))
 		{
 			$model->save();
@@ -86,14 +88,17 @@ class UserController extends Controller
 		$id = Yii::app()->user->getState('user_id');
 		$model = new UserForm();
 		$model->load($id);
-		$this->render('myAccount', array('model'=>$model));
+		
+		$this->render('myAccount', array('model'=>$model, 'languages'=>Yii::app()->params['languages']));
 	}
 
 	public function actionView($id)
 	{
-		$model = new UserForm();
-		$model->load($id);
-		$this->render('view', array('model'=>$model));
+		$user = new UserForm();
+		$user->load($id);
+		$needs = $user->loadNeeds();
+		$shares = $user->loadShares();
+		$this->render('view', array('model'=>$user, 'needs'=>$needs, 'shares'=>$shares));
 	}
 	
 	public function actionDelete()

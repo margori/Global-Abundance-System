@@ -23,59 +23,127 @@
 			else
 				element.style.display = 'none';
 		}
+		function show(id)	
+		{
+			element = document.getElementById(id);
+			element.style.display = 'inline';
+		}
+		function hide(id)	
+		{
+			element = document.getElementById(id);
+			element.style.display = 'none';
+		}
+		
 	</script>
 </head>
 
-<body>
+	<body >
 <div class="container" id="page">
 	<div id="header">
 		<div class="span-12">
 			<div id="logo" >
 				<a href="<?= Yii::app()->createUrl('site', array()) ?>"><?= Yii::t('global', 'title') ?></a>			
 			</div>
-			<div id="mainmenu" class="span-12">
+			<div id="mainmenu" class="span-24">
 				<ul>
+					<?php if (!Yii::app()->user->isGuest) { ?>
 					<li>
-						<a href="<?= Yii::app()->createUrl('./interaction', array()) ?>"><?= Yii::t('global', 'home') ?></a>			
+						<?= CHtml::link(Yii::t('global', 'interaction'), Yii::app()->createUrl('./interaction'),array('title'=>Yii::t('global', 'interaction hint'))) ?>
+					</li>
+					<?php } ?>
+					<li>
+						<?= CHtml::link(Yii::t('global', 'needs'), Yii::app()->createUrl('./need?p=1'),array('title'=>Yii::t('global', 'needs hint'))) ?>
 					</li>
 					<li>
-						<a href="<?= Yii::app()->createUrl('./need?p=1', array()) ?>"><?= Yii::t('global', 'needs') ?></a>			
+						<?= CHtml::link(Yii::t('global', 'shares'), Yii::app()->createUrl('./share?p=1'),array('title'=>Yii::t('global', 'shares hint'))) ?>						
+					</li>
+					<?php
+						if (!Yii::app()->user->isGuest) {
+					?>
+					<li>
+						<?= CHtml::link(Yii::t('items', 'my needs'), Yii::app()->createUrl('./need?o=mine'),array('title'=>Yii::t('global', 'my needs hint'))) ?>
 					</li>
 					<li>
-						<a href="<?= Yii::app()->createUrl('./share?p=1', array()) ?>"><?= Yii::t('global', 'shares') ?></a>					
+						<?= CHtml::link(Yii::t('items', 'my shares'), Yii::app()->createUrl('./share?o=mine'),array('title'=>Yii::t('global', 'my shares hint'))) ?>
 					</li>
-					<li>
-						<a href="<?= Yii::app()->createUrl('./user?p=1', array()) ?>"><?= Yii::t('global', 'users') ?></a>					
+					<?php
+							$comments = UserForm::newComments();
+							if (count($comments) > 0) {
+					?>
+					<li onclick="toggle('newComments');hide('newSolutions');">
+						<div id="newComments" class="popup" style="	display: none;position: fixed; margin-top: 20px; padding: 5px;">
+							<?php
+								foreach($comments as $comment)
+									echo '<div>' . CHtml::link(
+										$comment['user_name'] . ' ' . 
+										Yii::t('items', 'made a comment'),
+										Yii::app()->createUrl('need/view/' . $comment['item_id'])
+										, array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
+										) . '</div>';
+							?>
+						</div>
+						<?= CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/balloon.png','',array(
+								'style'=>' margin-bottom: -4px;',
+								)) ?>
 					</li>
-					<li>
-						<a href="<?= Yii::app()->createUrl('./archive?p=1', array()) ?>"><?= Yii::t('global', 'archive') ?></a>					
+					<?php 						
+							} 
+							$solutions = UserForm::newSolutions();
+							if (count($solutions) > 0) {
+					?>				
+					<li onclick="toggle('newSolutions');hide('newComments');">
+						<div id="newSolutions" class="popup" style="display: none;position: fixed; margin-top: 20px; padding: 5px;">
+							<?php
+								foreach($solutions as $solution)
+									echo '<div>'.CHtml::link(
+										$solution['user_name'] . ' ' . Yii::t('items', 'completed a solution for you'),
+										Yii::app()->createUrl('need/view/' . $solution['item_id'])
+										, array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
+										) . '</div>';
+							?>
+						</div>
+						<?= CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/light-bulb--exclamation.png','',array(
+								'style'=>' margin-bottom: -4px;',
+								)) ?>
+					</li>
+					<?php } } ?>
+					<li style="float: right; margin-top: 1px;">
+						<?= CHtml::link(Yii::t('global', 'users'), Yii::app()->createUrl('./user?p=1'),array('title'=>Yii::t('global', 'users hint'))) ?>
+					</li>
+					<li style="float: right;margin-top: 1px;">
+						<?= CHtml::link(Yii::t('global', 'archive'), Yii::app()->createUrl('./archive?p=1'),array('title'=>Yii::t('global', 'archive hint'))) ?>
 					</li>
 				</ul>
 			</div>
 		</div>
 
-		<div class="span-12 last">
+		<div class="right" style="margin: <?= Yii::app()->user->isGuest ? '0' : '5px' ?> 5px 0 0; text-align: right;">
+			<div>
 			<?php if (Yii::app()->user->isGuest) { ?>
-			<div class="right append-1">
 				<?= CHtml::beginForm($this->createUrl('site/login')) ?>
-				<?= CHtml::label(Yii::t('register','username'),false,array('class'=>'span-2')); ?>
-				<?= CHtml::textField('username','',array('class'=>'span-2', 'maxlength'=>50)) ?>
-				<?= CHtml::label(Yii::t('register','password'),false,array('class'=>'span-2')); ?>
-				<?= CHtml::passwordField('password','',array('class'=>'span-2', 'maxlength'=>50)) ?>
+				<?= CHtml::label(Yii::t('register','username'),false); ?>
+				<?= CHtml::textField('username','',array('style'=>'width: 56px', 'maxlength'=>50)) ?>
+				<?= CHtml::label(Yii::t('register','password'),false); ?>
+				<?= CHtml::passwordField('password','',array('style'=>'width: 56px', 'maxlength'=>50)) ?>
 				<?= CHtml::submitButton(Yii::t('global','Login')); ?>
 				<?= CHtml::endForm() ?>
-			</div>
 			<?php } else { ?>
-			<div class="right append-1">
-					<?= Yii::t('global','welcome') ?> <a href="<?= $this->createUrl('user/myAccount') ?>"><?= Yii::app()->user->getName() ?></a>
-					<a href="<?= $this->createUrl('./need?o=mine') ?>"><?= Yii::t('items','my needs') ?></a>					
-					<a href="<?= $this->createUrl('./share?o=mine') ?>"><?= Yii::t('items','my shares') ?></a>					
+				<?= Yii::t('global','welcome') ?> <a href="<?= $this->createUrl('user/myAccount') ?>"><?= Yii::app()->user->getState('user_real_name') ?></a>
+				<?php if(!Yii::app()->user->isGuest)
+					if (!Yii::app()->user->getState('user_email'))
+							echo CHtml::image( Yii::app()->baseUrl . "/images/icons/16x16/exclamation-small.png"
+									, '', array('title'=>Yii::t('user', 'suggest email'), 'style'=>'margin: -4px;'));?>
+				<a href="<?= Yii::app()->createUrl('site/logout', array()) ?>">
+				<?= Yii::t('global', 'logout') ?></a>
 			</div>
 			<?php } ?>
-		</div>
-		<div class="span-12 last">
-			<div class="right append-1" >
-				<span onclick="toggle('languages')">					
+			<div>					
+			<?php if (Yii::app()->user->isGuest) { ?>
+				<a href="<?= Yii::app()->createUrl('register', array()) ?>">
+					<?= Yii::t('global', 'register') ?>
+				</a>
+			<?php } ?>
+				<span   onclick="toggle('languages')">
 					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/locale-alternate.png" />
 					<?php
 						$currentLanguage = Yii::app()->language;
@@ -84,18 +152,15 @@
 							if ($iso == $currentLanguage)
 								echo $language;
 						}
-					?>
-				</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="<?= Yii::app()->user->isGuest ? Yii::app()->createUrl('register', array()) : Yii::app()->createUrl('site/logout', array()) ?>">
-					<?= Yii::app()->user->isGuest ? Yii::t('global', 'register') : Yii::t('global', 'logout') ?>
-				</a>
-				<div id="languages" class="right" style="position: fixed; display: none; background: #ffffff; padding: 4px 10px 5px 10px; border: 1px solid #C9E0ED" >
+					?>						
+						<div style="display: inline;">		
+										<div id="languages" class="popup"  style="text-align: left; width: 90px; display: none; position: fixed; margin-left: -110px; margin-top: 1.5em; ">
 					<?php 
 						foreach (Yii::app()->params['languages'] as $iso => $language) 
 							echo CHtml::link($language, Yii::app()->createUrl('site/language/'.$iso)) . '<br />'; 
 					?>
 				</div>
+						</span></div>
 			</div>
 		</div>	
 	</div><!-- header -->
@@ -106,20 +171,20 @@
 
 	<div class="clear"></div>
 	<div id="footer">
-		<div class="span-7">
+		<div>
 			<?= sprintf(Yii::t('global','terms'), Yii::app()->createUrl('site/suggestions')) ?>
 		</div>
-		<div class="span-7 prepend-1 append-bottom">
-			Copyleft &copy; <?php echo date('Y'); ?> by <a href="http://www.margori.com.ar/" target="_blank" >Margori</a>.<br/>
-			All Wrongs Reserved.<br/>
+		<div>
+			<?= CHtml::link('Copyleft', Yii::app()->createUrl('../LICENSE')) ?> &copy; <?php echo date('Y'); ?> by <a href="http://www.margori.com.ar/" target="_blank" >Margori</a>
+			<?= CHtml::link(Yii::t('global', 'and many more'), Yii::app()->createUrl('../CREDITS')) ?>.
+			<?= Yii::t('global', 'all wrongs reserved.') ?>.
 			<?= sprintf(Yii::t('global', 'powered by'), CHtml::link('Yii framework', 'http://www.yiiframework.com/', array('target'=>'_blank'))) ?>
 		</div>
-		<div class="span-4 prepend-3 last">
-			<p>
-				<a target="_blank" href="<?= Yii::app()->params['development url'] ?>"><?= Yii::t('global', 'development') ?></a>
-				<a target="_blank"href="<?= Yii::app()->params['blog url'] ?>">Blog</a>
-				<a href="mailto:<?= Yii::app()->params['contact email'] ?>"><?= Yii::t('global', 'contact') ?></a>
-			</p>
+		<div>
+			<a target="_blank" href="<?= Yii::app()->createUrl('../source.zip') ?>"><?= Yii::t('global', 'source') ?></a>
+			<a target="_blank" href="<?= Yii::app()->params['development url'] ?>"><?= Yii::t('global', 'development') ?></a>
+			<a target="_blank"href="<?= Yii::app()->params['blog url'] ?>">Blog</a>
+			<a href="mailto:<?= Yii::app()->params['contact email'] ?>"><?= Yii::t('global', 'contact') ?></a>
 		</div>
 	</div><!-- footer -->
 

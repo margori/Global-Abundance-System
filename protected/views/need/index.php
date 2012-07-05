@@ -3,7 +3,7 @@
 	<?php echo CHtml::beginForm($this->createUrl('./need')) ?>
 	<div class="span-22">
 		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
-		<?= CHtml::textField('tags', $tags,array('class'=>'span-18') ) ?>
+		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('items', 'use -')) ) ?>
 		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
 	</div>
 	<div class="prepend-2 span-16">
@@ -48,13 +48,15 @@
 		echo '</div>';
 	}	
 ?>
-<?php foreach($items as $item) { ?>
+<?php 
+	if (count($items) == 0)
+		echo Yii::t('items', 'no needs');
+	foreach($items as $item) { ?>
 <div class="span-23 append-bottom">
 	<div class="span-20">
-		<?= CHtml::link(
-						$item['description']
-						, $this->createUrl('need/view/' . $item['id'])
-						) ?>
+		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
+				Yii::t('items', 'user needs') . ' ' .
+				CHtml::link($item['description'], $this->createUrl('need/view/' . $item['id'])) ?>
 	</div>
 	<div class="span-3 last">
 		<?php if ($item['user_id'] == Yii::app()->user->getState('user_id')) { ?>

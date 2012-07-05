@@ -20,17 +20,16 @@ function toggleN(id)
 		<?= '<strong>' . CHtml::link($share->username, $this->createUrl('user/' . $share->user_id)) . '</strong> ' . Yii::t('items', 'user shares')
 				.' ('. Yii::t('items', 'available').' '. $share->quantity .')'; ?>
 	</div>
-	<div class="span-4 last">
-		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','current') ?></a>		
-		&nbsp;
-		<a onclick="toggle('currentDescription'); toggle('originalDescription');"><?= Yii::t('item','original') ?></a>		
-		&nbsp;
-		<?= CHtml::link(Yii::t('item','edit'), $this->createUrl('share/edit/' . $share->id)) ?>
+	<?php if (!Yii::app()->user->isGuest) { ?>
+	<div class="right last">
+		<a href="<?= $this->createUrl('need/edit/' . $share->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
 	</div>
-	<div id="currentDescription" class="span-23">
+	<?php } ?>
+	<div id="currentDescription" class="span-22">
 		<?= '<strong>'. $share->description .'</strong>'?>
 	</div>
-	<div id="originalDescription" class="span-23" style="display: none">
+	<div class="right last" onclick="toggle('originalDescription');"><?= Yii::t('items','original') ?></div>		
+	<div id="originalDescription" class="span-22" style="display: none">
 		<?= $share->original_description ?>
 	</div>
 </div>

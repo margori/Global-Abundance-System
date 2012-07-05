@@ -14,5 +14,6 @@ return array (
 		'default tags' => 'Etiquetas por defecto',
 
 		'delete account' => 'Borrar mi cuenta',
+		'suggest email' => "Falta un email para que le informemos soluciones propuestas por la comunidad a sus necesidades. No spam.",
 		);
 ?>
