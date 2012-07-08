@@ -222,7 +222,7 @@ class ItemForm extends CFormModel
 		// Mark as complete
 		$command = Yii::app()->db->createCommand();	
 		$command->update('solution', 
-							array('status' => 2,), 
+							array('status' => 2,'read'=>''), 
 							'id = :id', array(':id'=> $solutionId)
 							);
 		

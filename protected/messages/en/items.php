@@ -69,6 +69,7 @@ return array (
 		
 		'original' => 'Show original',
 		'made a comment' => 'made a comment',
+		'completed a solution' => 'completed a solution',
 		
 		'no needs' => 'No needs were found for those tags.',
 		'no shares' => 'No shares were found for those tags.',

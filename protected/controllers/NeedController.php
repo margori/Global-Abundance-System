@@ -37,7 +37,7 @@ class NeedController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 		
-		$options = Yii::app()->user->getState('need options') ?: 'newItem+draftSolutions';
+		$options = Yii::app()->user->getState('need options');
 		$pageSize = Yii::app()->user->getState('pageSize') ?: 10;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
 		
@@ -331,11 +331,22 @@ class NeedController extends Controller
 			$solutions[$i]['items'] = $solutionItems;
 		}
 		
-		
-		$command = Yii::app()->db->createCommand();
-		$command->setText("update solution
-				set `read` = 1
-				where item_id = $itemId")->execute();
+		$userId = Yii::app()->user->getState('user_id');
+		if ($userId > 0)
+		{
+			$command = Yii::app()->db->createCommand();
+			$command->setText("update solution
+					set `read` = 1
+					where
+							item_id = $itemId
+							and exists (
+								select 1
+								from item i
+								where
+									i.user_id = $userId
+									and i.id = $itemId
+							)")->execute();
+		}
 
 		return $solutions;
 	}

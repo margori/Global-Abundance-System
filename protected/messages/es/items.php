@@ -54,6 +54,7 @@ return array (
 
 		'original' => 'Ver original',
 		'made a comment' => 'hizo un comentario',
+		'completed a solution' => 'completó una solución',
 
 		'no needs' => 'No hay necesidades con esas etiquetas.',
 		'no shares' => 'No hay contribuciones con esas etiquetas.',

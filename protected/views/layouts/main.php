@@ -82,9 +82,14 @@
 										) . '</div>';
 							?>
 						</div>
-						<?= CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/balloon.png','',array(
+						<?php
+							echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/balloon.png','',array(
 								'style'=>' margin-bottom: -4px;',
-								)) ?>
+								));
+							echo CHtml::image(Yii::app()->baseUrl . "/images/icons/16x16/exclamation-small.png", '', array(
+								'style'=>'margin: -4px 0px 0px -12px; position:fixed;'
+								));
+						?>					
 					</li>
 					<?php 						
 							} 
@@ -95,8 +100,8 @@
 						<div id="newSolutions" class="popup" style="display: none;position: fixed; margin-top: 20px; padding: 5px;">
 							<?php
 								foreach($solutions as $solution)
-									echo '<div>'.CHtml::link(
-										$solution['user_name'] . ' ' . Yii::t('items', 'completed a solution for you'),
+									echo '<div style="padding: 5px;">'.CHtml::link(
+										$solution['user_name'] . ' ' . Yii::t('items', 'completed a solution'),
 										Yii::app()->createUrl('need/view/' . $solution['item_id'])
 										, array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
 										) . '</div>';
