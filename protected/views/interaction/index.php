@@ -1,8 +1,3 @@
-<?php if ($message != '') { ?>
-<div class="span-16 prepend-2 last append-bottom">
-	<?= $message ?>
-</div>
-<? } ?>
 <div class="clear"></div>
 <div class="span-9">
 	<?= Yii::t('interaction','I need:') ?>

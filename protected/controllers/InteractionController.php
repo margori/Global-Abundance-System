@@ -14,10 +14,7 @@ class InteractionController extends Controller
 		if (Yii::app()->user->isGuest)
 				$this->redirect(Yii::app()->createUrl('site'));
 		
-		$message = Yii::app()->user->getState('thanks_message');
-		Yii::app()->user->setState('thanks_message', null);
 		$this->render('index',array(
-				'message' => $message,
 				'defaultTags' => Yii::app()->user->getState('user_default_tags'),
 				));
 	}

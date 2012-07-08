@@ -138,7 +138,8 @@ class UserForm extends CFormModel
 		
 		$needs = $command->setText("select i.*
 				from item i
-				where i.shared = 0 and i.user_id = " . $this->id)->queryAll();
+				where i.shared = 0 and i.user_id = " . $this->id .
+				' order by i.id desc')->queryAll();
 		
 		return $needs;
 
@@ -150,7 +151,8 @@ class UserForm extends CFormModel
 		
 		$shares = $command->setText("select i.*
 				from item i
-				where i.shared = 1 and i.user_id = " . $this->id)->queryAll();
+				where i.shared = 1 and i.user_id = " . $this->id .
+				' order by i.id desc')->queryAll();
 		
 		return $shares;
 	}

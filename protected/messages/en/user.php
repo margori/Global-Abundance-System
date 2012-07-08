@@ -29,5 +29,8 @@ return array (
 
 		'delete account' => "Delete my account",
 		'suggest email' => "Set an email so we can notify you proposed solutions by community to your needs. No spam.",
+		
+		'@' => ' at ',
+		'.' => ' dot ',
 );
 ?>

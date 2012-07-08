@@ -62,7 +62,8 @@ return array (
 		'< add items' => '<- add shares to solution',
 		
 		'proposes' => 'proposes',
-		
+		'comments' => 'comments',
+ 		
 		'draft' => 'draft',
 		'complete' => 'complete',
 		'take' => 'take',

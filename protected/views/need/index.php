@@ -23,7 +23,7 @@
 <?php
 	if ($pageCount > 1)
 	{
-		echo '<div class="span-23 append-bottom">';
+		echo '<div class="prepend-1 span-22 last append-bottom">';
 		if ($pageCurrent > 1)
 		{
 			echo CHtml::link('<<', $this->createUrl('?p=1')) . '  ';
@@ -52,13 +52,13 @@
 	if (count($items) == 0)
 		echo Yii::t('items', 'no needs');
 	foreach($items as $item) { ?>
-<div class="span-23 append-bottom">
-	<div class="span-20">
+<div class="prepend-1 span-22 last append-bottom">
+	<div class="span-21">
 		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
 				Yii::t('items', 'user needs') . ' ' .
 				CHtml::link($item['description'], $this->createUrl('need/view/' . $item['id'])) ?>
 	</div>
-	<div class="span-3 last">
+	<div class="span-1 last">
 		<?php if ($item['user_id'] == Yii::app()->user->getState('user_id')) { ?>
 		<span id="deleteU<?= $item['id'] ?>" style="display: inline">
 			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/cross-button.png" alt="-" 
@@ -76,4 +76,32 @@
 	</div>
 </div>
 <?php } ?>
+<?php
+	if ($pageCount > 1)
+	{
+		echo '<div class="prepend-1 span-22 last append-bottom">';
+		if ($pageCurrent > 1)
+		{
+			echo CHtml::link('<<', $this->createUrl('?p=1')) . '  ';
+			echo CHtml::link('<', $this->createUrl('?p=' . ($pageCurrent - 1))) . ' ';
+		}
+		else
+			echo '<<  < ';
+
+		for($i = 1; $i <= $pageCount ; $i++)
+		{
+			if ($i == $pageCurrent)
+				echo $i;
+			else
+				echo CHtml::link($i, $this->createUrl('?p=' . $i));
+			echo ' ';
+		}
+
+		if ($pageCurrent < $pageCount)
+			echo CHtml::link('>', $this->createUrl('?p=' . ($pageCurrent + 1))) . ' ';
+		else
+			echo '> ';
+		echo '</div>';
+	}	
+?>
 

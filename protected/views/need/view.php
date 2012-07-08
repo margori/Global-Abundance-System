@@ -101,7 +101,7 @@
 	foreach($comments as $comment)
 	{ ?>
 	<div class="span-14">
-			<?= CHtml::link($comment['user_name'], $this->createUrl('user/' . $comment['user_id'])) . ' ' . Yii::t('interaction','comments'). ' ' ?>
+			<?= CHtml::link($comment['user_name'], $this->createUrl('user/' . $comment['user_id'])) . ' ' . Yii::t('items','comments'). ' ' ?>
 		<?php if ($comment['user_id'] == $userId) { ?>
 			<span id="deleteC<?= $comment['id'] ?>" style="display: inline">
 				<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/cross-button.png" alt="-" 

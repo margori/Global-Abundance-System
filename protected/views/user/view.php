@@ -29,7 +29,7 @@
 			<?= CHtml::label(Yii::t('user','email'), false); ?>:
 		</div>
 		<div class="span-16 last">
-			<a href="mailto: <?= $model->email ?>"><?= $model->email ?></a>
+			<?= $model->email ?>
 		</div>
 	</div>
 	<div class="span-22 append-bottom">
@@ -41,6 +41,7 @@
 		</div>
 	</div>
 </div>
+<?php if (count($needs) > 0) { ?>
 <h3><?= Yii::t('global', 'needs') ?></h3>
 <?php foreach($needs as $need) { ?>
 <div class="box push-1 span-20 last">
@@ -48,9 +49,12 @@
 </div>	
 <?php } ?>
 <div class="clear"></div>
+<?php } 
+	if (count($shares) > 0) { 
+?>
 <h3><?= Yii::t('global', 'shares') ?></h3>
 <?php foreach($shares as $share) { ?>
 <div class="box push-1 span-20 last">
 	<?= CHtml::link($share['description'], $this->createUrl('share/view/' . $share['id'])) ?>
 </div>	
-<?php } ?>
+<?php } } ?>

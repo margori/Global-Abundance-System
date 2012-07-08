@@ -96,6 +96,8 @@ class UserController extends Controller
 	{
 		$user = new UserForm();
 		$user->load($id);
+		$user->email = str_replace('@', Yii::t('user', '@'), $user->email);
+		$user->email = str_replace('.', Yii::t('user', '.'), $user->email);
 		$needs = $user->loadNeeds();
 		$shares = $user->loadShares();
 		$this->render('view', array('model'=>$user, 'needs'=>$needs, 'shares'=>$shares));
