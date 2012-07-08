@@ -77,8 +77,11 @@
 									echo '<div style="padding: 5px;">' . CHtml::link(
 										$comment['user_name'] . ' ' . 
 										Yii::t('items', 'made a comment'),
-										Yii::app()->createUrl('need/view/' . $comment['item_id'])
-										, array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
+										($comment['shared'] == 0 ?	
+											Yii::app()->createUrl('need/view/' . $comment['item_id']):
+											Yii::app()->createUrl('share/view/' . $comment['item_id'])
+										),
+										array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
 										) . '</div>';
 							?>
 						</div>
