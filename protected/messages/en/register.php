@@ -27,9 +27,9 @@ return array (
 		'username taken' => "Username already taken. Please use another username.",
 		'username required' => "Username required",
 		'password required' => "Password required",
-		'confirmation requiered' => "Password confirmation required",
-		'username too short' => "Username too short",
-		'password too short' => "Password too short",
+		'confirmation required' => "Password confirmation required",
+		'username too short' => "Username too short. At least %d characters required.",
+		'password too short' => "Password too short. At least %d characters required.",
 		'password confirmation'=> "Password and confirmation are different",
 );
 ?>

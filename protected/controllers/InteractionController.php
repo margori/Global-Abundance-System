@@ -41,17 +41,17 @@ class InteractionController extends Controller
 		{
 			$model->description = $_POST['description'];
 			$model->shared = $_POST['shared'];
-			$model->quantity = $_POST['quantity'] ?: 1;
+			$model->quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
 			$today = new DateTime();
 			$model->expiration_date = $today->add(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
 						
-			if($model->save())
+			$itemId = $model->save();
+			if($itemId > 0)
 			{
 				if ($model->shared == 1)
-					Yii::app()->user->setState('thanks_message', Yii::t('interaction', 'thanks for sharing'));
+					$this->redirect($this->createUrl("share/view/$itemId"));				
 				else
-					Yii::app()->user->setState('thanks_message', Yii::t('interaction', 'thanks for asking'));
-				$this->redirect(Yii::app()->createUrl('interaction'));
+					$this->redirect($this->createUrl("need/view/$itemId"));				
 			}
 		}
 			

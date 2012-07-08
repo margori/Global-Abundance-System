@@ -4,7 +4,7 @@
 		'id'=>'register-form',
 		'enableAjaxValidation'=>true,
 		'enableClientValidation'=>true,
-			'action'=>$this->createUrl('register/register'),
+			'action'=>$this->createUrl('register/register#form'),
 	)); 
 ?>
 <?php 
@@ -22,6 +22,7 @@
 	} ?>	
 
 <div class="span-22 box form">
+	<a name="form"></a>
 	<div class="span-2">
 		<?= Yii::t('register','username') ?>
 	</div>
@@ -46,7 +47,10 @@
 					<?= $message ?>
 				</span>
 			<?php }?>
-			<?php echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); ?>
+			<?php 
+				echo CHtml::hiddenField('language', Yii::app()->language);			
+				echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); 
+			?>
 	
 	</div>
 <?php $this->endWidget(); ?>

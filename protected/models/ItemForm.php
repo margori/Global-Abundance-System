@@ -144,7 +144,7 @@ class ItemForm extends CFormModel
 							);
 		}
 		
-		return true;
+		return $command->connection->lastInsertID;
 	}
 	
 	public function delete()
@@ -461,6 +461,30 @@ class ItemForm extends CFormModel
 				'user_id' => $userId, 
 				'comment' => $comment
 				));
+		$commentId = $command->connection->pdoInstance->lastInsertId();
+		
+		// Notifying other users.
+		$command = Yii::app()->db->createCommand();
+		$command->setText("insert into unread_comment
+			(user_id, comment_id)
+					
+			select i.user_id, $commentId
+			from item i
+			where i.id = $itemId
+
+			union
+
+			select s.user_id, $commentId
+			from solution s
+			where s.item_id = $itemId
+
+			union
+
+			select c.user_id, $commentId
+			from item_comment c
+			where c.item_id = $itemId						
+			")->execute();
+ 		
 	}
 
 	function deleteComment($id)

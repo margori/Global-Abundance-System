@@ -53,9 +53,11 @@ class RegisterController extends Controller
 			$message = $model->customValidate();
 			if($message == '')
 				if ($model->register())
-					$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect(Yii::app()->createUrl('interaction'));
 		}
 		// display the login form
+		$model->password = null;
+		$model->confirmation = null;
 		$this->render('index',array(
 				'model'=>$model,
 				'message'=>$message,

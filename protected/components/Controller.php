@@ -32,13 +32,14 @@ class Controller extends CController
 
 			// Setting language
 			$currentLaguage = Yii::app()->user->getState('language');
-			if ($currentLaguage == '')
-				Yii::app()->language = Yii::app()->params['default language'];
-			else
-				Yii::app()->language = $currentLaguage;
+			if (!$currentLaguage || $currentLaguage == '')
+			{
+				$currentLaguage = Yii::app()->params['default language'];;
+				Yii::app()->user->getState('language', $currentLaguage);
+			}
+			Yii::app()->language = $currentLaguage;
 
 			if (Yii::app()->user->isGuest && $_SERVER['REQUEST_URI'] == $this->createUrl('.'))
-				$this->redirect(Yii::app()->homeUrl);
-			
+				$this->redirect(Yii::app()->homeUrl);			
 	}
 }

@@ -28,8 +28,9 @@ class ShareController extends Controller
 		{
 			$model->attributes=$_POST['ItemForm'];
 			$model->description=  strip_tags($model->description);
-			if($model->save())
-				$this->redirect($this->createUrl('./share'));
+			$itemId = $model->save();
+			if($itemId > 0)
+				$this->redirect($this->createUrl("share/view/$itemId"));				
 		}
 
 		$this->render('new',array(
@@ -190,12 +191,18 @@ class ShareController extends Controller
 			order by id
 			")->queryAll();
 		
-		
-		$command = Yii::app()->db->createCommand();
-		$command->setText("update item_comment
-				set `read` = 1
-				where item_id = $itemId")->execute();
-
+		$userId = Yii::app()->user->getState('user_id');
+		if($userId > 0)
+		{
+			$command = Yii::app()->db->createCommand();
+			$command->setText("delete from unread_comment
+					where user_id = $userId
+							and comment_id in (
+								select c.id
+								from item_comment c
+								where c.item_id = $itemId
+							)")->execute();
+		}
 		return $comments;
 	}
 

@@ -52,10 +52,10 @@
 					</li>
 					<?php } ?>
 					<li>
-						<?= CHtml::link(Yii::t('global', 'needs'), Yii::app()->createUrl('./need?p=1'),array('title'=>Yii::t('global', 'needs hint'))) ?>
+						<?= CHtml::link(Yii::t('global', 'needs'), Yii::app()->createUrl('./need?p=1&o='),array('title'=>Yii::t('global', 'needs hint'))) ?>
 					</li>
 					<li>
-						<?= CHtml::link(Yii::t('global', 'shares'), Yii::app()->createUrl('./share?p=1'),array('title'=>Yii::t('global', 'shares hint'))) ?>						
+						<?= CHtml::link(Yii::t('global', 'shares'), Yii::app()->createUrl('./share?p=1&o='),array('title'=>Yii::t('global', 'shares hint'))) ?>						
 					</li>
 					<?php
 						if (!Yii::app()->user->isGuest) {
@@ -74,7 +74,7 @@
 						<div id="newComments" class="popup" style="	display: none;position: fixed; margin-top: 20px; padding: 5px;">
 							<?php
 								foreach($comments as $comment)
-									echo '<div>' . CHtml::link(
+									echo '<div style="padding: 5px;">' . CHtml::link(
 										$comment['user_name'] . ' ' . 
 										Yii::t('items', 'made a comment'),
 										Yii::app()->createUrl('need/view/' . $comment['item_id'])

@@ -159,17 +159,11 @@ class UserForm extends CFormModel
 	{
 		$userId = Yii::app()->user->getId();
 		$command = Yii::app()->db->createCommand();
-		$comments = $command->setText("select 
-						coalesce(u.real_name, u.username) as user_name,
-						ic.item_id,
-						shared
-			from item_comment ic 
-				inner join user u on u.id = ic.user_id
-				inner join item i on i.id = ic.item_id
-			where 
-				i.user_id = $userId
-				and ic.read = 0")
-						->queryAll();
+		$comments = $command->setText("SELECT COALESCE( u.real_name, u.username ) AS user_name, ic.item_id
+			FROM unread_comment uc
+				INNER JOIN item_comment ic ON ic.id = uc.comment_id
+				INNER JOIN user u ON u.id = ic.user_id
+			WHERE uc.user_id = $userId")->queryAll();
 		return $comments;
 	}
 

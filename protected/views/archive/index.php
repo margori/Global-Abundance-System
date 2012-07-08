@@ -1,4 +1,4 @@
-<h1><?= Yii::t('global', 'archive') ?></h1>
+<h1><?= Yii::t('archive', 'archive title') ?></h1>
 <div class="span-22 box">
 	<?php echo CHtml::beginForm($this->createUrl('./archive')) ?>
 	<div class="span-22">
