@@ -28,9 +28,8 @@ class ShareController extends Controller
 		{
 			$model->attributes=$_POST['ItemForm'];
 			$model->description=  strip_tags($model->description);
-			$itemId = $model->save();
-			if($itemId > 0)
-				$this->redirect($this->createUrl("share/view/$itemId"));				
+			if($model->save())
+				$this->redirect($this->createUrl("share/view/" . $model->id));				
 		}
 
 		$this->render('new',array(

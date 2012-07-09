@@ -130,7 +130,7 @@ class ItemForm extends CFormModel
 					'quantity' => $this->quantity,							
 					'expiration_date' => $this->expiration_date,							
 					));
-			return $command->connection->lastInsertID;
+			$this->id = $command->connection->lastInsertID;
 		}
 		else
 		{
@@ -143,8 +143,8 @@ class ItemForm extends CFormModel
 									), 
 							'id = :id', array(':id'=> $this->id)
 							);
-			return $this->id;
 		}		
+		return true;
 	}
 	
 	public function delete()
@@ -370,7 +370,7 @@ class ItemForm extends CFormModel
 		if (!$alreadyNotified)
 		{
 			$this->mailTo($solution['email'], $solution['user_name'], $subjectTemplate, $mail);
-			$notified[] = $need['email'];
+			$notified[] = $solution['email'];
 		}
 				
 		//Solution mails
@@ -387,7 +387,7 @@ class ItemForm extends CFormModel
 			if (!$alreadyNotified)
 			{
 				$this->mailTo($solutionItem['email'], $solutionItem['user_name'], $subjectTemplate, $mail);
-				$notified[] = $need['email'];
+				$notified[] = $solutionItem['email'];
 			}
 		}
 		

@@ -19,12 +19,25 @@ function toggleN(id)
 	<div class="span-18">		
 		<?= '<strong>' . CHtml::link($share->username, $this->createUrl('user/' . $share->user_id)) . '</strong> ' . Yii::t('items', 'user shares')
 				.' ('. Yii::t('items', 'available').' '. $share->quantity .')'; ?>
+		&nbsp;&nbsp;&nbsp;
+		<?php if (!Yii::app()->user->isGuest) { ?>
+		<a href="<?= $this->createUrl('share/edit/' . $share->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
+		<?php } ?>
+		<?php if (Yii::app()->user->getState('user_id') == $share->user_id) { ?>
+		<span id="deleteU<?= $share->id ?>" style="display: inline">
+			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/cross-button.png" alt="-" 
+					 onclick="toggle('deleteU<?= $share->id ?>');toggle('confirmationU<?= $share->id ?>');"/>
+		</span>			 
+		<span id="confirmationU<?= $share->id ?>" style="display: none">
+			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/slash-button.png" alt="N"
+				onclick="toggle('deleteU<?= $share->id ?>');toggle('confirmationU<?= $share->id ?>');"/>
+			<?= Yii::t('global', 'sure?') ?>
+			<a href="<?= $this->createUrl('share/delete/' . $share->id) ?>" >
+				<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/tick-button.png" alt="Y"/>
+			</a>
+		</span>
+		<?php } ?>
 	</div>
-	<?php if (!Yii::app()->user->isGuest) { ?>
-	<div class="right last">
-		<a href="<?= $this->createUrl('need/edit/' . $share->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
-	</div>
-	<?php } ?>
 	<div id="currentDescription" class="span-22">
 		<?= '<strong>'. $share->description .'</strong>'?>
 	</div>
@@ -39,7 +52,7 @@ function toggleN(id)
 		foreach($comments as $comment)
 		{ ?>
 	<div class="span-20">
-			<?= CHtml::link($comment['user_name'], $this->createUrl('user/' . $comment['user_id'])) . ' ' . Yii::t('interaction','comments'). ' ' ?>
+			<?= CHtml::link($comment['user_name'], $this->createUrl('user/' . $comment['user_id'])) . ' ' . Yii::t('items','comments'). ' ' ?>
 		<?php if ($comment['user_id'] == $userId) { ?>
 			<span id="deleteC<?= $comment['id'] ?>" style="display: inline">
 				<img src="../../../images/icons/16x16/cross-button.png" alt="-" onclick="toggleN('C<?= $comment['id'] ?>');"/>

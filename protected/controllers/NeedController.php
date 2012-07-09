@@ -79,9 +79,10 @@ class NeedController extends Controller
 			$model->attributes=$_POST['ItemForm'];
 			$model->description=  strip_tags($model->description);
 			
-			$itemId = $model->save();
-			if($itemId > 0)
-				$this->redirect($this->createUrl("need/view/$itemId"));				
+			if($model->save())
+			{
+				$this->redirect($this->createUrl("need/view/" . $model->id));				
+			}
 		}
 
 		if(isset($_POST['cancel']))

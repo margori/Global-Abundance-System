@@ -42,13 +42,12 @@ class InteractionController extends Controller
 			$today = new DateTime();
 			$model->expiration_date = $today->add(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
 						
-			$itemId = $model->save();
-			if($itemId > 0)
+			if($model->save())
 			{
 				if ($model->shared == 1)
-					$this->redirect($this->createUrl("share/view/$itemId"));				
+					$this->redirect($this->createUrl("share/view/" . $model->id));				
 				else
-					$this->redirect($this->createUrl("need/view/$itemId"));				
+					$this->redirect($this->createUrl("need/view/" . $model->id));				
 			}
 		}
 			

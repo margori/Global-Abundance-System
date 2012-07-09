@@ -2,9 +2,11 @@
 <div class="span-22 box last">
 	<div class="span-18">		
 		<?= '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ' . Yii::t('items', 'user needs'); ?>
-		<?php if (!Yii::app()->user->isGuest) { ?>
 		&nbsp;&nbsp;&nbsp;
+		<?php if (!Yii::app()->user->isGuest) { ?>
 		<a href="<?= $this->createUrl('need/edit/' . $need->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
+		<?php } ?>
+		<?php if (Yii::app()->user->getState('user_id') == $need->user_id) { ?>
 		<span id="deleteU<?= $need->id ?>" style="display: inline">
 			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/cross-button.png" alt="-" 
 					 onclick="toggle('deleteU<?= $need->id ?>');toggle('confirmationU<?= $need->id ?>');"/>
