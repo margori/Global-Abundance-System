@@ -30,13 +30,13 @@ class UserController extends Controller
 
 		if (isset($_GET['ps']))
 		{
-			Yii::app()->user->setState('pageSize', $_GET['ps']);
+			Yii::app()->user->setState('user pageSize', $_GET['ps']);
 			Yii::app()->user->setState('pageCurrent', 1);
 		}
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
-		$pageSize = Yii::app()->user->getState('pageSize') ?: 10;
+		$pageSize = Yii::app()->user->getState('user pageSize') ?: 25;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
 
 		$userForm = new UserForm();

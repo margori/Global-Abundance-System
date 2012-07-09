@@ -130,6 +130,7 @@ class ItemForm extends CFormModel
 					'quantity' => $this->quantity,							
 					'expiration_date' => $this->expiration_date,							
 					));
+			return $command->connection->lastInsertID;
 		}
 		else
 		{
@@ -142,9 +143,8 @@ class ItemForm extends CFormModel
 									), 
 							'id = :id', array(':id'=> $this->id)
 							);
-		}
-		
-		return $command->connection->lastInsertID;
+			return $this->id;
+		}		
 	}
 	
 	public function delete()

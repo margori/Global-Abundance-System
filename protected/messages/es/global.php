@@ -1,6 +1,6 @@
 <?php
 return array (
-	'title' => 'Sistema de abundancia global',
+	'title' => 'Global Abundance System',
 	'welcome'=>'Bienvenido',
 	'interaction' => 'Pedir o contribuir',
 	'interaction hint' => 'Aquí puedes pedir o dar lo que quieras',

@@ -40,7 +40,7 @@
 	<body >
 <div class="container" id="page">
 	<div id="header">
-		<div class="span-12">
+		<div class="span-15">
 			<div id="logo" >
 				<a href="<?= Yii::app()->createUrl('site', array()) ?>"><?= Yii::t('global', 'title') ?></a>			
 			</div>

@@ -2,12 +2,23 @@
 <div class="span-22 box last">
 	<div class="span-18">		
 		<?= '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ' . Yii::t('items', 'user needs'); ?>
-	</div>
-	<?php if (!Yii::app()->user->isGuest) { ?>
-	<div class="right">		
+		<?php if (!Yii::app()->user->isGuest) { ?>
+		&nbsp;&nbsp;&nbsp;
 		<a href="<?= $this->createUrl('need/edit/' . $need->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>
+		<span id="deleteU<?= $need->id ?>" style="display: inline">
+			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/cross-button.png" alt="-" 
+					 onclick="toggle('deleteU<?= $need->id ?>');toggle('confirmationU<?= $need->id ?>');"/>
+		</span>			 
+		<span id="confirmationU<?= $need->id ?>" style="display: none">
+			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/slash-button.png" alt="N"
+				onclick="toggle('deleteU<?= $need->id ?>');toggle('confirmationU<?= $need->id ?>');"/>
+			<?= Yii::t('global', 'sure?') ?>
+			<a href="<?= $this->createUrl('need/delete/' . $need->id) ?>" >
+				<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/tick-button.png" alt="Y"/>
+			</a>
+		</span>
+		<?php } ?>
 	</div>
-	<?php } ?>
 	<div id="currentDescription" class="span-22">
 		<?= '<strong>'. $need->description .'</strong>'?>
 	</div>

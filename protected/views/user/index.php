@@ -6,11 +6,11 @@
 		<?= CHtml::textField('nameFilter', $nameFilter,array('class'=>'span-18') ) ?>
 		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
 	</div>
-	<div class="right span-3 last">
+	<div class="right span-3 last" style="margin-right: 78px;">
 		<?= Yii::t('global', 'show') . ' '
-						. CHtml::link('10', $this->createUrl('?ps=10')) . ' '
-						. CHtml::link('25', $this->createUrl('?ps=25')) . ' ' 
+						. CHtml::link('25', $this->createUrl('?ps=25')) . ' '
 						. CHtml::link('50', $this->createUrl('?ps=50')) . ' ' 
+						. CHtml::link('100', $this->createUrl('?ps=100')) . ' ' 
 						?>
 	</div>
 	<?php echo CHtml::endForm(); ?>
