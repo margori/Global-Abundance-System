@@ -43,15 +43,14 @@
 	</div>
 	<div class="span-21" style="text-align: right;">
 		<?php if (isset($message)) { ?>
-				<span class="errorMessage">
-					<?= $message ?>
-				</span>
-			<?php }?>
-			<?php 
-				echo CHtml::hiddenField('language', Yii::app()->language);			
-				echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); 
-			?>
-	
+			<span class="errorMessage">
+				<?= $message ?>
+			</span>
+		<?php }?>
+		<?php 
+			echo CHtml::hiddenField('language', Yii::app()->language);			
+			echo CHtml::submitButton(Yii::t('register','register'), array('name'=>'register')); 
+		?>	
 	</div>
 <?php $this->endWidget(); ?>
 </div>

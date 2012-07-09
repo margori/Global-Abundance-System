@@ -11,6 +11,8 @@ class UserForm extends CFormModel
 	public $defaultTags;
 	public $language;
 	
+	public $message;
+	
 	public function rules()
 	{
 		return array(
@@ -21,7 +23,49 @@ class UserForm extends CFormModel
 	
 	public function validate()
 	{
+	
+	}
+	
+	public function customValidate()
+	{
+		$USERNAME_MIN_LENGTH = 4;
+		$PASSWORD_MIN_LENGTH = 4;
 		
+		$message = '';
+				
+		if (!isset($this->username) || $this->username == '')
+			$message = Yii::t('register', 'username required');
+		else	if (strlen($this->username) < $USERNAME_MIN_LENGTH)
+			$message = sprintf(Yii::t('register', 'username too short'), $USERNAME_MIN_LENGTH);
+		else if ($this->password != '')
+		{
+			if (!isset($this->password) || $this->password == '')
+				$message = Yii::t('register', 'password required');
+			else if (strlen($this->password) < $PASSWORD_MIN_LENGTH)
+				$message = sprintf(Yii::t('register', 'password too short'), $PASSWORD_MIN_LENGTH);
+			else if (!isset($this->confirmation) || $this->confirmation == '')
+				$message = Yii::t('register', 'confirmation required');
+			else if ($this->password != $this->confirmation)
+				$message = Yii::t('register', 'password confirmation');
+		}
+		else 
+		{		
+			$command = Yii::app()->db->createCommand();
+			$count = $command->select('count(*)')
+							->from('user')
+							->where(
+										array('and', 'username = :username', 'id <> :id'), 
+										// Parameters
+										array( 
+											"username" => $this->username,
+											'id' => Yii::app()->user->getState('user_id'),							
+										))
+							->queryScalar();
+
+			if ($count > 0)
+				$message = Yii::t('register', 'username taken');
+		}
+		return $message;
 	}
 
 	function load($id)

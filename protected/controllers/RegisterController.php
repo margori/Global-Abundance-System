@@ -22,7 +22,7 @@ class RegisterController extends Controller
 		$model = new RegisterForm();
 		
 		$this->render('index',array(
-				'model'=>$model,
+				'model'=>$model, 'message'=>''
 				));
 	}
 

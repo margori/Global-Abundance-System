@@ -77,29 +77,35 @@ class RegisterForm extends CFormModel
 		$USERNAME_MIN_LENGTH = 4;
 		$PASSWORD_MIN_LENGTH = 4;
 		
-		
+		$message = '';
+				
 		if (!isset($this->username) || $this->username == '')
-			return Yii::t('register', 'username required');
-		if (strlen($this->username) < $USERNAME_MIN_LENGTH)
-			return sprintf(Yii::t('register', 'username too short'), $USERNAME_MIN_LENGTH);
-		if (!isset($this->password) || $this->password == '')
-			return Yii::t('register', 'password required');
-		if (strlen($this->password) < $PASSWORD_MIN_LENGTH)
-			return sprintf(Yii::t('register', 'password too short'), $PASSWORD_MIN_LENGTH);
-		if (!isset($this->confirmation) || $this->confirmation == '')
-			return Yii::t('register', 'confirmation required');
-		if ($this->password != $this->confirmation)
-			return Yii::t('register', 'password confirmation');
-		
-		$command = Yii::app()->db->createCommand();
-		$count = $command->select('count(*)')
-						->from('user')
-						->where('username = \'' . $this->username .'\'')
-						->queryScalar();
-		
-		if ($count > 0)
-			return Yii::t('register', 'username taken');
-		
-		return '';
+			$message = Yii::t('register', 'username required');
+		else if (strlen($this->username) < $USERNAME_MIN_LENGTH)
+			$message = sprintf(Yii::t('register', 'username too short'), $USERNAME_MIN_LENGTH);
+		else if (!isset($this->password) || $this->password == '')
+			$message = Yii::t('register', 'password required');
+		else if (strlen($this->password) < $PASSWORD_MIN_LENGTH)
+			$message = sprintf(Yii::t('register', 'password too short'), $PASSWORD_MIN_LENGTH);
+		else if (!isset($this->confirmation) || $this->confirmation == '')
+			$message = Yii::t('register', 'confirmation required');
+		else if ($this->password != $this->confirmation)
+			$message = Yii::t('register', 'password confirmation');
+		else 
+		{		
+			$command = Yii::app()->db->createCommand();
+			$count = $command->select('count(*)')
+							->from('user')
+							->where('username = :username',
+										// Parameters
+										array( 
+											"username" => $this->username,
+										))
+							->queryScalar();
+
+			if ($count > 0)
+				$message = Yii::t('register', 'username taken');
+		}
+		return $message;
 	}
 }

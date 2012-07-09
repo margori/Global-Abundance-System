@@ -77,10 +77,12 @@ class UserController extends Controller
 				
 		if (isset($_POST['save']))
 		{
-			$model->save();
-			$this->redirect(Yii::app()->createUrl('interaction'));
+			$message = $model->customValidate();
+			if ($message == '')
+				if ($model->save())
+					$this->redirect(Yii::app()->createUrl('interaction'));
 		}
-		$this->render('index', array('model'=>$model));
+		$this->render('myAccount', array('model'=>$model, 'message'=>$message, 'languages'=>Yii::app()->params['languages']));
 	}
 	
 	public function actionMyAccount()
@@ -89,7 +91,7 @@ class UserController extends Controller
 		$model = new UserForm();
 		$model->load($id);
 		
-		$this->render('myAccount', array('model'=>$model, 'languages'=>Yii::app()->params['languages']));
+		$this->render('myAccount', array('model'=>$model, 'message'=>'', 'languages'=>Yii::app()->params['languages']));
 	}
 
 	public function actionView($id)

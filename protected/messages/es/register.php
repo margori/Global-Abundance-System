@@ -13,7 +13,7 @@ return array (
 		'username taken'=>'Nombre de usuario ya usado. Por favor use otro nombre de usuario',
 		'username required'=>'Nombre de usuario requerido',
 		'password required'=>'Contraseña requerida',
-		'confirmation requiered'=>'Confirmación de contraseña requerida',
+		'confirmation required'=>'Confirmación de contraseña requerida',
 		'username too short'=>'Nombre de usuario demasiado corto. Al menos %d carácteres requeridos.',
 		'password too short'=>'Contraseña demasiado corta. Al menos %d carácteres requeridos.',
 		'password confirmation'=>'Contraseña difiere de su confirmación',

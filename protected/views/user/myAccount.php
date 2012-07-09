@@ -60,6 +60,11 @@
 	<div class="span-22">
 		<?= CHtml::submitButton(Yii::t('global','save'), array('name' => 'save')) ?>
 		<?= CHtml::submitButton(Yii::t('global','cancel'), array('name' => 'cancel')) ?>
+		<?php if (isset($message)) { ?>
+			<span class="errorMessage">
+				<?= $message ?>
+			</span>
+		<?php }?>
 	</div>
 </div>
 <?php echo CHtml::endForm(); ?>
