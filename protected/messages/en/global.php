@@ -40,7 +40,7 @@ return array (
 		'cancel'=> "Cancel",
 		'show' => "Show",
 
-    'terms' => "Term and conditions: you are free to use this site however you want, but here are <a href=\"%s\">some suggestions</a>",
+    'terms' => "Terms and conditions: you are free to use this site any way you want, however here are <a href=\"%s\">some suggestions</a>",
 		'powered by' => "Powered by %s and Love.",
 		'contact' => "Contact",
 		'development' => "Development",

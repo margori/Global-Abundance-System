@@ -15,7 +15,7 @@ return array (
 		// That's all. Happy translating.
 		
     'clause1' => "All data entered in this site, except passwords, will be published.<br />If you have privacy or security issues, you should not register in this site.",
-		'clause2' => 'In this community, unconditional gifting is appreciated, instead of exchange or trading, but they are not forbidden.',
+		'clause2' => 'In this community, unconditional gifting is appreciated, instead of bartering or trading, however they are not forbidden.',
 		'clause3' => "Every action has a reaction.<br />Your behavior, good or bad, will have consecuences, will generate different experiences over other people, with correspondent intensities.<br />Good behavior means good expiriences. Bad behavior, well, current world.",
 		'clause4' => "Universe will give us back what we gave.<br />In addition to previous suggestion, experience you gave other people, you'll live it as well.",
 		'clause5' => "Take whatever you need, not whatever you want.<br />That's key for abundance. It's not necesary to take or consume everything found or available. Tomorrow there will be more.",
