@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS `solution_item` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 ALTER TABLE `solution_item`
-  ADD CONSTRAINT `solution_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `solution_item_ibfk_1` FOREIGN KEY (`solution_id`) REFERENCES `solution` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `solution_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `solution_item_ibfk_1` FOREIGN KEY (`solution_id`) REFERENCES `solution` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

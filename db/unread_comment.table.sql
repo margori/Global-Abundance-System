@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `unread_comment` (
 
 ALTER TABLE `unread_comment` ADD FOREIGN KEY (  `comment_id` ) REFERENCES  `gas`.`item_comment` (
 `id`
-) ON DELETE CASCADE ON UPDATE RESTRICT ;
+) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `unread_comment` ADD FOREIGN KEY (  `user_id` ) REFERENCES  `gas`.`user` (
 `id`
-) ON DELETE CASCADE ON UPDATE RESTRICT ;
+) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -6,10 +6,11 @@ CREATE TABLE IF NOT EXISTS `item` (
   `quantity` int(11) NOT NULL COMMENT '< 0is infinite quantity',
   `original_description` text NOT NULL,
   `expiration_date` date NOT NULL,
+  `creation_date` date NOT NULL,
   `notified` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
