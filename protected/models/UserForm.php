@@ -13,6 +13,9 @@ class UserForm extends CFormModel
 	
 	public $message;
 	
+	public $myLove;
+	public $hisLove;
+	
 	public function rules()
 	{
 		return array(
@@ -82,6 +85,26 @@ class UserForm extends CFormModel
 		$this->email = $data['email'];
 		$this->defaultTags = $data['default_tags'];
 		$this->language = $data['language'];
+		
+		$command = Yii::app()->db->createCommand();
+		$love = $command->select('love')
+						->from('user_heart')
+						->where('from_user_id = :from and to_user_id = :to')
+						->queryScalar(array(
+								'from'=>$id,
+								'to'=>Yii::app()->user->getState('user_id'),
+						));
+		$this->hisLove = $love == null ? 1 : $love;
+		
+		$command = Yii::app()->db->createCommand();
+		$love = $command->select('love')
+						->from('user_heart')
+						->where('from_user_id = :from and to_user_id = :to')
+						->queryScalar(array(
+								'from'=>Yii::app()->user->getState('user_id'),
+								'to'=>$id,
+						));
+		$this->myLove = $love == null ? 1 : $love;
 	}
 
 	public function save()
@@ -137,9 +160,18 @@ class UserForm extends CFormModel
 	{
 		$command = Yii::app()->db->createCommand();
 		$offset = ($pageCurrent - 1) * $pageSize;
+		$userId = Yii::app()->user->getState('user_id');
 		
-		$sql = 'select coalesce(i.real_name, i.username) as real_name, i.id ';
-		$sql .= 'from user i ';
+		$sql = 'select coalesce(u.real_name, u.username) as real_name, u.id ';
+		if ($userId > 0)
+			$sql .= ', coalesce(love_ab.love, 1) as love ';
+		else
+			$sql .= ', 1 as love ';
+		$sql .= 'from user u ';
+		if ($userId > 0)
+		{
+			$sql .= "left join user_heart love_ab on love_ab.from_user_id = $userId and love_ab.to_user_id = u.id ";
+		}
 	
 		if (isset($nameFilter) && trim($nameFilter) != '')
 		{
@@ -234,5 +266,26 @@ class UserForm extends CFormModel
 				and s.status = 2")
 						->queryAll();
 		return $count;
+	}
+
+	public function love($fromUserId, $toUserId, $love) 
+	{
+		$command = Yii::app()->db->createCommand();
+		$command->delete('user_heart',
+						"from_user_id = :from and to_user_id = :to",
+						array(
+								'from'=>$fromUserId,
+								'to'=>$toUserId,
+								));
+
+		if($love != 1)
+		{
+			$command = Yii::app()->db->createCommand();
+			$command->insert('user_heart', array(
+					'from_user_id'=>$fromUserId,
+					'to_user_id'=>$toUserId,
+					'love'=>$love,
+			));
+		}		
 	}
 }

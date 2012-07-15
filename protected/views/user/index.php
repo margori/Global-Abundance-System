@@ -45,6 +45,8 @@
 ?>
 <?php foreach($users as $user) { ?>
 <div class="box" style="display: inline-block">
+	<?= $user['love'] == 0 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart-break.png', '', array('style'=>'margin-bottom: -4px;')) : ''; ?>
+	<?= $user['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png', '', array('style'=>'margin-bottom: -4px;')) : ''; ?>
 	<?= CHtml::link($user['real_name'], $this->createUrl('user/' . $user['id'])) ?>
 </div>
 <?php } ?>

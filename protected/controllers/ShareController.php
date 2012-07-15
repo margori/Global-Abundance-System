@@ -27,6 +27,7 @@ class ShareController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
+			$model->creation_date = $today->format('Y-m-d');
 			$model->description=  strip_tags($model->description);
 			if($model->save())
 				$this->redirect($this->createUrl("share/view/" . $model->id));				

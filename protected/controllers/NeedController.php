@@ -77,6 +77,7 @@ class NeedController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
+			$model->creation_date = $today->format('Y-m-d');
 			$model->description=  strip_tags($model->description);
 			
 			if($model->save())
@@ -101,6 +102,8 @@ class NeedController extends Controller
 	public function actionEdit($id)
 	{
 		$model= $this->loadNeed($id);
+		if ($need->hisLove == 0)
+			$this->redirect(Yii::app()->createUrl("./need"));			
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -124,6 +127,10 @@ class NeedController extends Controller
 	
 	public function actionDelete($id)
 	{
+		$need = $this->loadNeed($id);
+		if ($need->hisLove == 0)
+			$this->redirect(Yii::app()->createUrl("./need"));			
+
 		$itemForm = new ItemForm();
 		$itemForm->id = $id;
 		$itemForm->delete();
@@ -136,6 +143,8 @@ class NeedController extends Controller
 	{
 		$userId = Yii::app()->user->getState('user_id');
 		$need = $this->loadNeed($id);
+		if ($need->hisLove == 0)
+			$this->redirect(Yii::app()->createUrl("./need"));			
 		$solutions = $this->loadSolutions($id);
 		$comments = $this->loadComments($id);
 
@@ -221,8 +230,10 @@ class NeedController extends Controller
 			Yii::app()->user->setState('pageCurrent', 1);
 			$pageCurrent = 1;
 		}
+				
+		$needUserId = ItemForm::GetUserId($needId); 
 
-		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize);
+		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize, $needUserId);
 
 		$this->render('addItem',array(
 			'shares'=>$shares,
@@ -290,19 +301,25 @@ class NeedController extends Controller
 	public function loadNeed($id)
 	{
 		$command = Yii::app()->db->createCommand();
+		$userId = Yii::app()->user->getState('user_id');
+	
+		$sql = 'select i.*, coalesce(u.real_name, u.username) as username ';
+		if ($userId > 0)
+			$sql .= ', coalesce(uh.love, 1) as hisLove ';
+		else	
+			$sql .= ', 1 as hisLove ';
 		
-		$row = $command->select('item.*, coalesce(user.real_name, user.username) as username')
-						->from('item`  
-							inner join `user` 
-							on `user.id` = `item.user_id')
-						->where(
-										// Operators
-										'item.id = :id', 
-										// Parameters
-										array( 
-											'id' => $id,
-										))
-						->queryRow();
+		$sql .= 'from item i 
+				inner join `user` u
+					on u.id = i.user_id ';
+		
+		if ($userId > 0)
+			$sql .= "left join user_heart uh
+					on uh.from_user_id = i.user_id and uh.to_user_id = $userId ";
+		
+		$sql .= "where i.id = $id ";
+		
+		$row = $command->setText($sql)->queryRow();
 		
 		if($row === null)
 			throw new CHttpException(404,'The requested page does not exist.');
@@ -322,14 +339,43 @@ class NeedController extends Controller
 		
 		for($i = 0; $i < count($solutions); $i++)
 		{
+			$solutionId = $solutions[$i]['id'];
 			$command = Yii::app()->db->createCommand();
 			$solutionItems = $command->select('si.id, si.solution_id, si.item_id, i.description')
 							->from('(solution_item si
 													inner join item i
 													on i.id = si.item_id)')
-							->where('si.solution_id = ' . $solutions[$i]['id'])
+							->where('si.solution_id = ' . $solutionId)
 							->queryAll();
 			$solutions[$i]['items'] = $solutionItems;
+			
+			$command = Yii::app()->db->createCommand();
+			$missingEmails = $command->setText("select coalesce(u.real_name, u.username) as user_name
+				from
+					item i
+					inner join user u on u.id = i.user_id
+				where 
+					i.id = $itemId
+					and (u.email is null or u.email = '')
+
+				union
+
+				select coalesce(u.real_name, u.username) as user_name
+				from solution_item si
+					inner join item i on i.id = si.item_id
+					inner join user u on u.id = i.user_id
+				where si.solution_id = $solutionId						
+					and (u.email is null or u.email = '')
+			")->queryColumn();
+			
+			if (count($missingEmails) > 0)
+			{
+				$users = implode(', ', $missingEmails);
+				$solutions[$i]['canbetaken'] = false;
+				$solutions[$i]['message'] = sprintf(Yii::t('items','missing emails'), $users);
+			}
+			else
+				$solutions[$i]['canbetaken'] = true;				
 		}
 		
 		$userId = Yii::app()->user->getState('user_id');

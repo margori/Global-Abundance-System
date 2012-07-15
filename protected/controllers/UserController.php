@@ -100,8 +100,13 @@ class UserController extends Controller
 		$user->load($id);
 		$user->email = str_replace('@', Yii::t('user', '@'), $user->email);
 		$user->email = str_replace('.', Yii::t('user', '.'), $user->email);
-		$needs = $user->loadNeeds();
-		$shares = $user->loadShares();
+		$needs = array();
+		$shares = array();
+		if ($user->hisLove > 0 and $user->myLove > 0)
+		{
+			$needs = $user->loadNeeds();
+			$shares = $user->loadShares();
+		}
 		$this->render('view', array('model'=>$user, 'needs'=>$needs, 'shares'=>$shares));
 	}
 	
@@ -111,5 +116,22 @@ class UserController extends Controller
 		$model = new UserForm();
 		$model->delete($id);
 		$this->redirect(Yii::app()->createUrl('site/logout'));		
+	}
+	
+	public function actionLove($id, $returnId)
+	{
+		$fromUserId = Yii::app()->user->getState('user_id');
+		$toUserId = $id;
+		$love = $returnId;
+		
+		$model = new UserForm();
+		$model->love($fromUserId, $toUserId, $love);
+		
+		$this->redirect(Yii::app()->createUrl('user/view/' . $toUserId));		
+	}
+	
+	public function actionBan()
+	{
+		$this->render('ban');
 	}
 }

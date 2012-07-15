@@ -32,5 +32,16 @@ return array (
 		
 		'@' => ' at ',
 		'.' => ' dot ',
+		
+		'you broke heart of' => 'You %s of %s',
+		'broke heart' => 'broke the heart',
+		'he loves you' => '%s %s you',
+		
+		'user broke my heart' => 'This user broke my heart. :(',
+		'I dont know this user' => "I don't know this user yet.",
+		'I like this user' => 'I like this user. :)',
+		'I love this user' => 'I love this user. :D',
+		
+		'ban' => "You have broken too many hearts of this community. Go away!",
 );
 ?>

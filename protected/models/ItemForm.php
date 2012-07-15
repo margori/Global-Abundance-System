@@ -9,12 +9,14 @@ class ItemForm extends CFormModel
 	public $username;
 	public $quantity;
 	public $expiration_date;
+	public $creation_date;
+	public $hisLove;
 
 	public function rules()
 	{
 		return array(
-			array('id, shared, description, quantity, expiration_date', 'required'),
-			array('username, user_id, original_description', 'safe'),
+			array('id, shared, description, quantity, expiration_date, creation_date', 'required'),
+			array('username, user_id, original_description, hisLove', 'safe'),
 		);
 	}
 
@@ -30,17 +32,40 @@ class ItemForm extends CFormModel
 		);
 	}
 	
-	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10)
+	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10, $includedUserId = null)
 	{
 		$command = Yii::app()->db->createCommand();
 		$offset = ($pageCurrent - 1) * $pageSize;
+		$userId = Yii::app()->user->getState('user_id');
 		
 		$sql = "select i.*, coalesce(u.real_name, username) as user_name ";
+		if ($userId > 0)
+			$sql .= ', love_ab.love ';
+		else
+			$sql .= ', 1 as love ';
 		$sql .= 'from item i inner join user u on u.id = i.user_id ';
-		
+		if ($userId > 0)
+		{
+			$sql .= "left join user_heart love_ab on love_ab.from_user_id = $userId and love_ab.to_user_id = i.user_id ";
+			$sql .= "left join user_heart love_ba on love_ba.from_user_id = i.user_id and love_ba.to_user_id = $userId ";
+		}
+		if ($includedUserId > 0)
+		{
+			$sql .= "left join user_heart love_ac on love_ac.from_user_id = $userId and love_ac.to_user_id = $includedUserId ";
+			$sql .= "left join user_heart love_ca on love_ca.from_user_id = $includedUserId and love_ca.to_user_id = $userId ";
+			$sql .= "left join user_heart love_bc on love_bc.from_user_id = i.user_id and love_bc.to_user_id = $includedUserId ";
+			$sql .= "left join user_heart love_cb on love_cb.from_user_id = $includedUserId and love_cb.to_user_id = i.user_id ";
+		}
 		$sql .= 'where i.quantity > 0 ';
 		$sql .= "and i.expiration_date >= curdate() ";
 		$sql .= "and i.shared = $shared ";
+		if ($userId > 0)
+			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
+		if ($includedUserId > 0)
+		{
+			$sql .= 'and (love_ac.love > 0 or love_ac.love is null) and (love_ca.love > 0 or love_ca.love is null) ';
+			$sql .= 'and (love_bc.love > 0 or love_bc.love is null) and (love_cb.love > 0 or love_cb.love is null) ';
+		}
 		if (isset($tags) && trim($tags) != '')
 		{
 			$splitTags = explode(' ', $tags);
@@ -61,8 +86,8 @@ class ItemForm extends CFormModel
 				$sql .= "or not exists(select 1 from solution s where s.item_id = i.id) ";
 			if (substr_count($options,'draftSolutions') > 0)
 				$sql .= "or exists(select 1 from solution s where s.status = 1 and s.item_id = i.id) ";
-			if (substr_count($options,'mine') > 0)
-				$sql .= "or i.user_id = " . Yii::app()->user->getState('user_id') .' ';
+			if (substr_count($options,'mine') > 0 and $userId > 0)
+				$sql .= "or i.user_id = $userId ";
 
 			$sql .= ')';
 		}
@@ -77,14 +102,23 @@ class ItemForm extends CFormModel
 
 	public function browseCount($tags,$shared = 1, $options = '')
 	{
+		$userId = Yii::app()->user->getState('user_id');
+
 		$command = Yii::app()->db->createCommand();
 		
 		$sql = 'select count(*) ';
 		$sql .= 'from item i ';
+		if ($userId > 0)
+		{
+			$sql .= "left join user_heart uh on uh.from_user_id = i.user_id and uh.to_user_id = $userId ";
+			$sql .= "left join user_heart myuh on myuh.to_user_id = i.user_id and myuh.from_user_id = $userId ";
+		}
 		
 		$sql .= 'where i.quantity > 0 ';
 		$sql .= "and i.expiration_date >= curdate() ";
 		$sql .= "and i.shared = $shared ";
+		if ($userId > 0)
+			$sql .= 'and (uh.love > 0 or uh.love is null) and (myuh.love > 0 or myuh.love is null) ';
 		if (isset($tags) && trim($tags) != '')
 		{
 			$splitTags = explode(' ', $tags);
@@ -105,8 +139,8 @@ class ItemForm extends CFormModel
 				$sql .= "or not exists(select 1 from solution s where s.item_id = i.id) ";
 			if (substr_count($options,'draftSolutions') > 0)
 				$sql .= "or exists(select 1 from solution s where s.status = 1 and s.item_id = i.id) ";
-			if (substr_count($options,'mine') > 0)
-				$sql .= "or i.user_id = " . Yii::app()->user->getState('user_id') .' ';
+			if (substr_count($options,'mine') > 0 and $userId > 0)
+				$sql .= "or i.user_id = $userId ";
 
 			$sql .= ')';
 		}
@@ -128,7 +162,8 @@ class ItemForm extends CFormModel
 					'shared' => $this->shared,
 					'user_id' => $userId,
 					'quantity' => $this->quantity,							
-					'expiration_date' => $this->expiration_date,							
+					'expiration_date' => $this->expiration_date,	
+					'creation_date' => $this->creation_date,
 					));
 			$this->id = $command->connection->lastInsertID;
 		}
@@ -540,4 +575,12 @@ class ItemForm extends CFormModel
 		return $sharpTags;
 	}
 	
+	public static function GetUserId($itemId)
+	{
+		$command = Yii::app()->db->createCommand();
+		return $command->select('user_id')
+						->from('item')
+						->where("id = :id")
+						->queryScalar(array('id'=>$itemId));
+	}
 }

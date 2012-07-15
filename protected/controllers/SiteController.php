@@ -60,6 +60,7 @@ class SiteController extends Controller
 		{
 			$model->username=$_POST['username'];
 			$model->password=$_POST['password'];
+			$model->rememberMe = true;
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
 				$this->redirect(Yii::app()->createUrl('interaction'));

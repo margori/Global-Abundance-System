@@ -52,7 +52,10 @@
 	if (count($items) == 0)
 		echo Yii::t('items', 'no needs');
 	foreach($items as $item) { ?>
-<div class="prepend-1 span-22 last append-bottom">
+<div class="span-1" style="text-align: right;">
+	<?= $item['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png' ) : '&nbsp;'; ?>
+</div>
+<div class="span-22 last append-bottom">
 	<div class="span-21">
 		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
 				Yii::t('items', 'user needs') . ' ' .

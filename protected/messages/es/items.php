@@ -24,7 +24,6 @@ return array (
 		'need edit' => 'Editando necesidad',
 		'share new' => 'Nueva contribución',
 		'share edit' => 'Editando contribución',
-		'solution for' => 'Solución para',
 		'solution new' => 'Nueva solución',
 		'user needs' => 'necesita',
 		'user shares' => 'contribuye con',
@@ -61,5 +60,7 @@ return array (
 		'no shares' => 'No hay contribuciones con esas etiquetas.',
 		
 		'use -' => "Use '-' para excluir esas etiquetas del resultado",
+
+		'missing emails' => '%s no tienen email definido todavía. Esperemos.',
 );
 ?>

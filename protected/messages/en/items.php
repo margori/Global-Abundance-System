@@ -38,7 +38,6 @@ return array (
 		'need edit' => 'Editing need',
 		'share edit' => 'Editing share',
 		'share new' => 'New share',
-		'solution for' => 'Solution for',
 		'solution new' => 'New solution',
 		'user needs' => 'needs',
 		'user shares' => 'shares',
@@ -47,8 +46,8 @@ return array (
 		'quantity' => 'Quantity',
 		'expiration date' => 'Expiration date',
 
-		'need description hint' => 'Describe what you need, using # in front of keywords.',
-		'share description hint' => 'Describe what you share, using # in front of keywords.',
+		'need description hint' => 'Describe what you need, using # before keywords.',
+		'share description hint' => 'Describe what you share, using # before keywords.',
 		'quantity hint' => 'Quantity',
 		'expiration hint need' => 'This need is available until this date',
 		'expiration hint share' => 'This share is available until this date',
@@ -76,5 +75,7 @@ return array (
 		'no shares' => 'No shares were found for those tags.',
 
 		'use -' => "Use '-' to exclude those tags from result",
+		
+		'missing emails' => "%s did not have email set yet. Let's wait.",
 );
 ?>

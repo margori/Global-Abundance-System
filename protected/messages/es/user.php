@@ -18,5 +18,16 @@ return array (
 		
 		'@' => ' arroba ',
 		'.' => ' punto ',
+		
+		'you broke heart of' => 'Tú %s de %s',
+		'broke heart' => 'rompiste el corazón',
+		'he loves you' => '%s %s a tí',
+		
+		'user broke my heart' => 'Este usuario rompió mi corazón. :(',
+		'I dont know this user' => "No conozco a este usuario todavía.",
+		'I like this user' => 'Me gusta este usuario. :)',
+		'I love this user' => 'Amo a este usuario. :D',
+
+		'ban' => "Usted a roto demasiados corazones de esta comunidad. Vayase!",
 );
 ?>

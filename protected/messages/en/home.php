@@ -17,7 +17,7 @@ return array (
 		'welcome' => "Welcome to our Global Abundance System.",
     'why?' => "A lot of people round the world are willing to help and be helped, to share and receive shares, to serve and be served.",
     'how?' => "This video explains how we could do it:",
-    'what?' => "Global Abundance System is the place where <b>you can ask what you need, give what you want, recicle, reuse, distribute, share or just serve</b>.<br />It's the place where problem are solved, requirement are fulfilled, needs are satisfied, missions are acomplished and dreams come true.<br /><br/>It's up to all of us, you included...",
+    'what?' => "Global Abundance System is the place where <b>you can ask what you need, give what you want, recicle, reuse, distribute, share or just serve</b>.<br />It's the place where problems are solved, requirements are fulfilled, needs are satisfied, missions are acomplished and dreams come true.<br /><br/>It's up to all of us, you included...",
 		'register' => "I need help! ... wait a minute, I wanna help too!",
 );
 ?>

@@ -1,4 +1,4 @@
-<h1><?= Yii::t('items','solution for') ?></h1>
+<h1><?= Yii::t('items','need') ?></h1>
 <div class="span-22 box last">
 	<div class="span-18">		
 		<?= '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ' . Yii::t('items', 'user needs'); ?>
@@ -91,8 +91,14 @@
 				if($solution['status'] == 2)
 					echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/light-bulb.png') . '</strong>';
 				if ($need->user_id == Yii::app()->user->getState('user_id'))
-					echo '&nbsp;'. CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id))
+				{
+					if ($solution['canbetaken'])
+						echo '&nbsp;'. CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id))
 							.'&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/thumb-up.png');
+					else
+						echo '&nbsp;'. Yii::t('items', 'take')
+							.'&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/exclamation.png','', array('title'=>$solution['message']));
+				}
 			?>
 		</div>
 	</div> 

@@ -15,21 +15,21 @@ return array (
 		// That's all. Happy translating.
 
 		'I need:' => "I need:",
-		'I give:' => "I share, give or serve:",
+		'I give:' => "I share, give or help with:",
 		'ask' => "Ask",
 		'share' => "Share",
-		'solution' => "I want to help creation a solution to somebody else need",
+		'solution' => "I want to help creating a solution for someone who needs it",
 		'asked' => "Asked.",
 		'served' => "Served.",
 		'thank' => "Thank you.",
-		'thanks for sharing' => "Thank you for sharing. You\' recieve an email when your share is selected to be used",
-		'thanks for asking' => "Thank you for asking. You\' recieve an email when an solution is ready to be taken",
+		'thanks for sharing' => "Thank you for sharing. You will recieve an email when your share is selected to be used",
+		'thanks for asking' => "Thank you for asking. You will recieve an email when a solution is ready to be taken",
 
 		'subject complete template' => "Global Abundance System - Solution complete",
 		'subject taken template' => "Global Abundance System - Solution taken",
 		'header template' => "Dear %s,",
-		'take template' => "We are glad to announce you a request already has a solution taken. Next, required information is shown\n%s\nAll people involved have been notified via email.\n\nWe invete you to comunicate with them to define deatils.",
-		'complete template' => "We are glad to announce you that your request already has a solution completed. You may evaluate it in this address:\n\n%s",
+		'take template' => "We are glad to announce your request has already a solution. Required information is shown next \n%s\n All people involved have been notified via email.\n\n We invite you to communicate with them to define details.",
+		'complete template' => "We are glad to announce you that your request already has a solution given. You may evaluate it in this address:\n\n%s",
 		'footer template' => "Best regards,\nGlobal Abundance System",
 		
 		'need template'=>'%s (%s) needs: %s',
