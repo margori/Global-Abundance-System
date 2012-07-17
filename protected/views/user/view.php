@@ -18,11 +18,12 @@
 				{
 					case 0: echo sprintf(Yii::t('user','you broke heart of'), $heartBroken , $model->realName ?: $model->username); break;
 					case 3:echo sprintf(Yii::t('user','he loves you'), $model->realName ?: $model->username, $heartFull ); break;
+					default: echo $model->realName; break;
 				}
 			?>
 			</strong>
 		</div>
-		<div style="position: fixed; margin-left: 750px; margin-top: -20px; background-color: #fff; padding: 10px;">
+		<div style="position: absolute; margin-left: 750px; margin-top: -20px; background-color: #fff; padding: 10px;">
 			<?= CHtml::link($heartBroken, $this->createUrl('user/love/' . $model->id . '/0'), array(
 				'title'=>Yii::t('user', 'user broke my heart'),
 				'style'=>$imagePadding . ($model->myLove == 0 ? "background-color: #e5eCf9;" : ''),

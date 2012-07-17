@@ -220,10 +220,12 @@ class NeedController extends Controller
 			$this->redirect(Yii::app()->createUrl("need/view/$needId"));
 		}
 
+		$needUserId = ItemForm::GetUserId($needId); 
+
 		$model = new ItemForm();
 		$tags = Yii::app()->request->getPost('tags');		
 		$sharpTags = $model->sharpTags($tags);
-		$shareCount = $model->browseCount($sharpTags, 0, $options);  
+		$shareCount = $model->browseCount($sharpTags, 0, $options, $needUserId);  
 		$pageCount = ceil($shareCount / $pageSize);
 		if ($pageCurrent > $pageCount)
 		{
@@ -231,7 +233,6 @@ class NeedController extends Controller
 			$pageCurrent = 1;
 		}
 				
-		$needUserId = ItemForm::GetUserId($needId); 
 
 		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize, $needUserId);
 

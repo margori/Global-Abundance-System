@@ -34,6 +34,9 @@ class ItemForm extends CFormModel
 	
 	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10, $includedUserId = null)
 	{
+		$today = new DateTime();
+		$sixMonthAgo = $today->sub(new DateInterval('P6M'))->format('Y-m-d'); // Today minus 6 month
+
 		$command = Yii::app()->db->createCommand();
 		$offset = ($pageCurrent - 1) * $pageSize;
 		$userId = Yii::app()->user->getState('user_id');
@@ -58,6 +61,7 @@ class ItemForm extends CFormModel
 		}
 		$sql .= 'where i.quantity > 0 ';
 		$sql .= "and i.expiration_date >= curdate() ";
+		$sql .= "and i.creation_date >= '$sixMonthAgo' ";
 		$sql .= "and i.shared = $shared ";
 		if ($userId > 0)
 			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
@@ -100,8 +104,10 @@ class ItemForm extends CFormModel
 		return $items;
 	}
 
-	public function browseCount($tags,$shared = 1, $options = '')
+	public function browseCount($tags,$shared = 1, $options = '', $includedUserId = null)
 	{
+		$today = new DateTime();
+		$sixMonthAgo = $today->sub(new DateInterval('P6M'))->format('Y-m-d'); // Today minus 6 month
 		$userId = Yii::app()->user->getState('user_id');
 
 		$command = Yii::app()->db->createCommand();
@@ -110,15 +116,28 @@ class ItemForm extends CFormModel
 		$sql .= 'from item i ';
 		if ($userId > 0)
 		{
-			$sql .= "left join user_heart uh on uh.from_user_id = i.user_id and uh.to_user_id = $userId ";
-			$sql .= "left join user_heart myuh on myuh.to_user_id = i.user_id and myuh.from_user_id = $userId ";
+			$sql .= "left join user_heart love_ab on love_ab.from_user_id = $userId and love_ab.to_user_id = i.user_id ";
+			$sql .= "left join user_heart love_ba on love_ba.from_user_id = i.user_id and love_ba.to_user_id = $userId ";
 		}
-		
+		if ($includedUserId > 0)
+		{
+			$sql .= "left join user_heart love_ac on love_ac.from_user_id = $userId and love_ac.to_user_id = $includedUserId ";
+			$sql .= "left join user_heart love_ca on love_ca.from_user_id = $includedUserId and love_ca.to_user_id = $userId ";
+			$sql .= "left join user_heart love_bc on love_bc.from_user_id = i.user_id and love_bc.to_user_id = $includedUserId ";
+			$sql .= "left join user_heart love_cb on love_cb.from_user_id = $includedUserId and love_cb.to_user_id = i.user_id ";
+		}
+	
 		$sql .= 'where i.quantity > 0 ';
 		$sql .= "and i.expiration_date >= curdate() ";
+		$sql .= "and i.creation_date >= '$sixMonthAgo' ";
 		$sql .= "and i.shared = $shared ";
 		if ($userId > 0)
-			$sql .= 'and (uh.love > 0 or uh.love is null) and (myuh.love > 0 or myuh.love is null) ';
+			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
+		if ($includedUserId > 0)
+		{
+			$sql .= 'and (love_ac.love > 0 or love_ac.love is null) and (love_ca.love > 0 or love_ca.love is null) ';
+			$sql .= 'and (love_bc.love > 0 or love_bc.love is null) and (love_cb.love > 0 or love_cb.love is null) ';
+		}
 		if (isset($tags) && trim($tags) != '')
 		{
 			$splitTags = explode(' ', $tags);

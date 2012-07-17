@@ -93,8 +93,13 @@
 				if ($need->user_id == Yii::app()->user->getState('user_id'))
 				{
 					if ($solution['canbetaken'])
-						echo '&nbsp;'. CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id))
-							.'&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/thumb-up.png');
+					{
+						if (count($solution['items']) > 0)							
+						{
+							echo '&nbsp;'. CHtml::link(Yii::t('items', 'take'), $this->createUrl('need/take/' . $solution['id'] . '/' . $need->id));
+							echo '&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/thumb-up.png');
+						}
+					}
 					else
 						echo '&nbsp;'. Yii::t('items', 'take')
 							.'&nbsp;'. CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/exclamation.png','', array('title'=>$solution['message']));

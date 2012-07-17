@@ -22,12 +22,6 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$today = new DateTime();
-		$lastLogin = $today->sub(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
-
-		$command = Yii::app()->db->createCommand();
-		$command->delete('user', "last_login < '$lastLogin'");		
-			
 		$command = Yii::app()->db->createCommand();
 
 		$row = $command->select("*")
@@ -35,12 +29,12 @@ class UserIdentity extends CUserIdentity
 						->where(
 										array('and', 'username = :username', 'password = :password'), 
 										array( 
-											"username" => $this->username,
+											'username' => $this->username,
 											'password' => $this->password,							
 										))
 						->queryRow();
 
-		if (isset($row))
+		if ($row)
 		{
 			$command = Yii::app()->db->createCommand();
 			$userCount = $command->select('count(*)')
@@ -52,16 +46,12 @@ class UserIdentity extends CUserIdentity
 							->queryScalar();
 			
 			if ($userCount < $brokenCount / 2)
-			{
 				Yii::app()->request->redirect(Yii::app()->createUrl('user/ban'));												
-			}			
 
+			$today = new DateTime();
 			$command = Yii::app()->db->createCommand();
 			$command->update('user',array('last_login' => $today->format('Y-m-d')), 'id = :id', array(':id'=> $row['id']));
 			
-			$command = Yii::app()->db->createCommand();
-			$command->delete('item', "creation_date < '$lastLogin'");		
-
 			$this->errorCode=self::ERROR_NONE;
 			$this->setState('user_id', $row['id']);
 			$this->setState('user_real_name', $row['real_name'] ?: $row['username']);

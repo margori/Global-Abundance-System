@@ -48,12 +48,17 @@ echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
 	}	
 ?>
 <?php foreach($shares as $share) { ?>
-<p>
-	<?= CHtml::checkBox('check' . $share['id'], false, array('value' => 'check' . $share['id'])) ?>
-	<?= CHtml::link($share['description'], $this->createUrl('share/view/' . $share['id']), array('target'=>'_blank')) ?>
-</p>
+<div class="span-1" >
+	<?= CHtml::checkBox('check' . $share['id'], false, array('value' => 'check' . $share['id'], 'style'=>'margin: -1px;')) ?>
+	<?= $share['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png','', array('style'=>'margin: -2px;') ) : ''; ?>
+</div>
+<div class="span-22 append-bottom last">
+	<?= CHtml::link($share['user_name'], $this->createUrl('user/view/' . $share['user_id'])) . ' ' . 
+			Yii::t('items', 'user shares') . ' ' .
+			CHtml::link($share['description'], $this->createUrl('share/view/' . $share['id'])) ?>
+</div>
 <?php } ?>
-<div>
+<div class="span-21 last">
 	<?= CHtml::submitButton(Yii::t('items','add and continue'), array('name' => 'addContinue',)) ?>
 	<?= CHtml::submitButton(Yii::t('items','add and return'), array('name' => 'addReturn',)) ?>
 	<?= CHtml::submitButton(Yii::t('items','cancel'), array('name' => 'cancel',)) ?>
