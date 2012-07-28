@@ -12,6 +12,7 @@ return array (
   'users hint' => 'Aquí puedes buscar a un usuario y ver sus necesidades y contribuciones',
 	'archive' => 'Archivo',
 	'archive hint' => "Aquí se listan soluciones anterires tomadas.\nPodrían ser utilizadas como referencia.",
+	'GAS motivations' => 'Motivos de GAS',
 
 	'about' => 'Acerca de',
 	'contact' => 'Contacto',
@@ -27,15 +28,15 @@ return array (
 	'show' => 'Mostrar',
 
 	'terms' => 'Términos y condiciones: eres libre de usar este sitio como quieras, pero aquí hay <a href="%s">algunas recomendaciones</a>',
-	'powered by' => 'Basado en %s y motivado por Amor.',
+	'powered by' => "Basado en %s, hospedado por %s y motivado por <a href=\"%s\">Amor</a>.",
 	'contact' => 'Contacto',
 	'development'=>'Desarrollo',
 	'source' => 'Código fuente',
 
-		'sure?' => 'Seguro?',
-		'suggestions' => 'Recomendaciones de uso',
+	'sure?' => 'Seguro?',
+	'suggestions' => 'Recomendaciones de uso',
 
-		'and many more' => "y muchos más",
-		'all wrongs reserved' => "Todos los errores reservados",
+	'and many more' => "y muchos más",
+	'all wrongs reserved' => "Todos los errores reservados",
 );
 ?>

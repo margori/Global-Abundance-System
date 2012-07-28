@@ -56,7 +56,6 @@ class UserIdentity extends CUserIdentity
 			$this->setState('user_id', $row['id']);
 			$this->setState('user_real_name', $row['real_name'] ?: $row['username']);
 			$this->setState('user_email', $row['email']);
-			$this->setState('user_default_tags', $row['default_tags']);
 			$this->setState('pageSize', 10);
 			$this->setState('language', $row['language']);
 		}

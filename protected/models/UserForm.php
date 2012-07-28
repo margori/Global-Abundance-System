@@ -8,7 +8,6 @@ class UserForm extends CFormModel
 	
 	public $realName;
 	public $email;
-	public $defaultTags;
 	public $language;
 	
 	public $message;
@@ -20,7 +19,7 @@ class UserForm extends CFormModel
 	{
 		return array(
 			array('id, username, password, confirmation
-				, realName, email, defaultTags, language','safe'),
+				, realName, email, language','safe'),
 		);
 	}
 	
@@ -83,7 +82,6 @@ class UserForm extends CFormModel
 		$this->username = $data['username'];
 		$this->realName = $data['real_name'];
 		$this->email = $data['email'];
-		$this->defaultTags = $data['default_tags'];
 		$this->language = $data['language'];
 		
 		$command = Yii::app()->db->createCommand();
@@ -126,7 +124,6 @@ class UserForm extends CFormModel
 					'password'=>$this->password,
 					'real_name' => $this->realName,
 					'email' => $this->email,
-					'default_tags' => $this->defaultTags,
 					'language' => $this->language,
 					),
 					'id = :userId', array(
@@ -138,7 +135,6 @@ class UserForm extends CFormModel
 					'username'=>$this->username,
 					'real_name' => $this->realName,
 					'email' => $this->email,
-					'default_tags' => $this->defaultTags,
 					'language' => $this->language,
 					),
 					'id = :userId', array(
@@ -149,7 +145,6 @@ class UserForm extends CFormModel
 			Yii::app()->user->setState('user_real_name', $this->realName);
 		else
 			Yii::app()->user->setState('user_real_name', $this->username);
-		Yii::app()->user->setState('user_default_tags', $this->defaultTags);
 		Yii::app()->user->setState('user_email', $this->email);
 		Yii::app()->user->setState('language', $this->language);
 	

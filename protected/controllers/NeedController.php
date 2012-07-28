@@ -102,7 +102,7 @@ class NeedController extends Controller
 	public function actionEdit($id)
 	{
 		$model= $this->loadNeed($id);
-		if ($need->hisLove == 0)
+		if ($model->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
 
 		// Uncomment the following line if AJAX validation is needed

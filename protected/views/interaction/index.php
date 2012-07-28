@@ -1,13 +1,37 @@
+<script type="text/javascript">
+	needCleaned = false;
+	shareCleaned = false;
+	
+	function cleanNeed()
+	{
+		if (needCleaned)
+			return;
+		textArea = document.getElementById("needArea");
+		textArea.value = "";
+		needCleaned = true;
+	}
+
+	function cleanShare()
+	{
+		if (shareCleaned)
+			return;
+		textArea = document.getElementById("shareArea");
+		textArea.value = "";
+		shareCleaned = true;
+	}
+</script>
 <div class="clear"></div>
 <div class="span-9">
-	<?= Yii::t('interaction','I need:') ?>
+	<?= Yii::t('interaction','I need') . ':' ?>
 	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
-		<?= CHtml::textArea('description',$defaultTags,array(
+		<?= CHtml::textArea('description',Yii::t('interaction','I need...'),array(
 				'class'=>'span-9',
 				'rows'=>'14',
 				'maxlength'=>5000,
+				'onfocus' => "cleanNeed()",
+				'id' => 'needArea',
 				)) ?>
 		<?= CHtml::hiddenField('shared','0') ?>
 		<div class="span-7">
@@ -23,14 +47,16 @@
 	<?php echo CHtml::endForm(); ?>
 </div>
 <div class="span-9">
-	<?= Yii::t('interaction','I give:') ?>
+	<?= Yii::t('interaction','I share') . ':' ?>
 	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
-		<?= CHtml::textArea('description',$defaultTags,array(
+		<?= CHtml::textArea('description',Yii::t('interaction','I share...'),array(
 				'class'=>'span-9',
 				'rows'=>'14',
 				'maxlength'=>5000,
+				'onfocus' => "cleanShare()",
+				'id' => 'shareArea',
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
 		<div class="span-4">

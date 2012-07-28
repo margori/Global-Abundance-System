@@ -63,7 +63,7 @@ class SiteController extends Controller
 			$model->rememberMe = true;
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->createUrl('interaction'));
+				$this->redirect(Yii::app()->createUrl('./interaction'));
 		}
 		// display the login form
 		$this->render('index',array('model'=>$model));
@@ -91,5 +91,62 @@ class SiteController extends Controller
 	public function actionSuggestions()
 	{
 		$this->render('suggestions');
+	}
+
+	public function actionLove()
+	{
+		$this->render('love');
+	}
+	
+	public function actionBackup()
+	{
+		if (Yii::app()->user->getState('user_id') != Yii::app()->params['root user id'])
+			$this->redirect (Yii::app()->baseUrl);
+
+    $return = '';
+
+		//all of the tables
+    $tables =array(
+			'item',
+			'item_comment',
+			'solution',
+			'solution_archive',
+			'solution_item',
+			'unread_comment',
+			'user',
+			'user_heart',	
+			);
+  
+	  //cycle through
+		foreach($tables as $table)
+		{
+			$rows = Yii::app()->db->createCommand()->setText('SELECT * FROM '.$table)->queryAll();
+
+			if (count($rows) > 0)
+			{
+				foreach($rows as $row)
+				{
+						$return.= 'INSERT INTO '.$table.' VALUES(';
+						$fields = array();					
+						foreach ($row as $field) 
+						{
+							$field = addslashes($field);
+							$field = ereg_replace("\n","\\n",$field);
+							if (isset($field)) 
+								$fields[] = '\''.$field.'\'' ; 
+							else 
+								$fields[] .= '\'\''; 
+
+						}
+						$fields = implode(', ', $fields);
+						$return.= $fields . ");\n";
+				}
+
+				$return.= "\n\n";
+			}
+		}
+  
+		echo $return;
+		exit();
 	}
 }

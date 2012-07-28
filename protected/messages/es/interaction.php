@@ -1,7 +1,9 @@
 <?php
 return array (
-		'I need:' => 'Necesito:',
-		'I give:' => 'Comparto, doy o sirvo:',
+		'I need' => 'Necesito',
+		'I share' => 'Comparto, doy o ayudo con',
+		'I need...' => "\n\nCuente a todos, con sus palabras, lo que necesita.\n\nSu pedido será apreciado y valorado.",
+		'I share...' => "\n\nCuente a todos, con sus palabras, lo que comparte, regala o ayuda.\n\nSu contribución será apreciada y valorada.",
 		'ask'=> 'Pedir',
 		'share'=> 'Compartir',
 		'solution' => 'Quiero ayudar creando una solucion a la necesidad de otra persona',

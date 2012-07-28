@@ -14,9 +14,7 @@ class InteractionController extends Controller
 		if (Yii::app()->user->isGuest)
 				$this->redirect(Yii::app()->createUrl('site'));
 		
-		$this->render('index',array(
-				'defaultTags' => Yii::app()->user->getState('user_default_tags'),
-				));
+		$this->render('index',array());
 	}
 
 	public function actionError()

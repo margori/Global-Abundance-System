@@ -43,14 +43,6 @@
 	</div>
 	<div class="span-22 append-bottom">
 		<div class="span-4">
-			<?= Yii::t('user','default tags') ?>
-		</div>
-		<div class="span-16 last">
-			<?= CHtml::textField('defaultTags', $model->defaultTags, array('style'=>'width: 658px')) ?>
-		</div>
-	</div>
-	<div class="span-22 append-bottom">
-		<div class="span-4">
 			<?= Yii::t('user','language') ?>
 		</div>
 		<div class="span-16 last">

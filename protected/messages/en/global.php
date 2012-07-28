@@ -26,13 +26,13 @@ return array (
 		'users hint' => "Here you can look for users and their needs and shares",
 		'archive' => "Archive",
 		'archive hint' => "Archive of previous taken solution.\nMay be it can be used as reference.",
+		'GAS motivations' => 'GAS motivations',
 		
     'about' => "About",
     'contact' => "Contact",
     'login' => "Login",
     'logout' => "Logout",
     'register' => "Register",
-
 		
 		'new' => "New",
 		'add' => "Add",
@@ -41,7 +41,7 @@ return array (
 		'show' => "Show",
 
     'terms' => "Terms and conditions: you are free to use this site any way you want, however here are <a href=\"%s\">some suggestions</a>",
-		'powered by' => "Powered by %s and Love.",
+		'powered by' => "Powered by %s, hosted by %s and motivated by <a href=\"%s\">Love</a>.",
 		'contact' => "Contact",
 		'development' => "Development",
 		'source' => 'Source code',

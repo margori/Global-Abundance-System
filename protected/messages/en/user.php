@@ -33,9 +33,9 @@ return array (
 		'@' => ' at ',
 		'.' => ' dot ',
 		
-		'you broke heart of' => 'You %s of %s',
-		'broke heart' => 'broke the heart',
-		'he loves you' => '%s %s you',
+		'you broke his heart' => 'You %s his/her heart.',
+		'have broken' => 'have broken',
+		'he loves you' => 'He/she %s you',
 		
 		'user broke my heart' => 'This user broke my heart. :(',
 		'I dont know this user' => "I don't know this user yet.",

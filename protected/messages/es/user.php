@@ -19,9 +19,9 @@ return array (
 		'@' => ' arroba ',
 		'.' => ' punto ',
 		
-		'you broke heart of' => 'Tú %s de %s',
-		'broke heart' => 'rompiste el corazón',
-		'he loves you' => '%s %s a tí',
+		'you broke his heart' => 'Tú %s su corazón.',
+		'have broken' => 'has roto',
+		'he loves you' => 'Te %s',
 		
 		'user broke my heart' => 'Este usuario rompió mi corazón. :(',
 		'I dont know this user' => "No conozco a este usuario todavía.",

@@ -14,8 +14,10 @@ return array (
 		// Last too lines are also required. Computer use them to know where file ends.
 		// That's all. Happy translating.
 
-		'I need:' => "I need:",
-		'I give:' => "I share, give or help with:",
+		'I need' => "I need",
+		'I share' => "I share, give or help with",
+		'I need...' => "\n\nTell everybody, with your own words, what you need\n\nYout need will be aprecciated and valued.",
+		'I share...' => "\n\nTell everybody, with your own words, what you share, give or help.\n\nYour gift will be appreciated and valued.",
 		'ask' => "Ask",
 		'share' => "Share",
 		'solution' => "I want to help creating a solution for someone who needs it",

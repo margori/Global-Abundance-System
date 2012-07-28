@@ -136,11 +136,11 @@
 				<?= CHtml::submitButton(Yii::t('global','Login')); ?>
 				<?= CHtml::endForm() ?>
 			<?php } else { ?>
-				<?= Yii::t('global','welcome') ?> <a href="<?= $this->createUrl('user/myAccount') ?>"><?= Yii::app()->user->getState('user_real_name') ?></a>
-				<?php if(!Yii::app()->user->isGuest)
-					if (!Yii::app()->user->getState('user_email'))
-							echo CHtml::image( Yii::app()->baseUrl . "/images/icons/16x16/exclamation-small.png"
-									, '', array('title'=>Yii::t('user', 'suggest email'), 'style'=>'margin: -4px;'));?>
+				<?= Yii::t('global','welcome') ?> <a href="<?= $this->createUrl('user/myAccount') ?>"><?= Yii::app()->user->getState('user_real_name'); ?></a>
+				<?php	if (!Yii::app()->user->getState('user_email'))
+						echo CHtml::link (CHtml::image( Yii::app()->baseUrl . "/images/icons/16x16/exclamation-small.png"
+							, '', array('title'=>Yii::t('user', 'suggest email'), 'style'=>'margin: -4px;')), $this->createUrl('user/myAccount') );
+				?>
 				<a href="<?= Yii::app()->createUrl('site/logout', array()) ?>">
 				<?= Yii::t('global', 'logout') ?></a>
 			</div>
@@ -151,7 +151,7 @@
 					<?= Yii::t('global', 'register') ?>
 				</a>
 			<?php } ?>
-				<span   onclick="toggle('languages')">
+				<span onclick="toggle('languages')">
 					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/locale-alternate.png" />
 					<?php
 						$currentLanguage = Yii::app()->language;
@@ -185,10 +185,19 @@
 		<div>
 			<?= CHtml::link('Copyleft', Yii::app()->createUrl('../LICENSE')) ?> &copy; <?php echo date('Y'); ?> by <a href="http://www.margori.com.ar/" target="_blank" >Margori</a>
 			<?= CHtml::link(Yii::t('global', 'and many more'), Yii::app()->createUrl('../CREDITS')) ?>.
-			<?= Yii::t('global', 'all wrongs reserved.') ?>.
-			<?= sprintf(Yii::t('global', 'powered by'), CHtml::link('Yii framework', 'http://www.yiiframework.com/', array('target'=>'_blank'))) ?>
+			<?= Yii::t('global', 'all wrongs reserved') ?>.
 		</div>
 		<div>
+			<?= sprintf(Yii::t('global', 'powered by'),
+							CHtml::link('Yii framework', 'http://www.yiiframework.com/', array('target'=>'_blank')),
+							CHtml::link(Yii::app()->params['host name'], Yii::app()->params['host url'], array('target'=>'_blank')),
+							Yii::app()->createUrl('site/love')
+							) ?>
+		</div>
+		<div>
+			<?php if (Yii::app()->user->getState('user_id') == Yii::app()->params['root user id']) { ?>
+				<a href="<?= Yii::app()->createUrl('site/backup') ?>">BackUp</a>
+			<?php } ?>
 			<a target="_blank" href="<?= Yii::app()->createUrl('../source.zip') ?>"><?= Yii::t('global', 'source') ?></a>
 			<a target="_blank" href="<?= Yii::app()->params['development url'] ?>"><?= Yii::t('global', 'development') ?></a>
 			<a target="_blank"href="<?= Yii::app()->params['blog url'] ?>">Blog</a>

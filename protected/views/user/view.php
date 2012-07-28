@@ -1,9 +1,9 @@
 <?php
 	$imagePadding = 'padding: 10px 6px 4px 6px;';
-	$heartBroken = CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart-break.png');
-	$heartEmpty = CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart-empty.png');
-	$heartHalf = CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart-half.png');
-	$heartFull = CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png', '', array('style'=>'margin-right: 6px;'));
+	$brokenUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-break.png';
+	$emptyUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-empty.png';
+	$halfUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-half.png';
+	$fullUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart.png';
 ?>
 <h1><?= Yii::t('user','user') ?></h1>
 <div class="span-22 box">
@@ -14,29 +14,30 @@
 		<div class="span-14">
 			<strong>
 			<?php
+				echo $model->realName ?: $model->username;
 				switch ($model->hisLove)
 				{
-					case 0: echo sprintf(Yii::t('user','you broke heart of'), $heartBroken , $model->realName ?: $model->username); break;
-					case 3:echo sprintf(Yii::t('user','he loves you'), $model->realName ?: $model->username, $heartFull ); break;
-					default: echo $model->realName; break;
+					case 0: echo '. ' . sprintf(Yii::t('user','you broke his heart'), 
+						CHtml::image($brokenUrl, '', array('title'=>Yii::t('user','have broken')))); break;
+					case 3:echo '. ' . sprintf(Yii::t('user','he loves you'), CHtml::image($fullUrl)); break;
 				}
 			?>
 			</strong>
 		</div>
 		<div style="position: absolute; margin-left: 750px; margin-top: -20px; background-color: #fff; padding: 10px;">
-			<?= CHtml::link($heartBroken, $this->createUrl('user/love/' . $model->id . '/0'), array(
+			<?= CHtml::link(CHtml::image($brokenUrl), $this->createUrl('user/love/' . $model->id . '/0'), array(
 				'title'=>Yii::t('user', 'user broke my heart'),
 				'style'=>$imagePadding . ($model->myLove == 0 ? "background-color: #e5eCf9;" : ''),
 			)) ?>
-			<?= CHtml::link($heartEmpty, $this->createUrl('user/love/' . $model->id . '/1'), array(
+			<?= CHtml::link(CHtml::image($emptyUrl), $this->createUrl('user/love/' . $model->id . '/1'), array(
 				'title'=>Yii::t('user', 'I dont know this user'),
 				'style'=>$imagePadding . ($model->myLove == 1 ? "background-color: #e5eCf9;" : ''),
 			)) ?>
-			<?= CHtml::link($heartHalf, $this->createUrl('user/love/' . $model->id . '/2'), array(
+			<?= CHtml::link(CHtml::image($halfUrl), $this->createUrl('user/love/' . $model->id . '/2'), array(
 				'title'=>Yii::t('user', 'I like this user'),
 				'style'=>$imagePadding . ($model->myLove == 2 ? "background-color: #e5eCf9;" : ''),
 			)) ?>
-			<?= CHtml::link($heartFull, $this->createUrl('user/love/' . $model->id . '/3'), array(
+			<?= CHtml::link(CHtml::image($fullUrl, '', array('style'=>'margin-right: 6px;')), $this->createUrl('user/love/' . $model->id . '/3'), array(
 				'title'=>Yii::t('user', 'I love this user'),
 				'style'=>$imagePadding . ($model->myLove == 3 ? "background-color: #e5eCf9;" : ''),
 			)) ?>

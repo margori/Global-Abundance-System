@@ -78,6 +78,8 @@ return array(
 		'development url'=>'https://github.com/margori/Global-Abundance-System',
 		'blog url'=>'http://gasystem.wordpress.com/',
 		'contact email'=>'gasdemo@yahoo.com',
+		'host name'=>'Localhost',
+		'host url'=>'http://localhost/',
 
 		'notify emails'=>'yes', // yes or no
 		'smtp_server' => '*****',

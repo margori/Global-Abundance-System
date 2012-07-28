@@ -73,7 +73,6 @@ class UserController extends Controller
 		if ($model->realName == '')
 			$model->realName = null;
 		$model->email = strip_tags($model->email);
-		$model->defaultTags = strip_tags($model->defaultTags);
 				
 		if (isset($_POST['save']))
 		{
