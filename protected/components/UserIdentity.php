@@ -54,7 +54,7 @@ class UserIdentity extends CUserIdentity
 			
 			$this->errorCode=self::ERROR_NONE;
 			$this->setState('user_id', $row['id']);
-			$this->setState('user_real_name', $row['real_name'] ?: $row['username']);
+			$this->setState('user_real_name', $row['real_name'] ? $row['real_name'] : $row['username']);
 			$this->setState('user_email', $row['email']);
 			$this->setState('pageSize', 10);
 			$this->setState('language', $row['language']);

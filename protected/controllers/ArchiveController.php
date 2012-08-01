@@ -37,8 +37,8 @@ class ArchiveController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
-		$pageSize = Yii::app()->user->getState('pageSize') ?: 10;
-		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
+		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
+		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
 		$archiveForm = new ArchiveForm();
 		$tags = Yii::app()->user->getState('archive tags');		

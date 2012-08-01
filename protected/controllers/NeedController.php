@@ -38,8 +38,8 @@ class NeedController extends Controller
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 		
 		$options = Yii::app()->user->getState('need options');
-		$pageSize = Yii::app()->user->getState('pageSize') ?: 10;
-		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
+		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
+		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 		
 		$tags = Yii::app()->user->getState('need tags');		
 		$needCount = $model->browseCount($tags, 0, $options);  
@@ -194,9 +194,9 @@ class NeedController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
-		$options = Yii::app()->user->getState('share options') ?: '';
-		$pageSize = Yii::app()->user->getState('pageSize') ?: 10;
-		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
+		$options = Yii::app()->user->getState('share options') ? Yii::app()->user->getState('share options') : '';
+		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
+		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
 		$solutionId = $id;
 		$needId = $returnId;

@@ -14,7 +14,7 @@
 		<div class="span-14">
 			<strong>
 			<?php
-				echo $model->realName ?: $model->username;
+				echo $model->realName ? $model->realName : $model->username;
 				switch ($model->hisLove)
 				{
 					case 0: echo '. ' . sprintf(Yii::t('user','you broke his heart'), 

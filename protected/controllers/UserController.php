@@ -36,8 +36,8 @@ class UserController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
-		$pageSize = Yii::app()->user->getState('user pageSize') ?: 25;
-		$pageCurrent = Yii::app()->user->getState('pageCurrent') ?: 1;
+		$pageSize = Yii::app()->user->getState('user pageSize') ? Yii::app()->user->getState('user pageSize') : 25;
+		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
 		$userForm = new UserForm();
 		$nameFilter = Yii::app()->request->getPost('nameFilter');		
