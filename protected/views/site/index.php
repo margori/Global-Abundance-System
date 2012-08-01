@@ -15,7 +15,7 @@
 				<td colspan="1" rowspan="2" style="text-align: center; ">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/OccupyLove.mini.jpg'),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', Yii::app()->user->getState('language')),
+							sprintf('http://www.youtube.com/watch?hl=%s&v=ZQ00xcuN2hI', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							)); ?>					
@@ -31,7 +31,7 @@
 				<td >
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/TED_NicMarks.png'),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', Yii::app()->user->getState('language')),
+							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							)); ?>
@@ -41,7 +41,7 @@
 				<td style="text-align: center; ">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png'),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', Yii::app()->user->getState('language')),
+							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							));	?>
