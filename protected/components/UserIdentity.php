@@ -27,7 +27,7 @@ class UserIdentity extends CUserIdentity
 		$row = $command->select("*")
 						->from('user')
 						->where(
-										array('and', 'username = :username', 'password = :password'), 
+										array('and', 'username = :username', 'password = MD5( CONCAT( password_salt, MD5( :password ) ) ) '), 
 										array( 
 											'username' => $this->username,
 											'password' => $this->password,							

@@ -118,10 +118,16 @@ class UserForm extends CFormModel
 			$this->language = Yii::app()->params['default language'];
 		
 		if (isset($this->password) && $this->password != '')
+		{
+			$now = date('r');
+			$salt = md5($now);
+			$finalPassword = md5($salt . md5($this->password) );
+
 			$command->update('user', 
 					array(
 					'username'=>$this->username,
-					'password'=>$this->password,
+					'password'=>$finalPassword,
+					'password_salt'=>$salt,
 					'real_name' => $this->realName,
 					'email' => $this->email,
 					'language' => $this->language,
@@ -129,6 +135,7 @@ class UserForm extends CFormModel
 					'id = :userId', array(
 							'userId' => $userId,
 					));
+		}
 		else
 			$command->update('user', 
 					array(

@@ -131,7 +131,7 @@ class SiteController extends Controller
 						foreach ($row as $field) 
 						{
 							$field = addslashes($field);
-							$field = ereg_replace("\n","\\n",$field);
+							$field = str_replace("\n","\\n",$field);
 							if (isset($field)) 
 								$fields[] = '\''.$field.'\'' ; 
 							else 

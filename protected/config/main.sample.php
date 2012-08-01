@@ -81,6 +81,8 @@ return array(
 		'host name'=>'Localhost',
 		'host url'=>'http://localhost/',
 
+		'root user id'=>'1',
+
 		'notify emails'=>'yes', // yes or no
 		'smtp_server' => '*****',
 		'smtp_port' => 25,

@@ -3,6 +3,7 @@ class RegisterForm extends CFormModel
 {
 	public $username;
 	public $password;
+	public $password_salt;
 	public $confirmation;
 	public $language;
 
@@ -10,7 +11,7 @@ class RegisterForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('username, password, confirmation, language', 'required'),
+			array('username, password, password_salt, confirmation, language', 'required'),
 			// rememberMe needs to be a boolean
 			array('clause1, clause2, clause3, clause4, clause5','boolean'),
 			// password needs to be authenticated
@@ -54,10 +55,15 @@ class RegisterForm extends CFormModel
 	 */
 	public function register()
 	{
+		$now = date('r');
+		$salt = md5($now);
+		$finalPassword = md5($salt . md5($this->password) );
+		
 		$command = Yii::app()->db->createCommand();
 		$command->insert('user', array(
 				'username'=>$this->username,
-				'password'=>$this->password,
+				'password'=>$finalPassword,
+				'password_salt'=>$salt,
 				'language'=>$this->language,
 				));
 		
