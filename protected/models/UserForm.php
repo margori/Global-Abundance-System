@@ -28,10 +28,9 @@ class UserForm extends CFormModel
 	
 	}
 	
-	public function customValidate()
+	public function validateSave()
 	{
 		$USERNAME_MIN_LENGTH = 4;
-		$PASSWORD_MIN_LENGTH = 4;
 		
 		$message = '';
 				
@@ -39,17 +38,6 @@ class UserForm extends CFormModel
 			$message = Yii::t('register', 'username required');
 		else	if (strlen($this->username) < $USERNAME_MIN_LENGTH)
 			$message = sprintf(Yii::t('register', 'username too short'), $USERNAME_MIN_LENGTH);
-		else if ($this->password != '')
-		{
-			if (!isset($this->password) || $this->password == '')
-				$message = Yii::t('register', 'password required');
-			else if (strlen($this->password) < $PASSWORD_MIN_LENGTH)
-				$message = sprintf(Yii::t('register', 'password too short'), $PASSWORD_MIN_LENGTH);
-			else if (!isset($this->confirmation) || $this->confirmation == '')
-				$message = Yii::t('register', 'confirmation required');
-			else if ($this->password != $this->confirmation)
-				$message = Yii::t('register', 'password confirmation');
-		}
 		else 
 		{		
 			$command = Yii::app()->db->createCommand();
@@ -67,6 +55,27 @@ class UserForm extends CFormModel
 			if ($count > 0)
 				$message = Yii::t('register', 'username taken');
 		}
+		return $message;
+	}
+	
+	function validateChangePassword()
+	{
+		$PASSWORD_MIN_LENGTH = 4;
+		
+		$message = '';
+				
+		if ($this->password != '')
+		{
+			if (!isset($this->password) || $this->password == '')
+				$message = Yii::t('register', 'password required');
+			else if (strlen($this->password) < $PASSWORD_MIN_LENGTH)
+				$message = sprintf(Yii::t('register', 'password too short'), $PASSWORD_MIN_LENGTH);
+			else if (!isset($this->confirmation) || $this->confirmation == '')
+				$message = Yii::t('register', 'confirmation required');
+			else if ($this->password != $this->confirmation)
+				$message = Yii::t('register', 'password confirmation');
+		}
+
 		return $message;
 	}
 
@@ -117,36 +126,16 @@ class UserForm extends CFormModel
 		if ($exists == 0)
 			$this->language = Yii::app()->params['default language'];
 		
-		if (isset($this->password) && $this->password != '')
-		{
-			$now = date('r');
-			$salt = md5($now);
-			$finalPassword = md5($salt . md5($this->password) );
-
-			$command->update('user', 
-					array(
-					'username'=>$this->username,
-					'password'=>$finalPassword,
-					'password_salt'=>$salt,
-					'real_name' => $this->realName,
-					'email' => $this->email,
-					'language' => $this->language,
-					),
-					'id = :userId', array(
-							'userId' => $userId,
-					));
-		}
-		else
-			$command->update('user', 
-					array(
-					'username'=>$this->username,
-					'real_name' => $this->realName,
-					'email' => $this->email,
-					'language' => $this->language,
-					),
-					'id = :userId', array(
-							'userId' => $userId,
-					));
+		$command->update('user', 
+				array(
+				'username'=>$this->username,
+				'real_name' => $this->realName,
+				'email' => $this->email,
+				'language' => $this->language,
+				),
+				'id = :userId', array(
+						'userId' => $userId,
+				));
 		
 		if ($this->realName)
 			Yii::app()->user->setState('user_real_name', $this->realName);
@@ -155,6 +144,29 @@ class UserForm extends CFormModel
 		Yii::app()->user->setState('user_email', $this->email);
 		Yii::app()->user->setState('language', $this->language);
 	
+		return true;
+	}
+	
+	public function changePassword()
+	{
+		if (isset($this->password) && $this->password == '')
+			return false;
+
+		$userId = Yii::app()->user->getState('user_id');
+		$command = Yii::app()->db->createCommand();
+
+		$now = date('r');
+		$salt = md5($now);
+		$finalPassword = md5($salt . md5($this->password) );
+
+		$command->update('user', 
+				array(
+				'password'=>$finalPassword,
+				'password_salt'=>$salt,
+				),
+				'id = :userId', array(
+						'userId' => $userId,
+				));
 		return true;
 	}
 	

@@ -18,8 +18,9 @@ class ShareController extends Controller
 		$model->shared = 1;
 		$model->quantity = 1;
 		$model->description = Yii::app()->user->getState('user_default_tags');
-		$today = new DateTime();
-		$model->expiration_date = $today->add(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
+		$sixMonthLater = new DateTime('+6 month');
+		$sixMonthLater = $sixMonthLater->format('Y-m-d');
+		$model->expiration_date = $sixMonthLater;
 
 		// Uncomment the following line if AJAX validation is Shareed
 		// $this->performAjaxValidation($model);
@@ -27,11 +28,13 @@ class ShareController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
-			$model->creation_date = $today->format('Y-m-d');
 			$model->description=  strip_tags($model->description);
 			if($model->save())
 				$this->redirect($this->createUrl("share/view/" . $model->id));				
 		}
+
+		if(isset($_POST['cancel']))
+			$this->redirect($this->createUrl('./interaction'));				
 
 		$this->render('new',array(
 				'model'=>$model,

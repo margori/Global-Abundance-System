@@ -8,47 +8,41 @@
 	<div class="span-18 last">
 		<?= Yii::t('home', 'how?') ?><br /><br />
 	</div>
-	<div >
-		<table style="width: 90%; margin-left: auto; margin-right: auto;">
-		<tbody>
-			<tr>
-				<td colspan="1" rowspan="2" style="text-align: center; ">
+	<div class="prepend-1 span-9">
 					<?= CHtml::link(
-							CHtml::image(Yii::app()->baseUrl . '/images/project_earth.jpg'),
+							CHtml::image(Yii::app()->baseUrl . '/images/project_earth.jpg','',array(
+									'style'=>'margin: 10px 0px 0px 20px'
+							)),
 							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							)); ?>					
-				</td>
-				<td >
+	</div>
+	<div class="prepend-1 span-4">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/TED_NicMarks.png'),
 							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							)); ?>
-				</td>
-				<td colspan="1" rowspan="2" style="text-align: center; ">
 					<?= CHtml::link(
-							CHtml::image(Yii::app()->baseUrl . '/images/OccupyLove.mini.jpg'),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=ZQ00xcuN2hI', Yii::app()->user->getState('language')),
-							array(
-									'target'=>'_blank',
-							)); ?>					
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align: center; ">
-					<?= CHtml::link(
-							CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png'),
+							CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png','',array(
+									'style'=>'margin: 10px 0px 0px 30px'
+							)),
 							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', Yii::app()->user->getState('language')),
 							array(
 									'target'=>'_blank',
 							));	?>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	</div>
+	<div class="prepend-1 span-6">
+					<?= CHtml::link(
+							CHtml::image(Yii::app()->baseUrl . '/images/OccupyLove.mini.jpg','',array(
+									'style'=>'margin: 40px 0px 0px 10px'
+							)),
+							sprintf('http://www.youtube.com/watch?hl=%s&v=ZQ00xcuN2hI', Yii::app()->user->getState('language')),
+							array(
+									'target'=>'_blank',
+							)); ?>					
 	</div>
 	<div id="what" class="prepend-top span-23 last"><?= Yii::t('home', 'what?'); ?></div>
 	<div id="register"  class="right last box"><a href="<?= Yii::app()->createUrl('register', array()) ?>"><?= Yii::t('home', 'register') ?></a></div>

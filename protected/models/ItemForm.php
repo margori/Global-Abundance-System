@@ -34,8 +34,8 @@ class ItemForm extends CFormModel
 	
 	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10, $includedUserId = null)
 	{
-		$today = new DateTime();
-		$sixMonthAgo = $today->sub(new DateInterval('P6M'))->format('Y-m-d'); // Today minus 6 month
+		$sixMonthAgo = new DateTime('-6 month');
+		$sixMonthAgo = $sixMonthAgo->format('Y-m-d');
 
 		$command = Yii::app()->db->createCommand();
 		$offset = ($pageCurrent - 1) * $pageSize;
@@ -106,8 +106,9 @@ class ItemForm extends CFormModel
 
 	public function browseCount($tags,$shared = 1, $options = '', $includedUserId = null)
 	{
-		$today = new DateTime();
-		$sixMonthAgo = $today->sub(new DateInterval('P6M'))->format('Y-m-d'); // Today minus 6 month
+		$sixMonthAgo = new DateTime('-6 month');
+		$sixMonthAgo = $sixMonthAgo->format('Y-m-d');
+			
 		$userId = Yii::app()->user->getState('user_id');
 
 		$command = Yii::app()->db->createCommand();
@@ -171,7 +172,8 @@ class ItemForm extends CFormModel
 	public function save()
 	{
 		$command = Yii::app()->db->createCommand();
-		
+		$today = date('Y-m-d');
+
 		if (!isset($this->id))
 		{
 	 		$userId = Yii::app()->user->getState('user_id');
@@ -182,7 +184,7 @@ class ItemForm extends CFormModel
 					'user_id' => $userId,
 					'quantity' => $this->quantity,							
 					'expiration_date' => $this->expiration_date,	
-					'creation_date' => $this->creation_date,
+					'creation_date' => $today,
 					));
 			$this->id = $command->connection->lastInsertID;
 		}

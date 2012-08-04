@@ -19,11 +19,11 @@ return array (
 	'login' => 'Ingresa',
 	'logout' => 'Salir',
 	'register' => 'Registrarse',
-
 		
 	'new'=> 'Nuevo',
 	'add'=> 'Agregar',
 	'save'=> 'Salvar',
+	'change' => "Cambiar",
 	'cancel'=> 'Cancelar',
 	'show' => 'Mostrar',
 

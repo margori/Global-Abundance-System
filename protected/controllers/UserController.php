@@ -74,14 +74,28 @@ class UserController extends Controller
 			$model->realName = null;
 		$model->email = strip_tags($model->email);
 				
+		$messageSave = '';
+		$messageChangePassword = '';
 		if (isset($_POST['save']))
 		{
-			$message = $model->customValidate();
-			if ($message == '')
+			$messageSave = $model->validateSave();
+			if ($messageSave == '')
 				if ($model->save())
 					$this->redirect(Yii::app()->createUrl('interaction'));
 		}
-		$this->render('myAccount', array('model'=>$model, 'message'=>$message, 'languages'=>Yii::app()->params['languages']));
+		else if (isset($_POST['change']))
+		{
+			$messageChangePassword = $model->validateChangePassword();
+			if ($messageChangePassword == '')
+				if ($model->changePassword())
+					$this->redirect(Yii::app()->createUrl('interaction'));
+		}
+		$this->render('myAccount', array(
+				'model'=>$model, 
+				'messageSave'=>$messageSave, 
+				'messageChangePassword'=>$messageChangePassword, 
+				'languages'=>Yii::app()->params['languages'],
+				));
 	}
 	
 	public function actionMyAccount()

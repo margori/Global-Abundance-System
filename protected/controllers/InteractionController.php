@@ -37,10 +37,10 @@ class InteractionController extends Controller
 			$model->description = $_POST['description'];
 			$model->shared = $_POST['shared'];
 			$model->quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-			$today = new DateTime();
-			$model->creation_date = $today->format('Y-m-d');
-			$model->expiration_date = $today->add(new DateInterval('P6M'))->format('Y-m-d'); // Today plus 6 month
-						
+			$sixMonthLater = new DateTime('+6 month');
+			$sixMonthLater = $sixMonthLater->format('Y-m-d');
+			$model->expiration_date = $sixMonthLater;
+							
 			if($model->save())
 			{
 				if ($model->shared == 1)
