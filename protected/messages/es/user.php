@@ -30,5 +30,6 @@ return array (
 
 		'ban' => "Usted a roto demasiados corazones de esta comunidad. Vayase!",
 		'my zones' => 'Mis zonas',
+		'zones' => 'Zonas',
 );
 ?>

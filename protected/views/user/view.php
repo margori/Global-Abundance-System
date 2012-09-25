@@ -71,6 +71,61 @@
 		
 	</div>
 </div>
+<?php if (count($zones) > 0) 
+	{
+		$minLat = 90;
+		$maxLat = -90;
+		$minLong = 180;
+		$maxLong = -180;
+
+		foreach($zones as $zone)
+		{
+			if ($zone['top'] < $minLat)
+				$minLat = $zone['top'];
+			if ($zone['bottom'] < $minLat)
+				$minLat = $zone['bottom'];
+			if ($zone['top'] > $maxLat)
+				$maxLat = $zone['top'];
+			if ($zone['bottom'] > $maxLat)
+				$maxLat = $zone['bottom'];
+			
+			if ($zone['left'] < $minLong)
+				$minLong = $zone['left'];
+			if ($zone['right'] < $maxLong)
+				$minLong = $zone['right'];
+			if ($zone['left'] > $maxLat)
+				$maxLong = $zone['left'];
+			if ($zone['right'] > $maxLong)
+				$maxLong = $zone['right'];
+		}
+?>
+<h2><?= Yii::t('user','zones') ?></h2>
+<div class="span-22 box">
+	<div id="map" class="span-22 last" style="height: 450px; background-color: #fff;  "></div>
+</div>
+<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"  type="text/javascript"></script>
+<script>
+	var map = L.map('map');
+	
+	var topLeft = new L.LatLng(<?= $minLat ?>,<?= $minLong ?>);
+	var bottomRight = new L.LatLng(<?= $maxLat ?>, <?= $maxLong ?>);
+	var bounds = new L.LatLngBounds(topLeft, bottomRight);
+		
+	map.fitBounds(bounds);
+	L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://cloudmade.com">CloudMade</a>'
+	}).addTo(map);
+	
+<?php foreach($zones as $zone) { ?>
+	var topLeft = new L.LatLng(<?= $zone['top'] ?>,<?= $zone['left'] ?>);
+	var bottomRight = new L.LatLng(<?= $zone['bottom'] ?>, <?= $zone['right'] ?>);
+	var bounds = new L.LatLngBounds(topLeft, bottomRight);
+	var rectangle = new L.rectangle(bounds, {weight : 2});
+	rectangle.addTo(map);
+<?php } ?>
+</script>
+<?php } ?>
 <?php if (count($needs) > 0) { ?>
 <h3><?= Yii::t('global', 'needs') ?></h3>
 <?php foreach($needs as $need) { ?>

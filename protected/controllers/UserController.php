@@ -136,12 +136,14 @@ class UserController extends Controller
 		$user->email = str_replace('.', Yii::t('user', '.'), $user->email);
 		$needs = array();
 		$shares = array();
+		$zones = array();
 		if ($user->hisLove > 0 and $user->myLove > 0)
 		{
 			$needs = $user->loadNeeds();
 			$shares = $user->loadShares();
+			$zones = $user->loadZones();
 		}
-		$this->render('view', array('model'=>$user, 'needs'=>$needs, 'shares'=>$shares));
+		$this->render('view', array('model'=>$user, 'zones'=>$zones, 'needs'=>$needs, 'shares'=>$shares));
 	}
 	
 	public function actionDelete()

@@ -75,7 +75,7 @@
 <?= CHtml::endForm(); ?>
 <h2><?= Yii::t('user','my zones') ?></h2>
 <?= CHtml::beginForm($this->createUrl('user/save')); ?>
-<script src="<?= Yii::app()->baseUrl ?>/js/leaflet.js"  type="text/javascript"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"  type="text/javascript"></script>
 <script>
 	var map;
 	var selectedZone = 0;
