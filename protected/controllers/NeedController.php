@@ -78,7 +78,7 @@ class NeedController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
-			$model->description=  strip_tags($model->description);
+			$model->description= htmlentities(strip_tags($model->description));
 			
 			if($model->save())
 			{
@@ -111,7 +111,7 @@ class NeedController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
-			$model->description=  strip_tags($model->description);
+			$model->description= htmlentities( strip_tags($model->description));
 			if($model->save())
 				$this->redirect($this->createUrl('need/view/' . $model->id));				
 		} 
@@ -373,7 +373,7 @@ class NeedController extends Controller
 			{
 				$users = implode(', ', $missingEmails);
 				$solutions[$i]['canbetaken'] = false;
-				$solutions[$i]['message'] = sprintf(Yii::t('items','missing emails'), $users);
+				$solutions[$i]['message'] = sprintf(Yii::t('item','missing emails'), $users);
 			}
 			else
 				$solutions[$i]['canbetaken'] = true;				

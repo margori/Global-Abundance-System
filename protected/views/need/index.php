@@ -1,15 +1,15 @@
-<h1><?= Yii::t('items', 'needs') ?></h1>
+<h1><?= Yii::t('item', 'needs') ?></h1>
 <div class="span-22 box">
 	<?php echo CHtml::beginForm($this->createUrl('./need')) ?>
 	<div class="span-22">
-		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
-		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('items', 'use -')) ) ?>
-		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
+		<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>
+		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('item', 'use -')) ) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter'), array('name'=>'filter')) ?>
 	</div>
 	<div class="prepend-2 span-16">
-		<?= Yii::app()->user->isGuest ? '' : CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('items', 'my needs') ?>	
-		<?= CHtml::checkBox('newItem', substr_count($options, 'newItem') > 0) . Yii::t('items', 'new items') ?>
-		<?= CHtml::checkBox('draftSolutions', substr_count($options, 'draftSolutions') > 0) . Yii::t('items', 'draft solutions') ?>
+		<?= Yii::app()->user->isGuest ? '' : CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('item', 'my needs') ?>	
+		<?= CHtml::checkBox('newItem', substr_count($options, 'newItem') > 0) . Yii::t('item', 'new items') ?>
+		<?= CHtml::checkBox('draftSolutions', substr_count($options, 'draftSolutions') > 0) . Yii::t('item', 'draft solutions') ?>
 	</div>
 	<div class="span-3 last">
 		<?= Yii::t('global', 'show') . ' '
@@ -50,7 +50,7 @@
 ?>
 <?php 
 	if (count($items) == 0)
-		echo Yii::t('items', 'no needs');
+		echo Yii::t('item', 'no needs');
 	foreach($items as $item) { ?>
 <div class="span-1" style="text-align: right;">
 	<?= $item['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png' ) : '&nbsp;'; ?>
@@ -58,7 +58,7 @@
 <div class="span-22 last append-bottom">
 	<div class="span-21">
 		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
-				Yii::t('items', 'user needs') . ' ' .
+				Yii::t('item', 'user needs') . ' ' .
 				CHtml::link($item['description'], $this->createUrl('need/view/' . $item['id'])) ?>
 	</div>
 	<div class="span-1 last">

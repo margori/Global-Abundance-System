@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` text NOT NULL COMMENT 'includes tags prefixed with #',
   `shared` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'false means this item is need for an user, true means served.',

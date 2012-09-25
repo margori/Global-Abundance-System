@@ -43,5 +43,6 @@ return array (
 		'I love this user' => 'I love this user. :D',
 		
 		'ban' => "You have broken too many hearts of this community. Go away!",
+		'my zones' => 'My zones',
 );
 ?>

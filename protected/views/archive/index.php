@@ -2,9 +2,9 @@
 <div class="span-22 box">
 	<?php echo CHtml::beginForm($this->createUrl('./archive')) ?>
 	<div class="span-22">
-		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
+		<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>
 		<?= CHtml::textField('tags', $tags,array('class'=>'span-18') ) ?>
-		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter'), array('name'=>'filter')) ?>
 	</div>
 	<div class="span-3 last">
 		<?= Yii::t('global', 'show') . ' '

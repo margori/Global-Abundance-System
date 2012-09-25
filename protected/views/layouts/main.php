@@ -13,6 +13,7 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
 	<title><?= Yii::t('global', 'title') ?></title>
 	<script type="text/javascript">
 		function toggle(id)	
@@ -61,10 +62,10 @@
 						if (!Yii::app()->user->isGuest) {
 					?>
 					<li>
-						<?= CHtml::link(Yii::t('items', 'my needs'), Yii::app()->createUrl('./need?o=mine'),array('title'=>Yii::t('global', 'my needs hint'))) ?>
+						<?= CHtml::link(Yii::t('item', 'my needs'), Yii::app()->createUrl('./need?o=mine'),array('title'=>Yii::t('global', 'my needs hint'))) ?>
 					</li>
 					<li>
-						<?= CHtml::link(Yii::t('items', 'my shares'), Yii::app()->createUrl('./share?o=mine'),array('title'=>Yii::t('global', 'my shares hint'))) ?>
+						<?= CHtml::link(Yii::t('item', 'my shares'), Yii::app()->createUrl('./share?o=mine'),array('title'=>Yii::t('global', 'my shares hint'))) ?>
 					</li>
 					<?php
 							$comments = UserForm::newComments();
@@ -76,7 +77,7 @@
 								foreach($comments as $comment)
 									echo '<div style="padding: 5px;">' . CHtml::link(
 										$comment['user_name'] . ' ' . 
-										Yii::t('items', 'made a comment'),
+										Yii::t('item', 'made a comment'),
 										($comment['shared'] == 0 ?	
 											Yii::app()->createUrl('need/view/' . $comment['item_id']):
 											Yii::app()->createUrl('share/view/' . $comment['item_id'])
@@ -104,7 +105,7 @@
 							<?php
 								foreach($solutions as $solution)
 									echo '<div style="padding: 5px;">'.CHtml::link(
-										$solution['user_name'] . ' ' . Yii::t('items', 'completed a solution'),
+										$solution['user_name'] . ' ' . Yii::t('item', 'completed a solution'),
 										Yii::app()->createUrl('need/view/' . $solution['item_id'])
 										, array( 'style'=>"color: #000;font-weight: normal; padding: 5px;")
 										) . '</div>';

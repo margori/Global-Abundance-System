@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `item_comment` (
+CREATE TABLE `item_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` text NOT NULL,
   `item_id` int(11) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `item_comment` (
   PRIMARY KEY (`id`),
   KEY `item_id` (`item_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `item_comment`
   ADD CONSTRAINT `item_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,

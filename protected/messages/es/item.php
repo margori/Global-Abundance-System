@@ -46,7 +46,7 @@ return array (
 
 		'< add items' => '<- agregue artículos a la solución',
 		'proposes' => 'propone',
-		'comments' => 'commenta',
+		'comments' => 'comenta',
 
 		'draft' => 'borrador',
 		'complete' => 'completo',

@@ -4,7 +4,7 @@
 	<div class="span-22">
 		<?= CHtml::label(Yii::t('user','name filter'),false,array('class'=>'span-2')); ?>
 		<?= CHtml::textField('nameFilter', $nameFilter,array('class'=>'span-18') ) ?>
-		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter'), array('name'=>'filter')) ?>
 	</div>
 	<div class="right span-3 last" style="margin-right: 78px;">
 		<?= Yii::t('global', 'show') . ' '

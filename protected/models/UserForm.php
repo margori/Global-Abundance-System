@@ -247,6 +247,17 @@ class UserForm extends CFormModel
 		return $shares;
 	}
 	
+	function loadZones()
+	{
+		$command = Yii::app()->db->createCommand();
+		
+		$zones = $command->setText("select z.*
+				from user_zone z
+				where z.user_id = " . $this->id )->queryAll();
+		
+		return $zones;
+	}
+	
 	static function newComments()
 	{
 		$userId = Yii::app()->user->getId();
@@ -301,5 +312,28 @@ class UserForm extends CFormModel
 					'love'=>$love,
 			));
 		}		
+	}
+	
+	public function saveZone($status, $id, $top, $right, $bottom, $left)
+	{
+		$command = Yii::app()->db->createCommand();
+		if ($status == 'save' and $id == '')
+			$command->insert('user_zone', array(
+					'top'=>$top,
+					'right'=>$right,
+					'bottom'=>$bottom,
+					'left'=>$left,
+					'user_id' => Yii::app()->user->getId(),
+			));
+		else if ($status == 'save' and $id > 0)
+			$command->update('user_zone', array(
+					
+					'top'=>$top,
+					'right'=>$right,
+					'bottom'=>$bottom,
+					'left'=>$left,
+			), 'id = :id', array('id' => $id));		
+		else
+			$command->delete ('user_zone', 'id = :id', array('id'=>$id));
 	}
 }

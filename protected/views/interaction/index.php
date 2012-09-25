@@ -23,7 +23,7 @@
 <div class="clear"></div>
 <div class="span-9">
 	<?= Yii::t('interaction','I need') . ':' ?>
-	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
+	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('item','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',Yii::t('interaction','I need...'),array(
@@ -37,7 +37,7 @@
 		<div class="span-7">
 			<p>
 				<a href="<?= Yii::app()->createUrl('need/new') ?>"><?= Yii::t('interaction','advanced') ?></a><br/>
-				<a href="<?= Yii::app()->createUrl('need/') ?>"><?= Yii::t('interaction','browse') ?></a>
+				<a href="<?= Yii::app()->createUrl('./need?p=1&o=') ?>"><?= Yii::t('interaction','browse') ?></a>
 			</p>
 		</div>
 		<div class="right">
@@ -48,7 +48,7 @@
 </div>
 <div class="span-9">
 	<?= Yii::t('interaction','I share') . ':' ?>
-	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('items','tag hint'); ?>"/>
+	<img src="../images/icons/16x16/question-white.png" alt="?" title="<?= Yii::t('item','tag hint'); ?>"/>
 	<br />
 	<?php echo CHtml::beginForm($this->createUrl('interaction/submit')); ?>
 		<?= CHtml::textArea('description',Yii::t('interaction','I share...'),array(
@@ -62,11 +62,11 @@
 		<div class="span-4">
 			<p>
 				<a href="<?= Yii::app()->createUrl('share/new') ?>"><?= Yii::t('interaction','advanced') ?></a><br />
-				<a href="<?= Yii::app()->createUrl('share/') ?>"><?= Yii::t('interaction','browse') ?></a>
+				<a href="<?= Yii::app()->createUrl('./share?p=1&o=') ?>"><?= Yii::t('interaction','browse') ?></a>
 			</p>
 		</div>
 		<div class="right">
-			<?= Yii::t('items','quantity'); ?>
+			<?= Yii::t('item','quantity'); ?>
 			<?= CHtml::textField('quantity', 1, array('style'=>'width:20px', 'maxlength'=>'2')) ?>
 			<?= CHtml::submitButton(Yii::t('interaction','share'), array('name'=>'save',
 					'title'=>Yii::t('interaction', 'dont forget tags'))); ?>

@@ -1,15 +1,15 @@
-<h1><?= Yii::t('items', 'add items') ?></h1>
+<h1><?= Yii::t('item', 'add items') ?></h1>
 <?php
 	$thisUrl = 'need/addItem/' . $solutionId . '/' . $needId;
 echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
 <div class="span-22 box">
 	<div class="span-22">
-		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
+		<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>
 		<?= CHtml::textField('tags', $tags,array('class'=>'span-18') ) ?>
-		<?= CHtml::submitButton(Yii::t('items','filter')) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter')) ?>
 	</div>
 	<div class="prepend-1 span-16">
-		<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('items', 'my shares') ?>	
+		<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('item', 'my shares') ?>	
 	</div>
 	<div class="span-3 last">
 		<?= Yii::t('global', 'show') . ' '
@@ -54,13 +54,13 @@ echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
 </div>
 <div class="span-22 append-bottom last">
 	<?= CHtml::link($share['user_name'], $this->createUrl('user/view/' . $share['user_id'])) . ' ' . 
-			Yii::t('items', 'user shares') . ' ' .
+			Yii::t('item', 'user shares') . ' ' .
 			CHtml::link($share['description'], $this->createUrl('share/view/' . $share['id'])) ?>
 </div>
 <?php } ?>
 <div class="span-21 last">
-	<?= CHtml::submitButton(Yii::t('items','add and continue'), array('name' => 'addContinue',)) ?>
-	<?= CHtml::submitButton(Yii::t('items','add and return'), array('name' => 'addReturn',)) ?>
-	<?= CHtml::submitButton(Yii::t('items','cancel'), array('name' => 'cancel',)) ?>
+	<?= CHtml::submitButton(Yii::t('item','add and continue'), array('name' => 'addContinue',)) ?>
+	<?= CHtml::submitButton(Yii::t('item','add and return'), array('name' => 'addReturn',)) ?>
+	<?= CHtml::submitButton(Yii::t('item','cancel'), array('name' => 'cancel',)) ?>
 </div>
 <?php echo CHtml::endForm(); ?>

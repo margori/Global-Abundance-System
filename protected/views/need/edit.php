@@ -1,4 +1,4 @@
-<h1><?= Yii::t('items','need edit') ?></h1>
+<h1><?= Yii::t('item','need edit') ?></h1>
 <script type="text/javascript" >
 function toggle(id)	
 	{
@@ -19,26 +19,26 @@ function toggle(id)
 	)); 
 ?>
 	<div class="row">
-		<?= Yii::t('items','description'); ?>
+		<?= Yii::t('item','description'); ?>
 		<img src="../../../images/icons/16x16/question-small-white.png" alt="?" onmouseover="toggle('descriptionHint')"
 				 onmouseout="toggle('descriptionHint')"/>
 		<span id="descriptionHint" style="display: none">
-			<?= Yii::t('items','need description hint'); ?>
+			<?= Yii::t('item','need description hint'); ?>
 		</span>
 		<?= $form->textArea($model,'description', array('class' => 'span-22','rows'=>'10', 'maxlength'=>5000)); ?>
 	</div>
 	<div class="row">
-		<?= Yii::t('items','expiration date'); ?>
+		<?= Yii::t('item','expiration date'); ?>
 		<?= $form->textField($model,'expiration_date'); ?>
 		<img src="../../../images/icons/16x16/question-small-white.png" alt="?" onmouseover="toggle('expirationHint')"
 				 onmouseout="toggle('expirationHint')"/>
 		<span id="expirationHint" style="display: none">
-			<?= Yii::t('items','need expiration hint'); ?>
+			<?= Yii::t('item','need expiration hint'); ?>
 		</span>
 	</div>
 
 	<div class="row submit">
-			<?php echo CHtml::submitButton(Yii::t('items','save'), array('name'=>'save')); ?>
+			<?php echo CHtml::submitButton(Yii::t('item','save'), array('name'=>'save')); ?>
 			<?php echo CHtml::submitButton(Yii::t('global','cancel'), array('name'=>'cancel')); ?>
 	</div>
  

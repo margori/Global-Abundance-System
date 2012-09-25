@@ -26,9 +26,9 @@ class ItemForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'id'=>Yii::t('items', 'id'),
-			'description'=>Yii::t('items', 'description'),
-			'quantity'=>Yii::t('items', 'quantity'),
+			'id'=>Yii::t('item', 'id'),
+			'description'=>Yii::t('item', 'description'),
+			'quantity'=>Yii::t('item', 'quantity'),
 		);
 	}
 	

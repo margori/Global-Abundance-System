@@ -90,6 +90,21 @@ class UserController extends Controller
 				if ($model->changePassword())
 					$this->redirect(Yii::app()->createUrl('interaction'));
 		}
+		else if (isset($_POST['zones']))
+		{
+			for ($i = 1 ; $i <=4 ; $i++)
+			{
+				$status = $_POST['zone' . $i . 'Status'];
+				$id = $_POST['zone' . $i . 'Id'];
+				$top = $_POST['zone' . $i . 'Top'];
+				$right = $_POST['zone' . $i . 'Right'];
+				$bottom = $_POST['zone' . $i . 'Bottom'];
+				$left = $_POST['zone' . $i . 'Left'];
+				
+				$model->saveZone($status, $id, $top, $right, $bottom, $left);
+			}
+			$this->redirect(Yii::app()->createUrl('interaction'));
+		}
 		$this->render('myAccount', array(
 				'model'=>$model, 
 				'messageSave'=>$messageSave, 
@@ -103,8 +118,14 @@ class UserController extends Controller
 		$id = Yii::app()->user->getState('user_id');
 		$model = new UserForm();
 		$model->load($id);
+		$zones = $model->loadZones();
 		
-		$this->render('myAccount', array('model'=>$model, 'message'=>'', 'languages'=>Yii::app()->params['languages']));
+		$this->render('myAccount', array(
+				'model'=>$model, 
+				'zones'=>$zones,
+				'message'=>'', 
+				'languages'=>Yii::app()->params['languages'],
+				));
 	}
 
 	public function actionView($id)

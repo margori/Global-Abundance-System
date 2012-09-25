@@ -1,14 +1,14 @@
-<h1><?= Yii::t('items','shares') ?></h1>
+<h1><?= Yii::t('item','shares') ?></h1>
 <div class="span-22 box">
 	<?php echo CHtml::beginForm($this->createUrl('./share')) ?>
 	<div class="span-22">
-		<?= CHtml::label(Yii::t('items','tags'),false,array('class'=>'span-2')); ?>
-		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('items', 'use -')) ) ?>
-		<?= CHtml::submitButton(Yii::t('items','filter'), array('name'=>'filter')) ?>
+		<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>
+		<?= CHtml::textField('tags', $tags,array('class'=>'span-18', 'title'=>Yii::t('item', 'use -')) ) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter'), array('name'=>'filter')) ?>
 	</div>
 	<?php if (!Yii::app()->user->isGuest) { ?>
 	<div class="prepend-1 span-16">
-		<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('items', 'my shares') ?>	
+		<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('item', 'my shares') ?>	
 	</div>
 	<?php } ?>
 	<div class="span-3 last">
@@ -50,7 +50,7 @@
 ?>
 <?php
 	if (count($items) == 0)
-		echo Yii::t('items', 'no shares');
+		echo Yii::t('item', 'no shares');
 	foreach($items as $item) { ?>
 <div class="span-1" style="text-align: right;">
 	<?= $item['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png' ) : '&nbsp;'; ?>
@@ -58,7 +58,7 @@
 <div class="span-22 last append-bottom">
 	<div class="span-21">
 		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
-				Yii::t('items', 'user shares') . ' ' .
+				Yii::t('item', 'user shares') . ' ' .
 				CHtml::link($item['description'], $this->createUrl('share/view/' . $item['id'])) ?>
 	</div>
 	<div class="span-1 last">
