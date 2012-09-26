@@ -132,39 +132,40 @@
 		}
 		else
 			rectangle.setBounds([[0, 0],[0, 0]]);
-		
-		if (selectedZone == n)
-			rectangle.color = "#ff0000";
-		else
-			rectangle.color = '#03f';
 	}
 
 	function selectZone(n)
 	{
+		if (n > lastZone)
+			return;
+		
 		selectedZone = n;
 
 		for(i = 1 ; i<= 4 ; i++)
 		{
 			refreshZone(i);
 		}
-		
-		var id = "zone" + n + "Top";
-		var top = document.getElementById(id);
-		var id = "zone" + n + "Left";
-		var left = document.getElementById(id);
-		var id = "zone" + n + "Bottom";
-		var bottom = document.getElementById(id);
-		var id = "zone" + n + "Right";
-		var right = document.getElementById(id);	
-		
-		var topLeft = new L.LatLng(top.value,left.value);
-		var bottomRight = new L.LatLng(bottom.value, right.value);
+				
+		if (n>0)
+		{
+			var id = "zone" + n + "Top";
+			var top = document.getElementById(id);
+			var id = "zone" + n + "Left";
+			var left = document.getElementById(id);
+			var id = "zone" + n + "Bottom";
+			var bottom = document.getElementById(id);
+			var id = "zone" + n + "Right";
+			var right = document.getElementById(id);	
 
-		topCircle.setLatLng(topLeft);
-		bottomCircle.setLatLng(bottomRight);
-		
-		var bounds = new L.LatLngBounds(topLeft, bottomRight);
-		map.fitBounds( bounds );
+			var topLeft = new L.LatLng(top.value,left.value);
+			var bottomRight = new L.LatLng(bottom.value, right.value);
+
+			topCircle.setLatLng(topLeft);
+			bottomCircle.setLatLng(bottomRight);
+
+			var bounds = new L.LatLngBounds(topLeft, bottomRight);
+			map.fitBounds( bounds );
+		}
 	}
 	
 	function circleMove(e)
@@ -248,8 +249,6 @@
 
 	function deleteZone(n)
 	{
-		lastZone--;
-		
 		for(i = n; i < 4; i++)
 		{
 			copy(i, "Status");
@@ -259,36 +258,18 @@
 			copy(i, "Left");
 		}
 		
-		topCircles[n-1].setOpacity(0);
-		bottomCircles[n-1].setOpacity(0);
-		rectangles[n-1].opacity = 0;
-		
-		var id = "zone4Status";
-		var e1 = document.getElementById(id);
-		e1.value = "delete";
+		var s = "zone" + lastZone + "Status";
+		var zoneStatus = document.getElementById(s);
+		zoneStatus.value = "delete";
 
-		var newShown = false;
-		for(i = 1 ; i <= 4 ; i++)
-		{
-			var id = "zone" + i + "Status";
-			var element = document.getElementById(id);
-			
-			if (element.value == "save")
-			{
-				show("zone" + i);		
-				hide("newZone" + i);		
-			}
-			else{
-				hide("zone" + i);		
-				if (!newShown)
-				{
-					show("newZone" + i);		
-					newShown = true;				
-				}
-				else
-					hide("newZone" + i);		
-			} 
-		}
+		lastZone--;
+		
+		if (n > lastZone)
+			selectZone(lastZone);
+		else if (lastZone > 0)
+			selectZone(n);
+		else
+			map.setView(new L.LatLng(<?= Yii::app()->params['default_latitude'] ?>, <?= Yii::app()->params['default_longitude'] ?>), 13);
 	}
 </script>
 <div class="span-22 box">
@@ -322,13 +303,47 @@
 	</div>
 </div>
 <script type="text/javascript" >	
+	
+	var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+	var cloudmadeAttribution = '<a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://cloudmade.com">CloudMade</a>';
+	var	cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
 
-	var map = L.map('map');
-	map.setView([<?= Yii::app()->params['default_latitude'] ?>, <?= Yii::app()->params['default_longitude'] ?>], 13);
-	L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-		attribution: '<a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://cloudmade.com">CloudMade</a>'
-	}).addTo(map);
+	map = new L.Map('map');
+	map.addLayer(cloudmade);
+	
+	<?php if (count($zones) > 0) 
+	{
+		$minLat = 90;
+		$maxLat = -90;
+		$minLong = 180;
+		$maxLong = -180;
+
+		foreach($zones as $zone)
+		{
+			if ($zone['top'] < $minLat)
+				$minLat = $zone['top'];
+			if ($zone['bottom'] < $minLat)
+				$minLat = $zone['bottom'];
+			if ($zone['top'] > $maxLat)
+				$maxLat = $zone['top'];
+			if ($zone['bottom'] > $maxLat)
+				$maxLat = $zone['bottom'];
+			
+			if ($zone['left'] < $minLong)
+				$minLong = $zone['left'];
+			if ($zone['right'] < $maxLong)
+				$minLong = $zone['right'];
+			if ($zone['left'] > $maxLat)
+				$maxLong = $zone['left'];
+			if ($zone['right'] > $maxLong)
+				$maxLong = $zone['right'];
+		}
+	}
+?>
+	var topLeft = new L.LatLng(<?= $minLat ?>,<?= $minLong ?>);
+	var bottomRight = new L.LatLng(<?= $maxLat ?>, <?= $maxLong ?>);
+	var bounds = new L.LatLngBounds(topLeft, bottomRight);
+	map.fitBounds(bounds);
 	
 	for(var i = 1; i<=4; i++)
 	{

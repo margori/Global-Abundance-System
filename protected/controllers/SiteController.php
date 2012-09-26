@@ -115,6 +115,7 @@ class SiteController extends Controller
 			'unread_comment',
 			'user',
 			'user_heart',	
+			'user_zone',
 			);
   
 	  //cycle through
