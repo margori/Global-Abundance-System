@@ -13,7 +13,7 @@
 							CHtml::image(Yii::app()->baseUrl . '/images/project_earth.jpg','',array(
 									'style'=>'margin: 10px 0px 0px 20px'
 							)),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', Yii::app()->user->getState('language')),
+							sprintf('http://www.youtube.com/watch?hl=%s&v=4Z9WVZddH9w#t=90m05s', $currentLanguage),
 							array(
 									'target'=>'_blank',
 							)); ?>					
@@ -21,7 +21,7 @@
 	<div class="prepend-1 span-4">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/TED_NicMarks.png'),
-							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', Yii::app()->user->getState('language')),
+							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', $currentLanguage),
 							array(
 									'target'=>'_blank',
 							)); ?>
@@ -29,7 +29,7 @@
 							CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png','',array(
 									'style'=>'margin: 10px 0px 0px 30px'
 							)),
-							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', Yii::app()->user->getState('language')),
+							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', $currentLanguage),
 							array(
 									'target'=>'_blank',
 							));	?>
@@ -39,7 +39,7 @@
 							CHtml::image(Yii::app()->baseUrl . '/images/OccupyLove.mini.jpg','',array(
 									'style'=>'margin: 40px 0px 0px 10px'
 							)),
-							sprintf('http://www.youtube.com/watch?hl=%s&v=ZQ00xcuN2hI', Yii::app()->user->getState('language')),
+							sprintf('http://www.youtube.com/watch?hl=%s&v=ZQ00xcuN2hI', $currentLanguage),
 							array(
 									'target'=>'_blank',
 							)); ?>					

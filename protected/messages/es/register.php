@@ -1,12 +1,13 @@
 <?php
 return array (
-		'clause1' => 'Todos los datos ingresado en este sitio, excepto contraseñas, serán publicados.<br />Si usted tiene problemas de privacidad o seguridad, no debería registrarse en este sitio.',
-		'clause2' => 'En esta comunidad se valora el regalo sin condiciones, antes que el trueque o el comercio, aunque no están prohibidos.',
-		'clause3' => 'Cada acción tiene una reacción.<br />Su comportamiento, bueno o malo, tendrá consecuencias, generará distintas experiencias sobre otras personas, con intensidades correspondientes.<br />Buen comportamiento significa buenas experiencias. Mal comportamiento, bueno, el mundo actual.',
-		'clause4' => 'El universo nos devolverá lo que entregamos.<br />Adicional a la sugerencia anterior, la experiencia que les entregue a los demás, usted también la vivirá.<br />',
-		'clause5' => 'Tome todo lo que necesita, no todo lo que desee.<br />Esto es clave para la abundancia. No es necesario que tome o consuma todo lo que encuentre o esté disponible. Mañana habrá más.',
-		'clause6' => 'Si rompe el corazón de la mitad de los usuarios de esta comunidad, usted será expulsado inmediatamente.',
-		'clause7' => "No use la contraseña de su cuenta de Facebook o email. Este sitio está aun en desarrollo.",
+		'clause1' => 'Si está de acuerdo con la frase "No tendré paz hasta que todos mis hermanos tengan sus necesidades básicas satisfechas" este es su sitio."',
+		'clause2' => 'Si está de acuerdo con la frase "Siempre habrá pobres" le recomendamos que no se registre en este sitio. Vuelva cuando haya cambiado de idea."',
+		'clause3' => 'Todos los datos ingresado en este sitio, excepto contraseñas, serán publicados.<br />Si usted tiene problemas de privacidad o seguridad, no debería registrarse en este sitio.',
+		'clause4' => 'En esta comunidad se valora el regalo sin condiciones, antes que el trueque o el comercio, aunque no están prohibidos.',
+		'clause5' => 'Cada acción tiene una reacción.<br />Su comportamiento, bueno o malo, tendrá consecuencias, generará distintas experiencias sobre otras personas, con intensidades correspondientes.<br />Buen comportamiento significa buenas experiencias. Mal comportamiento, bueno, el mundo actual.',
+		'clause6' => 'El universo nos devolverá lo que entregamos.<br />Adicional a la sugerencia anterior, la experiencia que les entregue a los demás, usted también la vivirá.<br />',
+		'clause7' => 'Tome todo lo que necesita, no todo lo que desee.<br />Esto es clave para la abundancia. No es necesario que tome o consuma todo lo que encuentre o esté disponible. Mañana habrá más.',
+		'clause8' => 'Si rompe el corazón de la mitad de los usuarios de esta comunidad, usted será expulsado inmediatamente.',
 				
 		'username' => 'Usuario',
 		'password' => 'Contraseña',

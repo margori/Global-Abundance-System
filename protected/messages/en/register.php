@@ -14,14 +14,15 @@ return array (
 		// Last too lines are also required. Computer use them to know where file ends.
 		// That's all. Happy translating.
 		
-    'clause1' => "All data entered in this site, except passwords, will be published.<br />If you have privacy or security issues, you should not register in this site.",
-		'clause2' => 'In this community, unconditional gifting is appreciated, instead of bartering or trading, however they are not forbidden.',
-		'clause3' => "Every action has a reaction.<br />Your behavior, good or bad, will have consequences. It will generate different experiences to other people, with intensities corresponding to your behavior.<br />Good behavior means good experiences. Bad behavior, means bad experiences.",
-		'clause4' => "Universe will give us back what we gave. <br />In addition to previous suggestion, experience you gave other people, you will live it as well.",
-		'clause5' => "Take whatever you need, not whatever you want.<br />That is key for abundance. It is not necesary to take or consume everything found or available. Tomorrow there will be more.",
-		'clause6' => 'If you break the heart a half of users of this community, you will excluded inmidiatly.',
-		'clause6' => 'Si rompe el corazón de la mitad de los usuarios de esta comunidad, será expulsado inmediatamente.',
-		'clause7' => "Don't use password of your Facebook or email accounts. This site still under develoment.",
+		'clause1' => 'If you agree with phrase "there won\'t be peace until every brother and sister have their basic needs satisfied", this is your site.',
+		'clause2' => 'If you agree with phrase "there will always be poor", we recommend not to register. Come back when you change your mind.',
+    'clause3' => "All data entered in this site, except passwords, will be published.<br />If you have privacy or security issues, you should not register in this site.",
+		'clause4' => 'In this community, unconditional gifting is appreciated, instead of bartering or trading, however they are not forbidden.',
+		'clause5' => "Every action has a reaction.<br />Your behavior, good or bad, will have consequences. It will generate different experiences to other people, with intensities corresponding to your behavior.<br />Good behavior means good experiences. Bad behavior, means bad experiences.",
+		'clause6' => "Universe will give us back what we gave. <br />In addition to previous suggestion, experience you gave other people, you will live it as well.",
+		'clause7' => "Take whatever you need, not whatever you want.<br />That is key for abundance. It is not necesary to take or consume everything found or available. Tomorrow there will be more.",
+		'clause8' => 'If you break the heart a half of users of this community, you will excluded inmidiatly.',
+		
 		'username' => "Username",
 		'password' => "Password",
 		'confirmation' => "Confirm password",

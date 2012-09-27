@@ -31,7 +31,14 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
 		
 		$model = new LoginForm();
-		$this->render('index', array('model'=>$model));
+		
+		if (Yii::app()->user->getState('language') != '')
+			$currentLanguage = Yii::app()->user->getState('language');
+		else
+			$currentLanguage = Yii::app()->language;
+
+		
+		$this->render('index', array('model'=>$model, 'currentLanguage'=>$currentLanguage));
 	}
 
 	/**
