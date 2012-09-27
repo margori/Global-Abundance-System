@@ -24,6 +24,7 @@
 			?>
 			</strong>
 		</div>
+		<?php if (!Yii::app()->user->isGuest) { ?>
 		<div style="position: absolute; margin-left: 750px; margin-top: -20px; background-color: #fff; padding: 10px;">
 			<?= CHtml::link(CHtml::image($brokenUrl), $this->createUrl('user/love/' . $model->id . '/0'), array(
 				'title'=>Yii::t('user', 'user broke my heart'),
@@ -42,6 +43,7 @@
 				'style'=>$imagePadding . ($model->myLove == 3 ? "background-color: #e5eCf9;" : ''),
 			)) ?>
 		</div>
+		<?php } ?>
 	</div>
 	<div class="span-14 append-bottom">
 		<div class="span-4">
