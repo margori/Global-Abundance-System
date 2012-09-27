@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
 	<title><?= Yii::t('global', 'title') ?></title>
+	<link rel="shortcut icon" href="<?= Yii::app()->baseUrl ?>/images/favicon.ico" />
 	<script type="text/javascript">
 		function toggle(id)	
 		{
