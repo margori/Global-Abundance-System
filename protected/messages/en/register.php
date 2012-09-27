@@ -14,7 +14,7 @@ return array (
 		// Last too lines are also required. Computer use them to know where file ends.
 		// That's all. Happy translating.
 		
-		'clause1' => 'If you agree with phrase "there won\'t be peace until every brother and sister have their basic needs satisfied", this is your site.',
+		'clause1' => 'If you agree with phrase "there won\'t be peace until all of us have our basic needs satisfied", this is your site.',
 		'clause2' => 'If you agree with phrase "there will always be poor", we recommend not to register. Come back when you change your mind.',
     'clause3' => "All data entered in this site, except passwords, will be published.<br />If you have privacy or security issues, you should not register in this site.",
 		'clause4' => 'In this community, unconditional gifting is appreciated, instead of bartering or trading, however they are not forbidden.',

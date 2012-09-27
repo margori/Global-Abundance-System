@@ -43,7 +43,11 @@
 	<div id="header">
 		<div class="span-15">
 			<div id="logo" >
-				<a href="<?= Yii::app()->createUrl('site', array()) ?>"><?= Yii::t('global', 'title') ?></a>			
+				<a href="<?= Yii::app()->createUrl('site', array()) ?>" style="text-decoration: none"><?= Yii::t('global', 'title') ?></a>	<span style="
+    position: absolute;
+    margin-top: -6px;
+    margin-left: 3px;
+    font-size: 18px; "><?= Yii::t('global', 'subtitle') ?></span>		
 			</div>
 			<div id="mainmenu" class="span-24">
 				<ul>

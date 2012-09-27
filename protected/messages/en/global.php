@@ -15,6 +15,7 @@ return array (
 	// That's all. Happy translating.
 
 	'title' => "Global Abundance System",
+	'subtitle' => 'beta',
 	'welcome' => "Welcome",
 	'interaction' => "Ask or give",
 	'interaction hint' => "Here you can ask or give whatever you want",

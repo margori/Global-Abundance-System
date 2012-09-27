@@ -1,7 +1,7 @@
 <?php
 return array (
-		'clause1' => 'Si está de acuerdo con la frase "No tendré paz hasta que todos mis hermanos tengan sus necesidades básicas satisfechas" este es su sitio."',
-		'clause2' => 'Si está de acuerdo con la frase "Siempre habrá pobres" le recomendamos que no se registre en este sitio. Vuelva cuando haya cambiado de idea."',
+		'clause1' => 'Si está de acuerdo con la frase "no habrá paz hasta que todos tengamos nuestras necesidades básicas satisfechas", este es su sitio.',
+		'clause2' => 'Si está de acuerdo con la frase "siempre habrá pobres", le recomendamos que no se registre. Vuelva cuando haya cambiado de idea.',
 		'clause3' => 'Todos los datos ingresado en este sitio, excepto contraseñas, serán publicados.<br />Si usted tiene problemas de privacidad o seguridad, no debería registrarse en este sitio.',
 		'clause4' => 'En esta comunidad se valora el regalo sin condiciones, antes que el trueque o el comercio, aunque no están prohibidos.',
 		'clause5' => 'Cada acción tiene una reacción.<br />Su comportamiento, bueno o malo, tendrá consecuencias, generará distintas experiencias sobre otras personas, con intensidades correspondientes.<br />Buen comportamiento significa buenas experiencias. Mal comportamiento, bueno, el mundo actual.',

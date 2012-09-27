@@ -1,6 +1,7 @@
 <?php
 return array (
 	'title' => 'Global Abundance System',
+	'subtitle' => 'beta',
 	'welcome'=>'Bienvenido',
 	'interaction' => 'Pedir o contribuir',
 	'interaction hint' => 'Aquí puedes pedir o dar lo que quieras',
