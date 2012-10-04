@@ -34,7 +34,7 @@ class InteractionController extends Controller
 
 		if(isset($_POST['save']))
 		{
-			$model->description = $_POST['description'];
+			$model->description = strip_tags($_POST['description']);
 			$model->shared = $_POST['shared'];
 			$model->quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
 			$sixMonthLater = new DateTime('+6 month');

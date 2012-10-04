@@ -42,9 +42,13 @@
 	<body >
 <div class="container" id="page">
 	<div id="header">
-		<div class="span-15">
+		<div class="span-15 last">
 			<div id="logo" >
-				<a href="<?= Yii::app()->createUrl('site', array()) ?>" style="text-decoration: none"><?= Yii::t('global', 'title') ?></a>	<span style="
+				<a href="<?= Yii::app()->createUrl('site', array()) ?>" ><?php 
+					if (Yii::app()->params['custom title'] == '')
+						echo Yii::t('global', 'title');
+					else
+						echo Yii::app()->params['custom title']; ?></a>	<span style="
     position: absolute;
     margin-top: -6px;
     margin-left: 3px;
@@ -136,9 +140,9 @@
 			<?php if (Yii::app()->user->isGuest) { ?>
 				<?= CHtml::beginForm($this->createUrl('site/login')) ?>
 				<?= CHtml::label(Yii::t('register','username'),false); ?>
-				<?= CHtml::textField('username','',array('style'=>'width: 56px', 'maxlength'=>50)) ?>
+				<?= CHtml::textField('username','',array('style'=>'width: 70px', 'maxlength'=>50)) ?>
 				<?= CHtml::label(Yii::t('register','password'),false); ?>
-				<?= CHtml::passwordField('password','',array('style'=>'width: 56px', 'maxlength'=>50)) ?>
+				<?= CHtml::passwordField('password','',array('style'=>'width: 70px', 'maxlength'=>50)) ?>
 				<?= CHtml::submitButton(Yii::t('global','Login')); ?>
 				<?= CHtml::endForm() ?>
 			<?php } else { ?>
@@ -153,9 +157,8 @@
 			<?php } ?>
 			<div>					
 			<?php if (Yii::app()->user->isGuest) { ?>
-				<a href="<?= Yii::app()->createUrl('register', array()) ?>">
-					<?= Yii::t('global', 'register') ?>
-				</a>
+				<a href="<?= Yii::app()->createUrl('register', array()) ?>">	<?= Yii::t('global', 'register') ?></a>
+				<a href="<?= Yii::app()->createUrl('register/forgot', array()) ?>">	<?= Yii::t('register', 'forgot') ?></a>
 			<?php } ?>
 				<span onclick="toggle('languages')">
 					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/locale-alternate.png" />

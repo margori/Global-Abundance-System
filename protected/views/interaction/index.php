@@ -8,6 +8,7 @@
 			return;
 		textArea = document.getElementById("needArea");
 		textArea.value = "";
+		textArea.style.color = 'black';
 		needCleaned = true;
 	}
 
@@ -17,6 +18,7 @@
 			return;
 		textArea = document.getElementById("shareArea");
 		textArea.value = "";
+		textArea.style.color = 'black';
 		shareCleaned = true;
 	}
 </script>
@@ -32,6 +34,7 @@
 				'maxlength'=>5000,
 				'onfocus' => "cleanNeed()",
 				'id' => 'needArea',
+				'style' => 'color: grey',
 				)) ?>
 		<?= CHtml::hiddenField('shared','0') ?>
 		<div class="span-7">
@@ -57,6 +60,7 @@
 				'maxlength'=>5000,
 				'onfocus' => "cleanShare()",
 				'id' => 'shareArea',
+				'style' => 'color: grey',
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
 		<div class="span-4">

@@ -69,6 +69,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		'custom title' => '', // Leave empty for default title
 		'languages' => array(
 				'en' => 'English',
 				'es' => 'Español',

@@ -38,7 +38,9 @@ return array (
 		'need edit' => 'Editing need',
 		'share edit' => 'Editing share',
 		'share new' => 'New share',
-		'solution new' => 'New solution',
+		'empty solution' => 'New empty solution',
+		'solution from need' => 'New share and solution from this need',
+		'solution from share' => 'New share and solution from this need',
 		'user needs' => 'needs',
 		'user shares' => 'shares',
 

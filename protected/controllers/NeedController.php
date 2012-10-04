@@ -141,12 +141,13 @@ class NeedController extends Controller
 
 	public function actionView($id)
 	{
-		$userId = Yii::app()->user->getState('user_id');
-		$need = $this->loadNeed($id);
+		$userId = Yii::app()->user->getState('user_id');		
+		$need = new ItemForm();
+		$need->load($id);
 		if ($need->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
-		$solutions = $this->loadSolutions($id);
-		$comments = $this->loadComments($id);
+		$solutions = $need->loadSolutions();
+		$comments = $need->loadComments();
 
 		$this->render('view',array(
 			'need'=>$need,
@@ -161,6 +162,33 @@ class NeedController extends Controller
 		$itemForm = new ItemForm();
 		$itemForm->newSolution($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$id"));
+	}
+
+	public function actionCompleteSolution($id)
+	{
+		$need = new ItemForm();
+		$need->load($id);
+		
+		$share = new ItemForm();
+		$share->description = $need->description;
+		$share->shared = 1;
+		$share->quantity = 1;
+		$sixMonthLater = new DateTime('+6 month');
+		$sixMonthLater = $sixMonthLater->format('Y-m-d');
+		$share->expiration_date = $sixMonthLater;
+		
+		$share->save();
+		
+	  $solutionId = $need->newSolution($need->id);
+		
+		$command = Yii::app()->db->createCommand();	
+		$command->insert('solution_item', 
+			array(
+				'solution_id' => $solutionId,
+				'item_id' => $share->id,
+				));
+		
+		$this->redirect(Yii::app()->createUrl("need/view/$id"));		
 	}
 
 	public function actionDeleteSolution($id, $returnId)
@@ -296,134 +324,6 @@ class NeedController extends Controller
 		$itemForm = new ItemForm();
 		$itemForm->deleteComment($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
-	}
-
-	// ------------------
-	public function loadNeed($id)
-	{
-		$command = Yii::app()->db->createCommand();
-		$userId = Yii::app()->user->getState('user_id');
-	
-		$sql = 'select i.*, coalesce(u.real_name, u.username) as username ';
-		if ($userId > 0)
-			$sql .= ', coalesce(uh.love, 1) as hisLove ';
-		else	
-			$sql .= ', 1 as hisLove ';
-		
-		$sql .= 'from item i 
-				inner join `user` u
-					on u.id = i.user_id ';
-		
-		if ($userId > 0)
-			$sql .= "left join user_heart uh
-					on uh.from_user_id = i.user_id and uh.to_user_id = $userId ";
-		
-		$sql .= "where i.id = $id ";
-		
-		$row = $command->setText($sql)->queryRow();
-		
-		if($row === null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		
-		$model = new ItemForm();
-		$model->attributes = $row;
-		return $model;
-	}
-
-	public function loadSolutions($itemId)
-	{
-		$command = Yii::app()->db->createCommand();
-		
-		$solutions = $command->setText("select s.*, coalesce(u.real_name, u.username) as user_name
-				from solution s inner join user u on u.id = s.user_id
-				where s.item_id = $itemId")->queryAll();
-		
-		for($i = 0; $i < count($solutions); $i++)
-		{
-			$solutionId = $solutions[$i]['id'];
-			$command = Yii::app()->db->createCommand();
-			$solutionItems = $command->select('si.id, si.solution_id, si.item_id, i.description')
-							->from('(solution_item si
-													inner join item i
-													on i.id = si.item_id)')
-							->where('si.solution_id = ' . $solutionId)
-							->queryAll();
-			$solutions[$i]['items'] = $solutionItems;
-			
-			$command = Yii::app()->db->createCommand();
-			$missingEmails = $command->setText("select coalesce(u.real_name, u.username) as user_name
-				from
-					item i
-					inner join user u on u.id = i.user_id
-				where 
-					i.id = $itemId
-					and (u.email is null or u.email = '')
-
-				union
-
-				select coalesce(u.real_name, u.username) as user_name
-				from solution_item si
-					inner join item i on i.id = si.item_id
-					inner join user u on u.id = i.user_id
-				where si.solution_id = $solutionId						
-					and (u.email is null or u.email = '')
-			")->queryColumn();
-			
-			if (count($missingEmails) > 0)
-			{
-				$users = implode(', ', $missingEmails);
-				$solutions[$i]['canbetaken'] = false;
-				$solutions[$i]['message'] = sprintf(Yii::t('item','missing emails'), $users);
-			}
-			else
-				$solutions[$i]['canbetaken'] = true;				
-		}
-		
-		$userId = Yii::app()->user->getState('user_id');
-		if ($userId > 0)
-		{
-			$command = Yii::app()->db->createCommand();
-			$command->setText("update solution
-					set `read` = 1
-					where
-							item_id = $itemId
-							and exists (
-								select 1
-								from item i
-								where
-									i.user_id = $userId
-									and i.id = $itemId
-							)")->execute();
-		}
-
-		return $solutions;
-	}
-	
-	public function loadComments($itemId)
-	{
-		$command = Yii::app()->db->createCommand();
-		
-		$comments = $command->setText("select ic.*, coalesce(u.real_name, u.username) as user_name
-			from item_comment ic inner join user u on u.id = ic.user_id
-			where ic.item_id = $itemId
-			order by id
-			")->queryAll();
-		
-		$userId = Yii::app()->user->getState('user_id');
-		
-		if ($userId > 0)
-		{
-			$command = Yii::app()->db->createCommand();
-			$command->setText("delete from unread_comment
-					where user_id = $userId
-							and comment_id in (
-								select c.id
-								from item_comment c
-								where c.item_id = $itemId
-							)")->execute();
-		}
-
-		return $comments;
 	}
 	
 	function addSessionItems()

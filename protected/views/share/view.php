@@ -46,6 +46,12 @@ function toggleN(id)
 		<?= $share->original_description ?>
 	</div>
 </div>
+<?php if (isset($userId)) { ?>
+<div class="clear push-1">
+	<a href="<?= $this->createUrl('share/completeSolution/' . $share->id) ?>" ><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/exclamation-shield.png" alt="-" /> <?= Yii::t('item','solution from share') ?>
+	</a>
+</div>
+<?php } ?>
 <div class="prepend-1 span-20 last">
 	<?php
 		$userId = Yii::app()->user->getState('user_id');

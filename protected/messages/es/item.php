@@ -24,7 +24,9 @@ return array (
 		'need edit' => 'Editando necesidad',
 		'share new' => 'Nueva contribución',
 		'share edit' => 'Editando contribución',
-		'solution new' => 'Nueva solución',
+		'empty solution' => 'Nueva solución vacía',
+		'solution from need' => 'Nueva contribución y solución a partir de esta necesidad',
+		'solution from share' => 'Nueva necesidad y solución a partir de esta contribución',
 		'user needs' => 'necesita',
 		'user shares' => 'contribuye con',
 

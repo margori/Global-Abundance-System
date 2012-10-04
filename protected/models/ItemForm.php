@@ -168,6 +168,134 @@ class ItemForm extends CFormModel
 		$count = $command->setText($sql)->queryScalar();
 		return $count;
 	}
+	
+	public function load($id)
+	{
+		$command = Yii::app()->db->createCommand();
+		$userId = Yii::app()->user->getState('user_id');
+	
+		$sql = 'select i.*, coalesce(u.real_name, u.username) as username ';
+		if ($userId > 0)
+			$sql .= ', coalesce(uh.love, 1) as hisLove ';
+		else	
+			$sql .= ', 1 as hisLove ';
+		
+		$sql .= 'from item i 
+				inner join `user` u
+					on u.id = i.user_id ';
+		
+		if ($userId > 0)
+			$sql .= "left join user_heart uh
+					on uh.from_user_id = i.user_id and uh.to_user_id = $userId ";
+		
+		$sql .= "where i.id = $id ";
+		
+		$row = $command->setText($sql)->queryRow();
+		
+		if($row === null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		
+		$this->attributes = $row;
+	}
+
+
+	public function loadSolutions()
+	{
+		$itemId = $this->id;
+		$command = Yii::app()->db->createCommand();
+		
+		$solutions = $command->setText("select s.*, coalesce(u.real_name, u.username) as user_name
+				from solution s inner join user u on u.id = s.user_id
+				where s.item_id = $itemId")->queryAll();
+		
+		for($i = 0; $i < count($solutions); $i++)
+		{
+			$solutionId = $solutions[$i]['id'];
+			$command = Yii::app()->db->createCommand();
+			$solutionItems = $command->select('si.id, si.solution_id, si.item_id, i.description')
+							->from('(solution_item si
+													inner join item i
+													on i.id = si.item_id)')
+							->where('si.solution_id = ' . $solutionId)
+							->queryAll();
+			$solutions[$i]['items'] = $solutionItems;
+			
+			$command = Yii::app()->db->createCommand();
+			$missingEmails = $command->setText("select coalesce(u.real_name, u.username) as user_name
+				from
+					item i
+					inner join user u on u.id = i.user_id
+				where 
+					i.id = $itemId
+					and (u.email is null or u.email = '')
+
+				union
+
+				select coalesce(u.real_name, u.username) as user_name
+				from solution_item si
+					inner join item i on i.id = si.item_id
+					inner join user u on u.id = i.user_id
+				where si.solution_id = $solutionId						
+					and (u.email is null or u.email = '')
+			")->queryColumn();
+			
+			if (count($missingEmails) > 0)
+			{
+				$users = implode(', ', $missingEmails);
+				$solutions[$i]['canbetaken'] = false;
+				$solutions[$i]['message'] = sprintf(Yii::t('item','missing emails'), $users);
+			}
+			else
+				$solutions[$i]['canbetaken'] = true;				
+		}
+		
+		$userId = Yii::app()->user->getState('user_id');
+		if ($userId > 0)
+		{
+			$command = Yii::app()->db->createCommand();
+			$command->setText("update solution
+					set `read` = 1
+					where
+							item_id = $itemId
+							and exists (
+								select 1
+								from item i
+								where
+									i.user_id = $userId
+									and i.id = $itemId
+							)")->execute();
+		}
+
+		return $solutions;
+	}
+	
+	public function loadComments()
+	{
+		$itemId = $this->id;
+		$command = Yii::app()->db->createCommand();
+		
+		$comments = $command->setText("select ic.*, coalesce(u.real_name, u.username) as user_name
+			from item_comment ic inner join user u on u.id = ic.user_id
+			where ic.item_id = $itemId
+			order by id
+			")->queryAll();
+		
+		$userId = Yii::app()->user->getState('user_id');
+		
+		if ($userId > 0)
+		{
+			$command = Yii::app()->db->createCommand();
+			$command->setText("delete from unread_comment
+					where user_id = $userId
+							and comment_id in (
+								select c.id
+								from item_comment c
+								where c.item_id = $itemId
+							)")->execute();
+		}
+
+		return $comments;
+	}
 
 	public function save()
 	{
@@ -228,6 +356,7 @@ class ItemForm extends CFormModel
 					'item_id' => $itemId,
 					'user_id' => $userId,
 					));
+		return $command->connection->lastInsertID;
 	}
 
 	public function deleteSolution($solutionId)
@@ -481,7 +610,7 @@ class ItemForm extends CFormModel
 		$command->setText("delete from item where quantity < 1")->execute();
 	}
 
-	function mailTo($toEmail, $toName, $subject, $body)
+	public static function mailTo($toEmail, $toName, $subject, $body)
 	{
 		if (Yii::app()->params['notify emails'] != 'yes')
 			return;
@@ -498,7 +627,17 @@ class ItemForm extends CFormModel
 		$mail->Password = Yii::app()->params['smtp_password'];
 		$mail->From = Yii::app()->params['smtp_from_email'];
 		$mail->FromName = Yii::app()->params['smtp_from_name'];
-		$mail->Subject = $subject;
+		
+		if (Yii::app()->params['include tile in email subject'])
+		{
+			if (Yii::app()->params['custom title'] == '')
+				$mail->Subject = $subject . ' - ' . Yii::t('global', 'title');
+			else
+				$mail->Subject = $subject . ' - ' . Yii::app()->params['custom title'];				
+		}
+		else
+			$mail->Subject = $subject;
+		
 		$mail->Body = utf8_decode($body);
 		$mail->AddAddress($toEmail, $toName);
 		$mail->IsHTML(false);

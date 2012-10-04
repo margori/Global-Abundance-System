@@ -20,5 +20,21 @@ return array (
 		'username too short'=>'Nombre de usuario demasiado corto. Al menos %d carácteres requeridos.',
 		'password too short'=>'Contraseña demasiado corta. Al menos %d carácteres requeridos.',
 		'password confirmation'=>'Contraseña difiere de su confirmación',
+		
+		'forgot' => 'Olvidó su contraseña',
+		'your email' => 'Ingrese email',
+		'send mail' => 'Enviar mail',
+		'reset password' => 'Restaurar contraseña',
+		'reset' => 'Restaurar',
+		'no email' => 'Ningún usuario con ese email encontrado.',
+		'new password' => 'Nueva contraseña',
+		'confirm password' => 'Confirme contraseña',
+						
+		'subject remember' => 'Reinicio de contraseña',
+		'body remember' => "Hemos recibido una petición de reinicio de contraseña para su dirección de correo. Por favor, haga cliquee la siguiente dirección:
+
+%s
+
+En caso de que usted no haya realizado esta petición, simplemente desestime este mensaje.",
 );
 ?>

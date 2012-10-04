@@ -34,5 +34,21 @@ return array (
 		'username too short' => "Username too short. At least %d characters required.",
 		'password too short' => "Password too short. At least %d characters required.",
 		'password confirmation'=> "Password and confirmation are different",
+
+		'forgot' => 'Forgot password',
+		'your email' => 'Enter your email',
+		'send mail' => 'Send mail',
+		'reset password' => 'Reset password',
+		'reset' => 'Reset',
+		'new password' => 'New password',
+		'confirm password' => 'Confirm password',
+		'no email' => 'No user with that email found.',
+		
+		'subject remember' => 'Password reset',
+		'body remember' => "We have recieved a request of password reset to your email address. Please, click in following url:
+
+%s
+
+In case you have not requested this, just discard this message.",
 );
 ?>

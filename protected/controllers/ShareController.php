@@ -163,6 +163,34 @@ class ShareController extends Controller
 		$this->redirect(Yii::app()->createUrl("share/view/$returnId"));
 	}
 
+
+	public function actionCompleteSolution($id)
+	{
+		$share = new ItemForm();
+		$share->load($id);
+		
+		$need = new ItemForm();
+		$need->description = $share->description;
+		$need->shared = 0;
+		$need->quantity = 1;
+		$sixMonthLater = new DateTime('+6 month');
+		$sixMonthLater = $sixMonthLater->format('Y-m-d');
+		$need->expiration_date = $sixMonthLater;
+		
+		$need->save();
+		
+	  $solutionId = $need->newSolution($need->id);
+		
+		$command = Yii::app()->db->createCommand();	
+		$command->insert('solution_item', 
+			array(
+				'solution_id' => $solutionId,
+				'item_id' => $id,
+				));
+		
+		$this->redirect(Yii::app()->createUrl("need/view/" . $need->id));		
+	}
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

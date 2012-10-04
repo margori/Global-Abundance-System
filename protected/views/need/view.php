@@ -59,7 +59,9 @@
 	?>
 	<div class="span-19">
 		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/puzzle.png" alt="-" />
-		<?= ' ' . $solutionItem['description'] ?>
+		<a href="<?= $this->createUrl('share/view/' . $solutionItem['item_id']) ?>" >
+			<?= ' ' . $solutionItem['description'] ?>
+		</a>
 	</div>
 	<div class="span-1 last">
 		<?php if($userId == $solution['user_id']) { ?> 
@@ -119,8 +121,9 @@
 <?php if (isset($userId)) { ?>
 <div class="clear push-1">
 	<a href="<?= $this->createUrl('need/newSolution/' . $need->id) ?>" >
-		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/exclamation-button.png" alt="-" />
-		<?= Yii::t('item','solution new') ?>
+		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/exclamation.png" alt="-" />
+		<?= Yii::t('item','empty solution') ?>
+	</a>&nbsp;&nbsp;<a href="<?= $this->createUrl('need/completeSolution/' . $need->id) ?>" ><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/exclamation-shield.png" alt="-" /> <?= Yii::t('item','solution from need') ?>
 	</a>
 </div>
 <?php } ?>

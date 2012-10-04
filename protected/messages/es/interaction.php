@@ -13,8 +13,8 @@ return array (
 		'thanks for sharing' => 'Gracias por compartir. Recibirá un email cuando su ofrenda haya sido seleccionada para ser usada.',
 		'thanks for asking' => 'Gracias por pedir. Recibirá un email cuando haya una solución para ser aceptada',
 		
-		'subject complete template' => 'Sistema de Abundancia Global - Solución completa',
-		'subject taken template' => 'Sistema de Abundancia Global - Solution tomada',
+		'subject complete template' => 'Solución completa',
+		'subject taken template' => 'Solución tomada',
 		'header template' => 'Estimado/a %s:',
 		'take template' => 'Tenemos el agrado de informarle que su pedido tiene una solución aceptada. A continuación se le indica los datos correspondientes a dicha solución.
 

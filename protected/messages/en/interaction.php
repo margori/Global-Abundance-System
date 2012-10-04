@@ -27,8 +27,8 @@ return array (
 		'thanks for sharing' => "Thank you for sharing. You will recieve an email when your share is selected to be used",
 		'thanks for asking' => "Thank you for asking. You will recieve an email when a solution is ready to be taken",
 
-		'subject complete template' => "Global Abundance System - Solution complete",
-		'subject taken template' => "Global Abundance System - Solution taken",
+		'subject complete template' => "Solution completed",
+		'subject taken template' => "Solution taken",
 		'header template' => "Dear %s,",
 		'take template' => "We are glad to announce your request has already a solution. Required information is shown next \n%s\n All people involved have been notified via email.\n\n We invite you to communicate with them to define details.",
 		'complete template' => "We are glad to announce you that your request already has a solution given. You may evaluate it in this address:\n\n%s",
