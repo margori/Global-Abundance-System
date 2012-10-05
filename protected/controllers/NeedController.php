@@ -127,13 +127,12 @@ class NeedController extends Controller
 	
 	public function actionDelete($id)
 	{
-		$need = $this->loadNeed($id);
+		$need = new ItemForm();
+		$need->load($id);
 		if ($need->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
 
-		$itemForm = new ItemForm();
-		$itemForm->id = $id;
-		$itemForm->delete();
+		$need->delete();
 		$this->redirect(Yii::app()->createUrl("./need"));
 	}
 	

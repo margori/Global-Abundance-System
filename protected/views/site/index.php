@@ -29,14 +29,15 @@
 							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', $currentLanguage),
 							array(
 									'target'=>'_blank',
-							)); ?>
+							)); ?><br />
 					<?= CHtml::link(
-							CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png','',array(
-									'style'=>'margin: 10px 0px 0px 30px'
-							)).
 							CHtml::image(Yii::app()->baseUrl . '/images/icons/play.png','',array(
-									'style'=>'position: absolute; margin: -54px 0px 0px 102px'
-							)),
+									'style'=>'position: absolute; margin: 84px 0px 0px 102px;'
+							))
+							.CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png','',array(
+									'style'=>'margin: 10px 0px 0px 30px'
+							))
+							,
 							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', $currentLanguage),
 							array(
 									'target'=>'_blank',

@@ -70,10 +70,13 @@ class ShareController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$itemForm = new ItemForm();
-		$itemForm->id = $id;
-		$itemForm->delete();
-		$this->redirect(Yii::app()->createUrl("./share"));
+		$share = new ItemForm();
+		$share->load($id);
+		if ($share->hisLove == 0)
+			$this->redirect(Yii::app()->createUrl("./need"));			
+
+		$share->delete();
+		$this->redirect(Yii::app()->createUrl("./need"));
 	}
 
 	public function actionIndex()
