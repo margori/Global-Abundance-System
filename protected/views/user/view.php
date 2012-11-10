@@ -73,6 +73,12 @@
 		
 	</div>
 </div>
+<?php if ($model->about != '') { ?>
+<h2><?= Yii::t('user','about') . ' ' . ($model->realName ? $model->realName : $model->username) ?></h2>
+<div class="span-22 box">
+	<?= $model->about ?>
+</div>
+<?php } ?>
 <?php if (count($zones) > 0) 
 	{
 		$minLat = 90;

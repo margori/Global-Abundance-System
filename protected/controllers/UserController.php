@@ -83,6 +83,11 @@ class UserController extends Controller
 				if ($model->save())
 					$this->redirect(Yii::app()->createUrl('interaction'));
 		}
+		if (isset($_POST['saveAbout']))
+		{
+			if ($model->saveAbout())
+				$this->redirect(Yii::app()->createUrl('interaction'));
+		}
 		else if (isset($_POST['change']))
 		{
 			$messageChangePassword = $model->validateChangePassword();

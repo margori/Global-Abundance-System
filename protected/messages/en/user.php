@@ -45,5 +45,8 @@ return array (
 		'ban' => "You have broken too many hearts of this community. Go away!",
 		'my zones' => 'My zones',
 		'zones' => 'Zones',
+		
+		'about' => 'About',
+		'about me' => 'About me',
 );
 ?>

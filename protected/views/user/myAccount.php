@@ -73,6 +73,18 @@
 	</div>
 </div>
 <?= CHtml::endForm(); ?>
+<h2><?= Yii::t('user','about me') ?></h2>
+<?= CHtml::beginForm($this->createUrl('user/save')); ?>
+<div class="span-22 box">
+		<?= CHtml::textArea('about',$model->about,array(
+				'class'=>'span-22',
+				'rows'=>'18',
+				'maxlength'=>5000,
+				'id' => 'about',
+				)) ?>
+		<?= CHtml::submitButton(Yii::t('global','save'), array('name' => 'saveAbout')) ?>
+</div>
+<?= CHtml::endForm(); ?>
 <h2><?= Yii::t('user','my zones') ?></h2>
 <?= CHtml::beginForm($this->createUrl('user/save')); ?>
 <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"  type="text/javascript"></script>
@@ -311,34 +323,41 @@
 	map = new L.Map('map');
 	map.addLayer(cloudmade);
 	
-	<?php if (count($zones) > 0) 
-	{
-		$minLat = 90;
-		$maxLat = -90;
-		$minLong = 180;
-		$maxLong = -180;
+	<?php 
+		
+		$minLat = Yii::app()->params['default_latitude'];
+		$maxLat = Yii::app()->params['default_latitude'];
+		$minLong = Yii::app()->params['default_longitude'];
+		$maxLong = Yii::app()->params['default_longitude'];
 
-		foreach($zones as $zone)
+		if (count($zones) > 0) 
 		{
-			if ($zone['top'] < $minLat)
-				$minLat = $zone['top'];
-			if ($zone['bottom'] < $minLat)
-				$minLat = $zone['bottom'];
-			if ($zone['top'] > $maxLat)
-				$maxLat = $zone['top'];
-			if ($zone['bottom'] > $maxLat)
-				$maxLat = $zone['bottom'];
-			
-			if ($zone['left'] < $minLong)
-				$minLong = $zone['left'];
-			if ($zone['right'] < $maxLong)
-				$minLong = $zone['right'];
-			if ($zone['left'] > $maxLat)
-				$maxLong = $zone['left'];
-			if ($zone['right'] > $maxLong)
-				$maxLong = $zone['right'];
+			$minLat = 90;
+			$maxLat = -90;
+			$minLong = 180;
+			$maxLong = -180;
+
+			foreach($zones as $zone)
+			{
+				if ($zone['top'] < $minLat)
+					$minLat = $zone['top'];
+				if ($zone['bottom'] < $minLat)
+					$minLat = $zone['bottom'];
+				if ($zone['top'] > $maxLat)
+					$maxLat = $zone['top'];
+				if ($zone['bottom'] > $maxLat)
+					$maxLat = $zone['bottom'];
+
+				if ($zone['left'] < $minLong)
+					$minLong = $zone['left'];
+				if ($zone['right'] < $maxLong)
+					$minLong = $zone['right'];
+				if ($zone['left'] > $maxLat)
+					$maxLong = $zone['left'];
+				if ($zone['right'] > $maxLong)
+					$maxLong = $zone['right'];
+			}
 		}
-	}
 ?>
 	var topLeft = new L.LatLng(<?= $minLat ?>,<?= $minLong ?>);
 	var bottomRight = new L.LatLng(<?= $maxLat ?>, <?= $maxLong ?>);

@@ -43,12 +43,13 @@ class ShareController extends Controller
 
 	public function actionEdit($id)
 	{
-		$model= $this->loadShare($id);
+		$model = new ItemForm();
+		$model->load($id);
 
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ItemForm'];
-			$model->description=  strip_tags($model->description);
+			$model->attributes = $_POST['ItemForm'];
+			$model->description = strip_tags($model->description);
 			if($model->save())
 				$this->redirect($this->createUrl('share/view/'. $id));
 		}
@@ -73,10 +74,10 @@ class ShareController extends Controller
 		$share = new ItemForm();
 		$share->load($id);
 		if ($share->hisLove == 0)
-			$this->redirect(Yii::app()->createUrl("./need"));			
+			$this->redirect(Yii::app()->createUrl("./share"));			
 
 		$share->delete();
-		$this->redirect(Yii::app()->createUrl("./need"));
+		$this->redirect(Yii::app()->createUrl("./share"));
 	}
 
 	public function actionIndex()
@@ -136,8 +137,9 @@ class ShareController extends Controller
 	public function actionView($id)
 	{
 		$userId = Yii::app()->user->getState('user_id');
-		$share = $this->loadShare($id);
-		$comments = $this->loadComments($id);
+		$share = new ItemForm();
+		$share->load($id);
+		$comments = $share->loadComments();
 
 		$this->render('view',array(
 			'share'=>$share,
@@ -151,8 +153,7 @@ class ShareController extends Controller
 		if (isset($_POST['comment_button']))
 		{
 			$itemForm = new ItemForm();
-			$comment = $_POST['comment'];
-			$comment=  strip_tags($comment);
+			$comment =  strip_tags($_POST['comment']);
 			$userId = Yii::app()->user->getState('user_id');
 			$itemForm->comment($id,$userId, $comment);
 		}
@@ -164,80 +165,6 @@ class ShareController extends Controller
 		$itemForm = new ItemForm();
 		$itemForm->deleteComment($id);
 		$this->redirect(Yii::app()->createUrl("share/view/$returnId"));
-	}
-
-
-	public function actionCompleteSolution($id)
-	{
-		$share = new ItemForm();
-		$share->load($id);
-		
-		$need = new ItemForm();
-		$need->description = $share->description;
-		$need->shared = 0;
-		$need->quantity = 1;
-		$sixMonthLater = new DateTime('+6 month');
-		$sixMonthLater = $sixMonthLater->format('Y-m-d');
-		$need->expiration_date = $sixMonthLater;
-		
-		$need->save();
-		
-	  $solutionId = $need->newSolution($need->id);
-		
-		$command = Yii::app()->db->createCommand();	
-		$command->insert('solution_item', 
-			array(
-				'solution_id' => $solutionId,
-				'item_id' => $id,
-				));
-		
-		$this->redirect(Yii::app()->createUrl("need/view/" . $need->id));		
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
-	 */
-	public function loadShare($id)
-	{
-		$command = Yii::app()->db->createCommand();
-		
-		$row = $command->setText("select i.*, coalesce(u.real_name, u.username) as username
-			from item i inner join user u on u.id = i.user_id
-			where i.id = $id")->queryRow();
-		
-		if($row === null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		
-		$model = new ItemForm();
-		$model->attributes = $row;
-		return $model;
-	}
-	
-	public function loadComments($itemId)
-	{
-		$command = Yii::app()->db->createCommand();
-		
-		$comments = $command->setText("select ic.*, coalesce(u.real_name, u.username) as user_name
-			from item_comment ic inner join user u on u.id = ic.user_id
-			where ic.item_id = $itemId
-			order by id
-			")->queryAll();
-		
-		$userId = Yii::app()->user->getState('user_id');
-		if($userId > 0)
-		{
-			$command = Yii::app()->db->createCommand();
-			$command->setText("delete from unread_comment
-					where user_id = $userId
-							and comment_id in (
-								select c.id
-								from item_comment c
-								where c.item_id = $itemId
-							)")->execute();
-		}
-		return $comments;
 	}
 
 	/**

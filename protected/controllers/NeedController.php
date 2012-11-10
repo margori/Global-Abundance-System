@@ -101,7 +101,8 @@ class NeedController extends Controller
 	 */
 	public function actionEdit($id)
 	{
-		$model= $this->loadNeed($id);
+		$model = new ItemForm();
+		$model->load($id);
 		if ($model->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
 

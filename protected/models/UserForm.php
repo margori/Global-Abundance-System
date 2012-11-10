@@ -15,11 +15,13 @@ class UserForm extends CFormModel
 	public $myLove;
 	public $hisLove;
 	
+	public $about;
+	
 	public function rules()
 	{
 		return array(
 			array('id, username, password, confirmation
-				, realName, email, language','safe'),
+				, realName, email, language, about','safe'),
 		);
 	}
 	
@@ -92,6 +94,7 @@ class UserForm extends CFormModel
 		$this->realName = $data['real_name'];
 		$this->email = $data['email'];
 		$this->language = $data['language'];
+		$this->about = $data['about'];
 		
 		$command = Yii::app()->db->createCommand();
 		$love = $command->select('love')
@@ -132,6 +135,7 @@ class UserForm extends CFormModel
 				'real_name' => $this->realName,
 				'email' => $this->email,
 				'language' => $this->language,
+				'about' => $this->about,
 				),
 				'id = :userId', array(
 						'userId' => $userId,
@@ -170,6 +174,21 @@ class UserForm extends CFormModel
 		return true;
 	}
 	
+	public function saveAbout()
+	{
+		$userId = Yii::app()->user->getState('user_id');
+		$command = Yii::app()->db->createCommand();
+
+		$command->update('user', 
+				array(
+				'about'=>  strip_tags($this->about),
+				),
+				'id = :userId', array(
+						'userId' => $userId,
+				));
+		return true;
+	}
+
 	function browse($nameFilter, $pageCurrent = 1, $pageSize = 10)
 	{
 		$command = Yii::app()->db->createCommand();
