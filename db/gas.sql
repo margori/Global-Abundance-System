@@ -3,14 +3,16 @@ CREATE TABLE IF NOT EXISTS `item` (
   `description` text NOT NULL COMMENT 'includes tags prefixed with #',
   `shared` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'false means this item is need for an user, true means served.',
   `user_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL COMMENT '< 0is infinite quantity',
+  `quantity` int(11) NOT NULL COMMENT '< 0 is infinite quantity',
   `original_description` text NOT NULL,
   `expiration_date` date NOT NULL,
   `creation_date` date NOT NULL,
   `notified` tinyint(1) NOT NULL DEFAULT '0',
+  `project_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+  KEY `user_id` (`user_id`),
+  KEY `project_id` (`project_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 CREATE TABLE IF NOT EXISTS `item_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

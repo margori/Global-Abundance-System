@@ -119,6 +119,7 @@ class SiteController extends Controller
 			'solution',
 			'solution_archive',
 			'solution_item',
+			'project',
 			'unread_comment',
 			'user',
 			'user_heart',	
