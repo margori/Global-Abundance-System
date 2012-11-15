@@ -42,6 +42,10 @@
 		<?= CHtml::passwordField('confirmation', $model->confirmation, array('class'=>'span-5', 'maxlength'=>50)) ?>
 	</div>
 	<div class="span-21" style="text-align: right;">
+		<?= Yii::t('register','email') ?>&nbsp;
+		<?= CHtml::textField('email', $model->email, array('class'=>'span-7 right', 'maxlength'=>50)) ?>
+	</div>
+	<div class="span-21" style="text-align: right;">
 		<?php if (isset($message)) { ?>
 			<span class="errorMessage">
 				<?= $message ?>

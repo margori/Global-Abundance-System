@@ -67,6 +67,9 @@
 					<li>
 						<?= CHtml::link(Yii::t('global', 'shares'), Yii::app()->createUrl('./share?p=1&o='),array('title'=>Yii::t('global', 'shares hint'))) ?>						
 					</li>
+					<li>
+						<?= CHtml::link(Yii::t('global', 'projects'), Yii::app()->createUrl('./project?p=1&o='),array('title'=>Yii::t('global', 'projects hint'))) ?>						
+					</li>
 					<?php
 						if (!Yii::app()->user->isGuest) {
 					?>
@@ -75,6 +78,9 @@
 					</li>
 					<li>
 						<?= CHtml::link(Yii::t('item', 'my shares'), Yii::app()->createUrl('./share?o=mine'),array('title'=>Yii::t('global', 'my shares hint'))) ?>
+					</li>
+					<li>
+						<?= CHtml::link(Yii::t('project', 'my projects'), Yii::app()->createUrl('./project?o=mine'),array('title'=>Yii::t('global', 'my projects hint'))) ?>
 					</li>
 					<?php
 							$comments = UserForm::newComments();
@@ -100,7 +106,7 @@
 								'style'=>' margin-bottom: -4px;',
 								));
 							echo CHtml::image(Yii::app()->baseUrl . "/images/icons/16x16/exclamation-small.png", '', array(
-								'style'=>'margin: -4px 0px 0px -12px; position:fixed;'
+								'style'=>'margin: -4px 0px 0px -12px; position: absolute;'
 								));
 						?>					
 					</li>

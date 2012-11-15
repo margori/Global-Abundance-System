@@ -1,7 +1,12 @@
 <h1><?= Yii::t('item','need') ?></h1>
 <div class="span-22 box last">
 	<div class="span-18">		
-		<?= '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ' . Yii::t('item', 'user needs'); ?>
+		<?php 
+			echo '<strong>' . CHtml::link($need->username, $this->createUrl('user/' . $need->user_id)) . '</strong> ';
+			if ($need->project_name)
+				echo Yii::t('interaction', 'for') . ' ' . '<strong>' . CHtml::link($need->project_name, $this->createUrl('project/' . $need->project_id)) . '</strong> ';
+			echo Yii::t('item', 'user needs'); 
+		?>
 		&nbsp;&nbsp;&nbsp;
 		<?php if (!Yii::app()->user->isGuest) { ?>
 		<a href="<?= $this->createUrl('need/edit/' . $need->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>

@@ -45,6 +45,10 @@ function toggle(id)
 			<?= Yii::t('item','need expiration hint'); ?>
 		</span>
 	</div>
+	<div class="row">
+		<?= Yii::t('interaction', 'from') ?>
+		<?= CHtml::dropDownList('project', $project_id, $projects) ?>
+	</div>
 
 	<div class="row submit">
 			<?php echo CHtml::submitButton(Yii::t('item','save'), array('name'=>'save')); ?>

@@ -14,7 +14,11 @@ class InteractionController extends Controller
 		if (Yii::app()->user->isGuest)
 				$this->redirect(Yii::app()->createUrl('site'));
 		
-		$this->render('index',array());
+		$projects = ProjectForm::loadMyProject();
+		
+		$this->render('index',array(
+				'projects' => $projects,
+		));
 	}
 
 	public function actionError()
@@ -40,6 +44,7 @@ class InteractionController extends Controller
 			$sixMonthLater = new DateTime('+6 month');
 			$sixMonthLater = $sixMonthLater->format('Y-m-d');
 			$model->expiration_date = $sixMonthLater;
+			$model->project_id = $_POST['project'];
 							
 			if($model->save())
 			{

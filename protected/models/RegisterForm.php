@@ -6,12 +6,13 @@ class RegisterForm extends CFormModel
 	public $password_salt;
 	public $confirmation;
 	public $language;
+	public $email;
 
 	public function rules()
 	{
 		return array(
 			// username and password are required
-			array('username, password, password_salt, confirmation, language', 'required'),
+			array('username, password, password_salt, confirmation, language, email', 'required'),
 			// rememberMe needs to be a boolean
 			array('clause1, clause2, clause3, clause4, clause5','boolean'),
 			// password needs to be authenticated
@@ -65,6 +66,7 @@ class RegisterForm extends CFormModel
 				'password'=>$finalPassword,
 				'password_salt'=>$salt,
 				'language'=>$this->language,
+				'email'=>$this->email,
 				));
 		
 		$userId = $command->connection->lastInsertID;

@@ -45,6 +45,10 @@ return array (
 		'proposed' => "proposed",
 		'needed' => "needed",
 		'shared' => "shared",
-		'dont forget tags' => "Don\'t forget tags in description"
+		'dont forget tags' => "Don\'t forget tags in description",
+		
+		'quantity' => 'Q',
+		'for' => 'for',
+		'from' => 'from',
 );
 ?>

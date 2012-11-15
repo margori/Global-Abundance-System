@@ -13,6 +13,8 @@ return array (
   'users hint' => 'Aquí puedes buscar a un usuario y ver sus necesidades y contribuciones',
 	'archive' => 'Archivo',
 	'archive hint' => "Aquí se listan soluciones anterires tomadas.\nPodrían ser utilizadas como referencia.",
+	'projects' => "Proyectos",
+	'projects hint' => "Aquí se lista lo que la gente hace o quiere hacer.",
 	'GAS motivations' => 'Motivos de GAS',
 
 	'about' => 'Acerca de',

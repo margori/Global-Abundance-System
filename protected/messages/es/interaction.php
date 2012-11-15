@@ -39,6 +39,10 @@ Lo invitamos a que se comunique con ellos para definir los detalles.',
 		'proposed'=>'propuso',
 		'needed'=>'necesitaba',
 		'shared'=>'compartió',
-		'dont forget tags' => 'No olvide las etiquetas en la descripción'
-	);
+		'dont forget tags' => 'No olvide las etiquetas en la descripción',
+
+		'quantity' => 'Cant.',
+		'for' => 'para',
+		'from' => 'desde',
+);
 ?>

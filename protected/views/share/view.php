@@ -17,8 +17,12 @@ function toggleN(id)
 </script>
 <div class="span-22 box last">
 	<div class="span-18">		
-		<?= '<strong>' . CHtml::link($share->username, $this->createUrl('user/' . $share->user_id)) . '</strong> ' . Yii::t('item', 'user shares')
-				.' ('. Yii::t('item', 'available').' '. $share->quantity .')'; ?>
+		<?php
+			echo '<strong>' . CHtml::link($share->username, $this->createUrl('user/' . $share->user_id)) . '</strong> ';
+			if ($share->project_name)
+				echo Yii::t('interaction', 'from') . ' ' . '<strong>' . CHtml::link($share->project_name, $this->createUrl('project/' . $share->project_id)) . '</strong> ';
+			echo Yii::t('item', 'user shares') .' ('. Yii::t('item', 'available').' '. $share->quantity .')'; 
+		?>
 		&nbsp;&nbsp;&nbsp;
 		<?php if (!Yii::app()->user->isGuest) { ?>
 		<a href="<?= $this->createUrl('share/edit/' . $share->id) ?>"><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/pencil.png" alt="-" /></a>

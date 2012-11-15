@@ -121,6 +121,10 @@ class UserController extends Controller
 	public function actionMyAccount()
 	{
 		$id = Yii::app()->user->getState('user_id');
+		
+		if (!$id)
+					$this->redirect(Yii::app()->createUrl('site'));
+		
 		$model = new UserForm();
 		$model->load($id);
 		$zones = $model->loadZones();

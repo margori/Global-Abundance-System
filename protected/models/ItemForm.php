@@ -11,12 +11,14 @@ class ItemForm extends CFormModel
 	public $expiration_date;
 	public $creation_date;
 	public $hisLove;
+	public $project_id;
+	public $project_name;
 
 	public function rules()
 	{
 		return array(
 			array('id, shared, description, quantity, expiration_date, creation_date', 'required'),
-			array('username, user_id, original_description, hisLove', 'safe'),
+			array('username, user_id, original_description, hisLove, project_id, project_name', 'safe'),
 		);
 	}
 
@@ -63,13 +65,16 @@ class ItemForm extends CFormModel
 		$sql .= "and i.expiration_date >= curdate() ";
 		$sql .= "and i.creation_date >= '$sixMonthAgo' ";
 		$sql .= "and i.shared = $shared ";
+		
 		if ($userId > 0)
 			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
+		
 		if ($includedUserId > 0)
 		{
 			$sql .= 'and (love_ac.love > 0 or love_ac.love is null) and (love_ca.love > 0 or love_ca.love is null) ';
 			$sql .= 'and (love_bc.love > 0 or love_bc.love is null) and (love_cb.love > 0 or love_cb.love is null) ';
 		}
+		
 		if (isset($tags) && trim($tags) != '')
 		{
 			$splitTags = explode(' ', $tags);
@@ -174,7 +179,7 @@ class ItemForm extends CFormModel
 		$command = Yii::app()->db->createCommand();
 		$userId = Yii::app()->user->getState('user_id');
 	
-		$sql = 'select i.*, coalesce(u.real_name, u.username) as username ';
+		$sql = 'select i.*, p.name as project_name, coalesce(u.real_name, u.username) as username ';
 		if ($userId > 0)
 			$sql .= ', coalesce(uh.love, 1) as hisLove ';
 		else	
@@ -182,7 +187,9 @@ class ItemForm extends CFormModel
 		
 		$sql .= 'from item i 
 				inner join `user` u
-					on u.id = i.user_id ';
+					on u.id = i.user_id
+				left join project p
+					on p.id = i.project_id ';
 		
 		if ($userId > 0)
 			$sql .= "left join user_heart uh
@@ -313,6 +320,7 @@ class ItemForm extends CFormModel
 					'quantity' => $this->quantity,							
 					'expiration_date' => $this->expiration_date,	
 					'creation_date' => $today,
+					'project_id' => ($this->project_id == 0 ? null : $this->project_id),	
 					));
 			$this->id = $command->connection->lastInsertID;
 		}
@@ -324,6 +332,7 @@ class ItemForm extends CFormModel
 									'shared' => $this->shared,
 									'quantity' => $this->quantity,							
 									'expiration_date' => $this->expiration_date,							
+									'project_id' => ($this->project_id == 0 ? null : $this->project_id),	
 									), 
 							'id = :id', array(':id'=> $this->id)
 							);

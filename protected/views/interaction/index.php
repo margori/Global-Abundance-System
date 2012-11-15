@@ -39,8 +39,10 @@
 		<?= CHtml::hiddenField('shared','0') ?>
 		<div class="span-7">
 			<p>
-				<a href="<?= Yii::app()->createUrl('need/new') ?>"><?= Yii::t('interaction','advanced') ?></a><br/>
-				<a href="<?= Yii::app()->createUrl('./need?p=1&o=') ?>"><?= Yii::t('interaction','browse') ?></a>
+				<?= Yii::t('interaction', 'for') ?>
+				<?= CHtml::dropDownList('project', null, $projects, array('style' => 'width: 150px;')) ?>
+				<br/>
+				<a href="<?= Yii::app()->createUrl('need/new') ?>"><?= Yii::t('interaction','advanced') ?></a>
 			</p>
 		</div>
 		<div class="right">
@@ -63,14 +65,16 @@
 				'style' => 'color: grey',
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
-		<div class="span-4">
+		<div class="span-5">
 			<p>
-				<a href="<?= Yii::app()->createUrl('share/new') ?>"><?= Yii::t('interaction','advanced') ?></a><br />
-				<a href="<?= Yii::app()->createUrl('./share?p=1&o=') ?>"><?= Yii::t('interaction','browse') ?></a>
+				<?= Yii::t('interaction', 'from') ?>
+				<?= CHtml::dropDownList('project', null, $projects, array('style' => 'width: 150px;')) ?>
+				<br />
+				<a href="<?= Yii::app()->createUrl('share/new') ?>"><?= Yii::t('interaction','advanced') ?></a>
 			</p>
 		</div>
 		<div class="right">
-			<?= Yii::t('item','quantity'); ?>
+			<?= Yii::t('interaction','quantity'); ?>
 			<?= CHtml::textField('quantity', 1, array('style'=>'width:20px', 'maxlength'=>'2')) ?>
 			<?= CHtml::submitButton(Yii::t('interaction','share'), array('name'=>'save',
 					'title'=>Yii::t('interaction', 'dont forget tags'))); ?>

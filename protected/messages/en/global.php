@@ -27,6 +27,8 @@ return array (
 	'users hint' => "Here you can look for users and their needs and shares",
 	'archive' => "Archive",
 	'archive hint' => "Archive of previous taken solution.\nMay be it can be used as reference.",
+	'projects' => "Projects",
+	'projects hint' => "Here there is a list of people do or want do do.",
 	'GAS motivations' => 'GAS motivations',
 
 	'about' => "About",

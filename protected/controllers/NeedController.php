@@ -78,6 +78,7 @@ class NeedController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
+			$model->project_id = $_POST['project'];
 			$model->description= htmlentities(strip_tags($model->description));
 			
 			if($model->save())
@@ -89,8 +90,13 @@ class NeedController extends Controller
 		if(isset($_POST['cancel']))
 			$this->redirect($this->createUrl('./interaction'));				
 
+		$projects = ProjectForm::loadMyProject();
+		$project_id = intval($_GET['project_id']);
+		
 		$this->render('new',array(
-				'model'=>$model,
+			'model'=>$model,
+			'projects' => $projects,
+			'project_id' => $project_id,
 		));
 	}
 
@@ -112,6 +118,7 @@ class NeedController extends Controller
 		if(isset($_POST['save']))
 		{
 			$model->attributes=$_POST['ItemForm'];
+			$model->project_id = $_POST['project'];
 			$model->description= htmlentities( strip_tags($model->description));
 			if($model->save())
 				$this->redirect($this->createUrl('need/view/' . $model->id));				
@@ -121,8 +128,14 @@ class NeedController extends Controller
 			$this->redirect($this->createUrl('need/view/' . $model->id));				
 		}
 
+		if(isset($_POST['cancel']))
+			$this->redirect($this->createUrl('./interaction'));				
+
+		$projects = ProjectForm::loadMyProject();
+
 		$this->render('edit',array(
 			'model'=>$model,
+			'projects' => $projects,
 		));
 	}
 	
