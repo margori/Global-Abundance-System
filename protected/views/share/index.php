@@ -57,8 +57,11 @@
 </div>
 <div class="span-22 last append-bottom">
 	<div class="span-21">
-		<?= CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])) . ' ' . 
-				Yii::t('item', 'user shares') . ' ' .
+		<?php
+			echo CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])); 
+			if ($item['project_name'])
+				echo ' ' . Yii::t('interaction', 'from') . ' ' . CHtml::link($item['project_name'], $this->createUrl('project/' . $item['project_id']));
+			echo ' ' . Yii::t('item', 'user shares') . ' ' .
 				CHtml::link($item['description'], $this->createUrl('share/view/' . $item['id'])) ?>
 	</div>
 	<div class="span-1 last">

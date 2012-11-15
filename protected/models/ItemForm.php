@@ -45,10 +45,11 @@ class ItemForm extends CFormModel
 		
 		$sql = "select i.*, coalesce(u.real_name, username) as user_name ";
 		if ($userId > 0)
-			$sql .= ', love_ab.love ';
+			$sql .= ', love_ab.love, p.name as project_name, p.id as project_id ';
 		else
 			$sql .= ', 1 as love ';
 		$sql .= 'from item i inner join user u on u.id = i.user_id ';
+		$sql .= 'left join project p on p.id = i.project_id ';
 		if ($userId > 0)
 		{
 			$sql .= "left join user_heart love_ab on love_ab.from_user_id = $userId and love_ab.to_user_id = i.user_id ";

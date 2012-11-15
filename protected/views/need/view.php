@@ -95,12 +95,22 @@
 			<?php  
 				if($solution['status'] == 1) // Draft
 					echo '<strong>';
-				echo CHtml::link(Yii::t('item', 'draft'), $this->createUrl('need/draft/' . $solution['id'] . '/' . $need->id)) . '&nbsp;';
+				
+				if($userId == $solution['user_id']) 
+					echo CHtml::link(Yii::t('item', 'draft'), $this->createUrl('need/draft/' . $solution['id'] . '/' . $need->id)) . '&nbsp;';
+				else
+					echo Yii::t('item', 'draft') . '&nbsp;';
+
 				if($solution['status'] == 1)
 					echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/hard-hat.png') . '&nbsp;</strong>';
 				if($solution['status'] == 2)
 					echo '<strong>';
-				echo CHtml::link(Yii::t('item', 'complete'), $this->createUrl('need/complete/' . $solution['id'] . '/' . $need->id)) ;
+
+				if($userId == $solution['user_id']) 
+					echo CHtml::link(Yii::t('item', 'complete'), $this->createUrl('need/complete/' . $solution['id'] . '/' . $need->id)) ;
+				else
+					echo Yii::t('item', 'complete');
+					
 				if($solution['status'] == 2)
 					echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/light-bulb.png') . '</strong>';
 				if ($need->user_id == Yii::app()->user->getState('user_id'))

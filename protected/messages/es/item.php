@@ -8,7 +8,7 @@ return array (
 		
 		'add items' => 'Necesidad - agregando contribución a solución',
 		'my needs' => 'Mis necesidades',
-		'my shares'=> 'Mis contribuciones',
+		'my shares'=> 'Mis contrib.',
 
 		'tags' => 'Etiquetas:',
 		'filter'=> 'Filtrar',
@@ -47,7 +47,7 @@ return array (
 		'taken solutions' => 'Soluciones tomadas',
 
 		'< add items' => '<- agregue artículos a la solución',
-		'proposes' => 'propone',
+		'proposes' => 'propone como solución',
 		'comments' => 'comenta',
 
 		'draft' => 'borrador',
