@@ -79,7 +79,7 @@ class NeedController extends Controller
 		{
 			$model->attributes=$_POST['ItemForm'];
 			$model->project_id = $_POST['project'];
-			$model->description= htmlentities(strip_tags($model->description));
+			$model->description= strip_tags($model->description);
 			
 			if($model->save())
 			{
@@ -119,7 +119,7 @@ class NeedController extends Controller
 		{
 			$model->attributes=$_POST['ItemForm'];
 			$model->project_id = $_POST['project'];
-			$model->description= htmlentities( strip_tags($model->description));
+			$model->description= strip_tags($model->description);
 			if($model->save())
 				$this->redirect($this->createUrl('need/view/' . $model->id));				
 		} 
