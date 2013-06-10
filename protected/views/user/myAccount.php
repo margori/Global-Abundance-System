@@ -281,7 +281,7 @@
 		else if (lastZone > 0)
 			selectZone(n);
 		else
-			map.setView(new L.LatLng(<?= Yii::app()->params['default_latitude'] ?>, <?= Yii::app()->params['default_longitude'] ?>), 13);
+			map.setView(new L.LatLng(<?= ConfigurationModel::instance()->default_latitude ?>, <?= ConfigurationModel::instance()->default_longitude ?>), 13);
 	}
 </script>
 <div class="span-22 box">
@@ -325,10 +325,10 @@
 	
 	<?php 
 		
-		$minLat = Yii::app()->params['default_latitude'];
-		$maxLat = Yii::app()->params['default_latitude'];
-		$minLong = Yii::app()->params['default_longitude'];
-		$maxLong = Yii::app()->params['default_longitude'];
+		$minLat = ConfigurationModel::instance()->default_latitude;
+		$maxLat = ConfigurationModel::instance()->default_latitude;
+		$minLong = ConfigurationModel::instance()->default_longitude;
+		$maxLong = ConfigurationModel::instance()->default_longitude;
 
 		if (count($zones) > 0) 
 		{

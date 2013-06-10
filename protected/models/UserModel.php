@@ -1,5 +1,5 @@
 <?php
-class UserForm extends CFormModel
+class UserModel extends CFormModel
 {
 	public $id;
 	public $username;
@@ -127,7 +127,7 @@ class UserForm extends CFormModel
 			if ($iso == $this->language)
 				$exists = 1;
 		if ($exists == 0)
-			$this->language = Yii::app()->params['default language'];
+			$this->language = ConfigurationModel::instance()->default_language;
 		
 		$command->update('user', 
 				array(

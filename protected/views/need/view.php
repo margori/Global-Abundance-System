@@ -70,7 +70,7 @@
 	</div>
 	<div class="span-1 last">
 		<?php if($userId == $solution['user_id']) { ?> 
-		<a href="<?= $this->createUrl('need/deleteSolutionItem/' . $solutionItem['id'] . '/' . $need->id) ?>" >
+		<a href="<?= $this->createUrl('need/deleteItemSolutionBackToNeed/' . $solution['id'] . '/' . $solutionItem['id']) ?>" >
 			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/minus-button.png" alt="-" />
 		</a>
 		<?php } ?> 
@@ -81,17 +81,17 @@
 			{
 	?>
 	<div class="span-21" >
-		<div class="span-6">
+		<div class="span-7">
 			<?php 
 				if($userId == $solution['user_id']) 
 				{ ?> 
-			<a href="<?= $this->createUrl('need/addItem/' . $solution['id'] . '/' . $need->id) ?>?p=1" ><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/plus-button.png" alt="+" /></a>
+			<a href="<?= $this->createUrl('need/solution/' . $solution['id']) ?>?p=1" ><img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/plus-button.png" alt="+" /></a>
 			<?php 
 					if (count($solution['items']) == 0 ) echo Yii::t('item', '< add items'); 
 				
 				} else echo '&nbsp'; ?>
 		</div>
-		<div class="prepend-9 span-5">
+		<div class="prepend-8 span-5">
 			<?php  
 				if($solution['status'] == 1) // Draft
 					echo '<strong>';

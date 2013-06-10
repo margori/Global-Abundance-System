@@ -2,9 +2,6 @@
 
 class InteractionController extends Controller
 {
-	/**
-	 * Declares class-based actions.
-	 */
 	public function actions()
 	{
 	}
@@ -14,27 +11,16 @@ class InteractionController extends Controller
 		if (Yii::app()->user->isGuest)
 				$this->redirect(Yii::app()->createUrl('site'));
 		
-		$projects = ProjectForm::loadMyProject();
+		$projects = ProjectModel::loadMyProject();
 		
 		$this->render('index',array(
 				'projects' => $projects,
 		));
 	}
-
-	public function actionError()
-	{
-	    if($error=Yii::app()->errorHandler->error)
-	    {
-	    	if(Yii::app()->request->isAjaxRequest)
-	    		echo $error['message'];
-	    	else
-	        	$this->render('error', $error);
-	    }
-	}
 	
 	public function actionSubmit()
 	{
-		$model= new ItemForm();
+		$model= new ItemModel();
 
 		if(isset($_POST['save']))
 		{
@@ -57,3 +43,6 @@ class InteractionController extends Controller
 			
 	}
 }
+
+
+?>

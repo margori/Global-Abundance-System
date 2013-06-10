@@ -41,5 +41,9 @@ return array (
 
 	'and many more' => "y muchos más",
 	'all wrongs reserved' => "Todos los errores reservados",
+
+	'ready' => "Listo",
+	'return' => "Volver",
+	'back' => "Volver",
 );
 ?>

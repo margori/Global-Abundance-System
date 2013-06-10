@@ -55,5 +55,9 @@ return array (
 
 	'and many more' => "and many more",
 	'all wrongs reserved' => "All wrongs reserved",
+
+	'ready' => "Ready",
+	'return' => "Return",
+	'back' => "Back",
 );
 ?>

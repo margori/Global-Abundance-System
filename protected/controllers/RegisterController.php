@@ -2,50 +2,26 @@
 
 class RegisterController extends Controller
 {
-	/**
-	 * Declares class-based actions.
-	 */
 	public function actions()
 	{
 		return array(
 		);
 	}
 
-	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
-	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$model = new RegisterForm();
+		$model = new RegisterModel();
 		
 		$this->render('index',array(
 				'model'=>$model, 'message'=>''
 				));
 	}
-
-	/**
-	 * This is the action to handle external exceptions.
-	 */
-	public function actionError()
-	{
-	    if($error=Yii::app()->errorHandler->error)
-	    {
-	    	if(Yii::app()->request->isAjaxRequest)
-	    		echo $error['message'];
-	    	else
-	        	$this->render('error', $error);
-	    }
-	}
 	
 	public function actionRegister()
 	{
-		$model= new RegisterForm();
+		$model= new RegisterModel();
 
 		$message ='';
-		// collect user input data
 		if(isset($_POST['register']))
 		{
 			$model->attributes=$_POST;
@@ -55,7 +31,7 @@ class RegisterController extends Controller
 				if ($model->register())
 				$this->redirect(Yii::app()->createUrl('interaction'));
 		}
-		// display the login form
+
 		$model->password = null;
 		$model->confirmation = null;
 		$this->render('index',array(
@@ -106,7 +82,7 @@ class RegisterController extends Controller
 
 				$mail = $mailHeader . $mailBody . $mailFooter;
 
-				ItemForm::mailTo($email, $data['user_name'], $subjectTemplate, $mail);
+				ItemModel::mailTo($email, $data['user_name'], $subjectTemplate, $mail);
 
 				$this->redirect(Yii::app()->createUrl('site'));
 			}
@@ -131,7 +107,7 @@ class RegisterController extends Controller
 
 		if(isset($_POST['reset']))
 		{
-			$model= new RegisterForm();
+			$model= new RegisterModel();
 			$model->username = 'ABCD1234()'; // Dummy data.
 			$model->password = $_POST['password'];
 			$model->confirmation = $_POST['confirmation'];
@@ -160,3 +136,5 @@ class RegisterController extends Controller
 		$this->render('reset',array( 'code' => $code, 'message' => $message ));
 	}
 }
+
+?>

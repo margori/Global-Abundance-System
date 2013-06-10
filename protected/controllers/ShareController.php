@@ -2,19 +2,11 @@
 
 class ShareController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
 	public $layout='//layouts/column1';
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionNew()
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 		$model->shared = 1;
 		$model->quantity = 1;
 		$model->description = Yii::app()->user->getState('user_default_tags');
@@ -27,7 +19,7 @@ class ShareController extends Controller
 
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ItemForm'];
+			$model->attributes=$_POST;
 			$model->project_id = $_POST['project'];
 			$model->description=  strip_tags($model->description);
 			if($model->save())
@@ -37,7 +29,7 @@ class ShareController extends Controller
 		if(isset($_POST['cancel']))
 			$this->redirect($this->createUrl('./interaction'));				
 
-		$projects = ProjectForm::loadMyProject();
+		$projects = ProjectModel::loadMyProject();
 		$project_id = intval($_GET['project_id']);
 
 		$this->render('new',array(
@@ -49,12 +41,12 @@ class ShareController extends Controller
 
 	public function actionEdit($id)
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 		$model->load($id);
 
 		if(isset($_POST['save']))
 		{
-			$model->attributes = $_POST['ItemForm'];
+			$model->attributes = $_POST;
 			$model->project_id = $_POST['project'];
 			$model->description = strip_tags($model->description);
 			if($model->save())
@@ -66,7 +58,7 @@ class ShareController extends Controller
 			$this->redirect($this->createUrl('share/view/'. $id));
 		}
 		
-		$projects = ProjectForm::loadMyProject();
+		$projects = ProjectModel::loadMyProject();
 
 		$this->render('edit',array(
 			'model'=>$model,
@@ -74,14 +66,9 @@ class ShareController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
-		$share = new ItemForm();
+		$share = new ItemModel();
 		$share->load($id);
 		if ($share->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./share"));			
@@ -92,7 +79,7 @@ class ShareController extends Controller
 
 	public function actionIndex()
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 
 		if (isset($_GET['o']))
 			Yii::app()->user->setState('share options',$_GET['o']);
@@ -107,7 +94,7 @@ class ShareController extends Controller
 			
 			Yii::app()->user->setState('share options',$options);
 
-			$sharpTags = ItemForm::sharpTags($_POST['tags']);
+			$sharpTags = ItemModel::sharpTags($_POST['tags']);
 			Yii::app()->user->setState('share tags', $sharpTags);
 		}
 
@@ -147,7 +134,7 @@ class ShareController extends Controller
 	public function actionView($id)
 	{
 		$userId = Yii::app()->user->getState('user_id');
-		$share = new ItemForm();
+		$share = new ItemModel();
 		$share->load($id);
 		$comments = $share->loadComments();
 
@@ -162,7 +149,7 @@ class ShareController extends Controller
 	{
 		if (isset($_POST['comment_button']))
 		{
-			$itemForm = new ItemForm();
+			$itemForm = new ItemModel();
 			$comment =  strip_tags($_POST['comment']);
 			$userId = Yii::app()->user->getState('user_id');
 			$itemForm->comment($id,$userId, $comment);
@@ -172,21 +159,10 @@ class ShareController extends Controller
 	
 	public function actionDeleteComment($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->deleteComment($id);
 		$this->redirect(Yii::app()->createUrl("share/view/$returnId"));
 	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='item-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
 }
+
+?>

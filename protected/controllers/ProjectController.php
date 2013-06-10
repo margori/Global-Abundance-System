@@ -6,7 +6,7 @@ class ProjectController extends Controller
 
 	public function actionIndex()
 	{
-		$model = new ProjectForm();
+		$model = new ProjectModel();
 
 		if (isset($_GET['o']))
 			Yii::app()->user->setState('project options',$_GET['o']);
@@ -24,7 +24,7 @@ class ProjectController extends Controller
 			$nameFilter = $_POST['nameFilter'];
 			Yii::app()->user->setState('project nameFilter', $nameFilter);
 			
-			$sharpTags = ItemForm::sharpTags($_POST['tags']);
+			$sharpTags = ItemModel::sharpTags($_POST['tags']);
 			Yii::app()->user->setState('project tags', $sharpTags);
 		}
 	
@@ -65,13 +65,12 @@ class ProjectController extends Controller
 
 	public function actionNew()
 	{
-		$model = new ProjectForm();
+		$model = new ProjectModel();
 
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ProjectForm'];			
 			$model->name= strip_tags($_POST['project_name']);
-			$model->description= strip_tags($model->description);
+			$model->description= strip_tags($_POST['description']);
 			
 			if($model->save())
 			{
@@ -87,26 +86,17 @@ class ProjectController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
 	public function actionEdit($id)
 	{
-		$model = new ProjectForm();
+		$model = new ProjectModel();
 		$model->load($id);
 		if ($model->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./project"));			
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ProjectForm'];
 			$model->name= strip_tags($_POST['project_name']);
-			$model->description= strip_tags($model->description);
+			$model->description= strip_tags($_POST['description']);
 			if($model->save())
 				$this->redirect($this->createUrl('project/view/' . $model->id));				
 		} 
@@ -122,7 +112,7 @@ class ProjectController extends Controller
 	
 	public function actionDelete($id)
 	{
-		$need = new ProjectForm();
+		$need = new ProjectModel();
 		$need->load($id);
 		if ($need->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./project"));			
@@ -131,12 +121,10 @@ class ProjectController extends Controller
 		$this->redirect(Yii::app()->createUrl("./project"));
 	}
 	
-	// ------------------
-
 	public function actionView($id)
 	{
 		$userId = Yii::app()->user->getState('user_id');		
-		$project = new ProjectForm();
+		$project = new ProjectModel();
 		$project->load($id);
 		$needs = $project->loadNeeds();
 		$shares = $project->loadShares();
@@ -151,3 +139,5 @@ class ProjectController extends Controller
 			));
 	}	
 }
+
+?>

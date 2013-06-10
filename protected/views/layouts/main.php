@@ -14,7 +14,11 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
-	<title><?= Yii::t('global', 'title') ?></title>
+	<title><?php 
+					if (ConfigurationModel::instance()->app_title == '')
+						echo Yii::t('global', 'title');
+					else
+						echo ConfigurationModel::instance()->app_title; ?></title>
 	<link rel="shortcut icon" href="<?= Yii::app()->baseUrl ?>/images/favicon.ico" />
 	<script type="text/javascript">
 		function toggle(id)	
@@ -45,10 +49,10 @@
 		<div class="span-15 last">
 			<div id="logo" >
 				<a href="<?= Yii::app()->createUrl('site', array()) ?>" ><?php 
-					if (Yii::app()->params['custom title'] == '')
+					if (ConfigurationModel::instance()->app_title == '')
 						echo Yii::t('global', 'title');
 					else
-						echo Yii::app()->params['custom title']; ?></a>	<span style="
+						echo ConfigurationModel::instance()->app_title; ?></a>	<span style="
     position: absolute;
     margin-top: -6px;
     margin-left: 3px;
@@ -83,7 +87,7 @@
 						<?= CHtml::link(Yii::t('project', 'my projects'), Yii::app()->createUrl('./project?o=mine'),array('title'=>Yii::t('global', 'my projects hint'))) ?>
 					</li>
 					<?php
-							$comments = UserForm::newComments();
+							$comments = UserModel::newComments();
 							if (count($comments) > 0) {
 					?>
 					<li onclick="toggle('newComments');hide('newSolutions');">
@@ -112,7 +116,7 @@
 					</li>
 					<?php 						
 							} 
-							$solutions = UserForm::newSolutions();
+							$solutions = UserModel::newSolutions();
 							if (count($solutions) > 0) {
 					?>				
 					<li onclick="toggle('newSolutions');hide('newComments');">
@@ -205,19 +209,23 @@
 		<div>
 			<?= sprintf(Yii::t('global', 'powered by'),
 							CHtml::link('Yii framework', 'http://www.yiiframework.com/', array('target'=>'_blank')),
-							CHtml::link(Yii::app()->params['host name'], Yii::app()->params['host url'], array('target'=>'_blank')),
+							CHtml::link(ConfigurationModel::instance()->host_name, ConfigurationModel::instance()->host_url, array('target'=>'_blank')),
 							Yii::app()->createUrl('site/love')
 							) ?>
 		</div>
 		<div>
-			<?php if (Yii::app()->user->getState('user_id') == Yii::app()->params['root user id']) { ?>
-				<a href="<?= Yii::app()->createUrl('site/backup') ?>">BackUp</a>
-			<?php } ?>
 			<a target="_blank" href="<?= Yii::app()->createUrl('../source.zip') ?>"><?= Yii::t('global', 'source') ?></a>
-			<a target="_blank" href="<?= Yii::app()->params['development url'] ?>"><?= Yii::t('global', 'development') ?></a>
-			<a target="_blank"href="<?= Yii::app()->params['blog url'] ?>">Blog</a>
-			<a href="mailto:<?= Yii::app()->params['contact email'] ?>"><?= Yii::t('global', 'contact') ?></a>
+			<a target="_blank" href="<?= ConfigurationModel::instance()->development_url ?>"><?= Yii::t('global', 'development') ?></a>
+			<a target="_blank"href="<?= ConfigurationModel::instance()->blog_url ?>">Blog</a>
+			<a href="mailto:<?= ConfigurationModel::instance()->contact_email ?>"><?= Yii::t('global', 'contact') ?></a>
 		</div>
+		<?php if (Yii::app()->user->getState('user_id') == Yii::app()->params['root user id']) { ?>
+		<div>
+			<?= CHtml::link(Yii::t('server', 'backup'), Yii::app()->createUrl('server/backup')); ?>
+			<?= CHtml::link(Yii::t('server', 'configuration'), Yii::app()->createUrl('server/configure')); ?>
+			<?= CHtml::link(Yii::t('server', 'install'), Yii::app()->createUrl('server/install/new')); ?>
+		</div>
+		<?php } ?>
 	</div><!-- footer -->
 
 	<div class="clear"></div>

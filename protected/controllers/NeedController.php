@@ -6,7 +6,7 @@ class NeedController extends Controller
 
 	public function actionIndex()
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 
 		if (isset($_GET['o']))
 			Yii::app()->user->setState('need options',$_GET['o']);
@@ -25,7 +25,7 @@ class NeedController extends Controller
 			
 			Yii::app()->user->setState('need options',$options);
 
-			$sharpTags = ItemForm::sharpTags($_POST['tags']);
+			$sharpTags = ItemModel::sharpTags($_POST['tags']);
 			Yii::app()->user->setState('need tags', $sharpTags);
 		}
 	
@@ -64,7 +64,7 @@ class NeedController extends Controller
 
 	public function actionNew()
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 		$model->shared = 0;
 		$model->quantity = 1;
 		$model->description = Yii::app()->user->getState('user_default_tags');
@@ -72,12 +72,9 @@ class NeedController extends Controller
 		$sixMonthLater = $sixMonthLater->format('Y-m-d');
 		$model->expiration_date = $sixMonthLater;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ItemForm'];
+			$model->attributes=$_POST;
 			$model->project_id = $_POST['project'];
 			$model->description= strip_tags($model->description);
 			
@@ -90,7 +87,7 @@ class NeedController extends Controller
 		if(isset($_POST['cancel']))
 			$this->redirect($this->createUrl('./interaction'));				
 
-		$projects = ProjectForm::loadMyProject();
+		$projects = ProjectModel::loadMyProject();
 		$project_id = intval($_GET['project_id']);
 		
 		$this->render('new',array(
@@ -100,24 +97,16 @@ class NeedController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
 	public function actionEdit($id)
 	{
-		$model = new ItemForm();
+		$model = new ItemModel();
 		$model->load($id);
 		if ($model->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['save']))
 		{
-			$model->attributes=$_POST['ItemForm'];
+			$model->attributes=$_POST;
 			$model->project_id = $_POST['project'];
 			$model->description= strip_tags($model->description);
 			if($model->save())
@@ -131,7 +120,7 @@ class NeedController extends Controller
 		if(isset($_POST['cancel']))
 			$this->redirect($this->createUrl('./interaction'));				
 
-		$projects = ProjectForm::loadMyProject();
+		$projects = ProjectModel::loadMyProject();
 
 		$this->render('edit',array(
 			'model'=>$model,
@@ -141,7 +130,7 @@ class NeedController extends Controller
 	
 	public function actionDelete($id)
 	{
-		$need = new ItemForm();
+		$need = new ItemModel();
 		$need->load($id);
 		if ($need->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
@@ -150,12 +139,10 @@ class NeedController extends Controller
 		$this->redirect(Yii::app()->createUrl("./need"));
 	}
 	
-	// ------------------
-
 	public function actionView($id)
 	{
 		$userId = Yii::app()->user->getState('user_id');		
-		$need = new ItemForm();
+		$need = new ItemModel();
 		$need->load($id);
 		if ($need->hisLove == 0)
 			$this->redirect(Yii::app()->createUrl("./need"));			
@@ -172,17 +159,17 @@ class NeedController extends Controller
 	
 	public function actionNewSolution($id)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->newSolution($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$id"));
 	}
 
 	public function actionCompleteSolution($id)
 	{
-		$need = new ItemForm();
+		$need = new ItemModel();
 		$need->load($id);
 		
-		$share = new ItemForm();
+		$share = new ItemModel();
 		$share->description = $need->description;
 		$share->shared = 1;
 		$share->quantity = 1;
@@ -206,12 +193,12 @@ class NeedController extends Controller
 
 	public function actionDeleteSolution($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->deleteSolution($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
-	public function actionAddItem($id, $returnId)
+	public function actionSolution($id)
 	{
 		if (isset($_GET['o']))
 			Yii::app()->user->setState('add item options',$_GET['o']);
@@ -240,30 +227,19 @@ class NeedController extends Controller
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
 		$solutionId = $id;
-		$needId = $returnId;
 		
-		if (isset($_POST['addReturn']))
-		{
-			$this->addSessionItems();
-			$this->addItems($solutionId);
-			Yii::app()->user->setState('addItems', null);
-			$this->redirect(Yii::app()->createUrl("need/view/$needId"));
-		}
-		if (isset($_POST['addContinue']))
-		{
-			$this->addSessionItems();
-			$this->addItems($solutionId);
-			Yii::app()->user->setState('addItems', null);
-		}
-		else if (isset($_POST['cancel']))
-		{
-			Yii::app()->user->setState('addItems', null);
-			$this->redirect(Yii::app()->createUrl("need/view/$needId"));
-		}
+		$solution = new SolutionModel();
+		$solution->load($solutionId);
+		$solution->loadItems();
 
-		$needUserId = ItemForm::GetUserId($needId); 
+		$needId = $solution->item_id;
+		
+		$need = new ItemModel();
+		$need->load($needId);
 
-		$model = new ItemForm();
+		$needUserId = ItemModel::GetUserId($needId); 
+
+		$model = new ItemModel();
 		$tags = Yii::app()->request->getPost('tags');		
 		$sharpTags = $model->sharpTags($tags);
 		$shareCount = $model->browseCount($sharpTags, 0, $options, $needUserId);  
@@ -273,48 +249,81 @@ class NeedController extends Controller
 			Yii::app()->user->setState('pageCurrent', 1);
 			$pageCurrent = 1;
 		}
+		
+		$excludeId = null;
+		foreach ($solution->items as $item)
+			$excludeId[] = $item['item_id'];
+		if (isset($excludeId))
+			$excludeId = implode(', ', $excludeId);
 				
+		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize, $needUserId, $excludeId);
 
-		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize, $needUserId);
+		$userId = Yii::app()->user->getState('user_id');	
 
-		$this->render('addItem',array(
-			'shares'=>$shares,
+		$this->render('solution',array(
+			'need' => $need,
+			'solution' => $solution,
+			'shares'=> $shares,
 			'tags' => $sharpTags,
-			'solutionId' => $solutionId,
-			'needId' => $needId,
 			'options'=> $options,
 			'pageCurrent' => $pageCurrent,
 			'pageSize' => $pageSize,
 			'pageCount' => $pageCount,
+			'userId' => $userId,
 			));		
 	}
-
-	public function actionDeleteSolutionItem($id, $returnId)
+	
+	public function actionAddItem($id, $returnId)
 	{
 		if (Yii::app()->user->isGuest)
 			$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
-		$itemForm = new ItemForm();
-		$itemForm->deleteSolutionItem($id);
-		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
+
+		$solution =new SolutionModel();
+		$solution->id = $id;
+		
+		$itemId = $returnId;
+		$solution->addItem($itemId);
+		
+		$this->redirect(Yii::app()->createUrl('need/solution/' .$solution->id));		
+	}
+
+	public function actionDeleteItemSolutionBackToNeed($id, $returnId)
+	{
+		if (Yii::app()->user->isGuest)
+			$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
+		$solution = new SolutionModel();
+		$solution->load($id);
+		$solution->deleteItem($returnId);
+		$this->redirect(Yii::app()->createUrl('need/view/' . $solution->item_id));
+	}
+
+	public function actionDeleteSolutionItemBackToSolution($id, $returnId)
+	{
+		if (Yii::app()->user->isGuest)
+			$this->redirect(Yii::app()->createUrl("need/solution/$returnId"));
+		$solution = new SolutionModel();
+		$solution->load($id);
+		$solution->deleteItem($returnId);
+		$this->redirect(Yii::app()->createUrl('need/solution/' . $solution->id));
 	}
 	
 	public function actionDraft($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->markAsDraft($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	public function actionComplete($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->markAsComplete($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
 
 	public function actionTake($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->take($id);
 		$this->redirect(Yii::app()->createUrl("./need"));
 	}
@@ -323,7 +332,7 @@ class NeedController extends Controller
 	{
 		if (isset($_POST['comment_button']))
 		{
-			$itemForm = new ItemForm();
+			$itemForm = new ItemModel();
 			$comment = $_POST['comment'];
 			$comment=  strip_tags($comment);
 			$userId = Yii::app()->user->getState('user_id');
@@ -334,41 +343,8 @@ class NeedController extends Controller
 
 	public function actionDeleteComment($id, $returnId)
 	{
-		$itemForm = new ItemForm();
+		$itemForm = new ItemModel();
 		$itemForm->deleteComment($id);
 		$this->redirect(Yii::app()->createUrl("need/view/$returnId"));
 	}
-	
-	function addSessionItems()
-	{
-		$addItems = Yii::app()->user->getState('addItems');
-		foreach($_POST as $value)
-		{
-			if (substr($value, 0, 5) == 'check')
-			{
-				$id =	substr($value, 5, strlen($value) - 5);
-				$addItems[] = $id;
-			}
-		}
-		Yii::app()->user->setState('addItems', $addItems);
-	}
-	
-	function addItems($solutionId)
-	{
-		$addItems = Yii::app()->user->getState('addItems');
-		if (isset($addItems))
-		{
-			$command = Yii::app()->db->createCommand();	
-			foreach($addItems as $itemId)
-			{
-				$command->insert('solution_item', 
-					array(
-						'solution_id' => $solutionId,
-						'item_id' => $itemId,
-						));
-			}
-		}		
-	}
-	
-	// ------------------
 }

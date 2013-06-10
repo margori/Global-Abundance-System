@@ -1,5 +1,5 @@
 <?php
-class ItemForm extends CFormModel
+class ItemModel extends CFormModel
 {
 	public $id;
 	public $description;
@@ -34,7 +34,8 @@ class ItemForm extends CFormModel
 		);
 	}
 	
-	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10, $includedUserId = null)
+	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10
+					, $includedUserId = null, $excludeId = null)
 	{
 		$sixMonthAgo = new DateTime('-6 month');
 		$sixMonthAgo = $sixMonthAgo->format('Y-m-d');
@@ -101,16 +102,19 @@ class ItemForm extends CFormModel
 
 			$sql .= ')';
 		}
+		
+		if ($excludeId != '')
+			$sql .= "and i.id not in ($excludeId)";
 			
 		$sql .= 'order by id desc ';
 		$sql .= "limit $pageSize offset $offset";
 		
 		$items = $command->setText($sql)->queryAll();
-			return $items;
 		return $items;
 	}
 
-	public function browseCount($tags,$shared = 1, $options = '', $includedUserId = null)
+	public function browseCount($tags,$shared = 1, $options = ''
+					, $includedUserId = null, $excludeId = null)
 	{
 		$sixMonthAgo = new DateTime('-6 month');
 		$sixMonthAgo = $sixMonthAgo->format('Y-m-d');
@@ -170,6 +174,9 @@ class ItemForm extends CFormModel
 
 			$sql .= ')';
 		}
+		
+		if ($excludeId != '')
+			$sql .= "and i.id not in ($excludeId)";
 		
 		$count = $command->setText($sql)->queryScalar();
 		return $count;
@@ -388,15 +395,6 @@ class ItemForm extends CFormModel
 		// Detail is deleted too due to foreign key cascade restriction
 	}
 	
-	public function deleteSolutionItem($id)
-	{
-		$command = Yii::app()->db->createCommand();	
-		
-		$command->delete('solution_item', 
-				'id = :id', array(':id' => $id)
-				);
-	}
-	
 	public function markAsDraft($solutionId)
 	{
 		$command = Yii::app()->db->createCommand();	
@@ -600,7 +598,7 @@ class ItemForm extends CFormModel
 		Yii::app()->db->createCommand()->insert('solution_archive', array('description'=>$archiveDescrition));
 				
 		// Delete fulfilled need
-		$itemForm = new Itemform();
+		$itemForm = new ItemModel();
 		$itemForm->id = $needId;
 		$itemForm->delete();
 
@@ -622,7 +620,7 @@ class ItemForm extends CFormModel
 
 	public static function mailTo($toEmail, $toName, $subject, $body)
 	{
-		if (Yii::app()->params['notify emails'] != 'yes')
+		if (!ConfigurationModel::instance()->send_emails)
 			return;
 		if (!isset($toEmail))
 			return;
@@ -630,20 +628,20 @@ class ItemForm extends CFormModel
 		Yii::import('application.extensions.phpmailer.JPhpMailer');
 		$mail = new JPhpMailer();
 		$mail->IsSMTP();
-		$mail->Timeout = Yii::app()->params['smtp_timeout'];
-		$mail->Host = Yii::app()->params['smtp_server'];
-		$mail->Port = Yii::app()->params['smtp_port'];
-		$mail->Username = Yii::app()->params['smtp_username'];
-		$mail->Password = Yii::app()->params['smtp_password'];
-		$mail->From = Yii::app()->params['smtp_from_email'];
-		$mail->FromName = Yii::app()->params['smtp_from_name'];
+		$mail->Timeout = ConfigurationModel::instance()->smtp_timeout;
+		$mail->Host = ConfigurationModel::instance()->smtp_server;
+		$mail->Port = ConfigurationModel::instance()->smtp_port;
+		$mail->Username = ConfigurationModel::instance()->smtp_username;
+		$mail->Password = ConfigurationModel::instance()->smtp_password;
+		$mail->From = ConfigurationModel::instance()->smtp_from_email;
+		$mail->FromName = ConfigurationModel::instance()->smtp_from_name;
 		
-		if (Yii::app()->params['include tile in email subject'])
+		if (ConfigurationModel::instance()->include_title_in_email)
 		{
-			if (Yii::app()->params['custom title'] == '')
+			if (ConfigurationModel::instance()->app_title == '')
 				$mail->Subject = $subject . ' - ' . Yii::t('global', 'title');
 			else
-				$mail->Subject = $subject . ' - ' . Yii::app()->params['custom title'];				
+				$mail->Subject = $subject . ' - ' . ConfigurationModel::instance()->app_title;
 		}
 		else
 			$mail->Subject = $subject;
@@ -652,7 +650,7 @@ class ItemForm extends CFormModel
 		$mail->AddAddress($toEmail, $toName);
 		$mail->IsHTML(false);
 		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = Yii::app()->params['smtp_secure'];;
+		$mail->SMTPSecure = ConfigurationModel::instance()->smtp_secure;
 		$result = $mail->Send();
 		$message = $mail->ErrorInfo;
 		return $result;

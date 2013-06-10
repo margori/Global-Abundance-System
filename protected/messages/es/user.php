@@ -2,6 +2,7 @@
 return array (
 		'my account' => 'Mi cuenta',
 	  'user' => 'Usuario',
+		'language' => "Idioma",
 		
 		'name filter' => 'Nombre',
 

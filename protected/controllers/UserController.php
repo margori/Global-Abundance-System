@@ -2,22 +2,9 @@
 
 class UserController extends Controller
 {
-	/**
-	 * Declares class-based actions.
-	 */
 	public function actions()
 	{
 		return array(
-			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
-				'class'=>'CCaptchaAction',
-				'backColor'=>0xFFFFFF,
-			),
-			// page action renders "static" pages stored under 'protected/views/site/pages'
-			// They can be accessed via: index.php?r=site/page&view=FileName
-			'page'=>array(
-				'class'=>'CViewAction',
-			),
 		);
 	}
 
@@ -39,7 +26,7 @@ class UserController extends Controller
 		$pageSize = Yii::app()->user->getState('user pageSize') ? Yii::app()->user->getState('user pageSize') : 25;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
-		$userForm = new UserForm();
+		$userForm = new UserModel();
 		$nameFilter = Yii::app()->request->getPost('nameFilter');		
 
 		$userCount = $userForm->browseCount($nameFilter);  
@@ -66,7 +53,7 @@ class UserController extends Controller
 		if (isset($_POST['cancel']))
 			$this->redirect(Yii::app()->createUrl('interaction'));
 
-		$model = new UserForm();
+		$model = new UserModel();
 		$model->attributes = $_POST;
 		$model->username = strip_tags($model->username);
 		$model->realName = strip_tags($model->realName);
@@ -125,7 +112,7 @@ class UserController extends Controller
 		if (!$id)
 					$this->redirect(Yii::app()->createUrl('site'));
 		
-		$model = new UserForm();
+		$model = new UserModel();
 		$model->load($id);
 		$zones = $model->loadZones();
 		
@@ -139,7 +126,7 @@ class UserController extends Controller
 
 	public function actionView($id)
 	{
-		$user = new UserForm();
+		$user = new UserModel();
 		$user->load($id);
 		$user->email = str_replace('@', Yii::t('user', '@'), $user->email);
 		$user->email = str_replace('.', Yii::t('user', '.'), $user->email);
@@ -158,7 +145,7 @@ class UserController extends Controller
 	public function actionDelete()
 	{
 		$id = Yii::app()->user->getState('user_id');
-		$model = new UserForm();
+		$model = new UserModel();
 		$model->delete($id);
 		$this->redirect(Yii::app()->createUrl('site/logout'));		
 	}
@@ -169,7 +156,7 @@ class UserController extends Controller
 		$toUserId = $id;
 		$love = $returnId;
 		
-		$model = new UserForm();
+		$model = new UserModel();
 		$model->love($fromUserId, $toUserId, $love);
 		
 		$this->redirect(Yii::app()->createUrl('user/view/' . $toUserId));		
@@ -180,3 +167,5 @@ class UserController extends Controller
 		$this->render('ban');
 	}
 }
+
+?>

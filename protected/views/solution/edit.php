@@ -1,7 +1,32 @@
 <h1><?= Yii::t('item', 'add items') ?></h1>
 <?php
-	$thisUrl = 'need/addItem/' . $solutionId . '/' . $needId;
-echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
+	$thisUrl = 'need/addItem/' . $solutionId . '/' . $needId; ?>
+<div class="push-1 span-20 box last">
+	<div class="span-17">
+		<?= CHtml::link($solution['user_name'], $this->createUrl('user/' . $solution['user_id'])) . ' ' . Yii::t('item', 'proposes') ?>
+	</div>
+	<?php
+		if (isset($solution['items']))
+			foreach($solution['items'] as $solutionItem) {
+	?>
+	<div class="span-19">
+		<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/puzzle.png" alt="-" />
+		<a href="<?= $this->createUrl('share/view/' . $solutionItem['item_id']) ?>" >
+			<?= ' ' . $solutionItem['description'] ?>
+		</a>
+	</div>
+	<div class="span-1 last">
+		<?php if($userId == $solution['user_id']) { ?> 
+		<a href="<?= $this->createUrl('need/deleteSolutionItem/' . $solutionItem['id'] . '/' . $need->id) ?>" >
+			<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/minus-button.png" alt="-" />
+		</a>
+		<?php } ?> 
+	</div>
+	<?php 
+			} // foreach $solutionItem 
+	?>
+</div>
+<?php echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
 <div class="span-22 box">
 	<div class="span-22">
 		<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>

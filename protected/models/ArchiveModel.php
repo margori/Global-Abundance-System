@@ -1,5 +1,5 @@
 <?php
-class ArchiveForm extends CFormModel
+class ArchiveModel extends CFormModel
 {
 	public function rules()
 	{

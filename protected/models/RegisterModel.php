@@ -1,5 +1,5 @@
 <?php
-class RegisterForm extends CFormModel
+class RegisterModel extends CFormModel
 {
 	public $username;
 	public $password;
@@ -73,7 +73,7 @@ class RegisterForm extends CFormModel
 		Yii::app()->user->setState('user_id', $userId);
 		Yii::app()->user->setState('user_real_name', $this->username);		
 
-		$model = new LoginForm;
+		$model = new LoginModel;
 		$model->username = $this->username;
 		$model->password = $this->password;
 		

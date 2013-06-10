@@ -1,5 +1,5 @@
 <?php
-class ProjectForm extends CFormModel
+class ProjectModel extends CFormModel
 {
 	public $id;
 	public $name;
@@ -228,6 +228,5 @@ class ProjectForm extends CFormModel
 				' order by i.id desc')->queryAll();
 		
 		return $shares;
-	}
-	
+	}	
 }

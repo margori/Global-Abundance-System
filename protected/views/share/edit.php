@@ -47,15 +47,8 @@ function toggle(id)
 		</span>
 	</div>
 	<div class="row">
-		<?php 
-			echo Yii::t('interaction', 'for'). ' ';
-			if (Yii::app()->user->getState('user_id') == $model->user_id)
-				echo CHtml::dropDownList('project', $model->project_id, $projects);				
-			else
-			{
-				echo '<strong>' . $model->project_name . '</strong>';
-				echo CHtml::hiddenField('project', $model->project_id);				
-			} ?>
+		<?= Yii::t('interaction', 'from') ?>
+		<?= CHtml::dropDownList('project', $model->project_id, $projects) ?>
 	</div>
 
 	<div class="row submit">

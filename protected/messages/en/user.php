@@ -16,6 +16,7 @@ return array (
 
 		'my account' => "My account",
 	  'user' => "User",
+		'language' => "Language",
 		
 		'name filter' => "Name",
 		

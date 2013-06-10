@@ -14,7 +14,7 @@
 	</div>
 	<div class="row">
 		<?= Yii::t('project','description'); ?>
-		<?= $form->textArea($model,'description', array('class' => 'span-22','rows'=>'10', 'maxlength'=>5000)); ?>
+		<?= CHtml::textArea('description', $model->description, array('class' => 'span-22','rows'=>'10', 'maxlength'=>5000)); ?>
 	</div>
 
 	<div class="row submit">

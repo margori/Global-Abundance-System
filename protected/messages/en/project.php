@@ -9,7 +9,7 @@ return array (
 
 		'tags' => 'Tags:',
 		'filter'=> 'Filter',
-		'user projects' => 'proyects',
+		'user projects' => 'projects',
 		'save' => 'Save',
 		
 		'name' => 'Name',
