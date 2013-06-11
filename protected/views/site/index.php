@@ -8,7 +8,7 @@
 	<div class="span-18 last">
 		<?= Yii::t('home', 'how?') ?><br /><br />
 	</div>
-	<div class="prepend-1 span-9">
+	<div class="span-9">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/project_earth.jpg','',array(
 									'style'=>'margin: 10px 0px 0px 20px'
@@ -20,30 +20,45 @@
 							array('target'=>'_blank',	)
 							); ?>					
 	</div>
-	<div class="prepend-1 span-4">
+	<div class="span-7" style="height: 300px;" >
 					<?= CHtml::link(
-							CHtml::image(Yii::app()->baseUrl . '/images/TED_NicMarks.png').
+							CHtml::image(Yii::app()->baseUrl . '/images/TED_NicMarks.png','',array(
+									'style'=>'margin: 0px 0px 20px 0px'
+							)).
 							CHtml::image(Yii::app()->baseUrl . '/images/icons/play.png','',array(
 									'style'=>'position: absolute; margin: 74px 0px 0px -56px'
 							)),
 							sprintf('http://www.ted.com/talks/lang/%s/nic_marks_the_happy_planet_index.html', $currentLanguage),
 							array(
 									'target'=>'_blank',
-							)); ?><br />
+							)); ?>
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/icons/play.png','',array(
-									'style'=>'position: absolute; margin: 84px 0px 0px 102px;'
+									'style'=>'position: absolute; margin: 94px 0px 0px 72px;'
 							))
 							.CHtml::image(Yii::app()->baseUrl . '/images/TED_PeterDiamandis.png','',array(
-									'style'=>'margin: 10px 0px 0px 30px'
+									'style'=>'margin: 0px 0px 0px 0px'
 							))
 							,
 							sprintf('http://www.ted.com/talks/lang/%s/peter_diamandis_abundance_is_our_future.html', $currentLanguage),
 							array(
 									'target'=>'_blank',
 							));	?>
+		<br />
+					<?= CHtml::link(
+							CHtml::image(Yii::app()->baseUrl . '/images/icons/play.png','',array(
+									'style'=>'position: absolute; margin: 74px 0px 0px 122px;'
+							))
+							.CHtml::image(Yii::app()->baseUrl . '/images/TED_AmandaPalmer.png','',array(
+									'style'=>'margin: 0px 0px 0px 50px'
+							))
+							,
+							sprintf('http://www.ted.com/talks/lang/%s/amanda_palmer_the_art_of_asking.html', $currentLanguage),
+							array(
+									'target'=>'_blank',
+							));	?>
 	</div>
-	<div class="prepend-1 span-6">
+	<div class="span-6">
 					<?= CHtml::link(
 							CHtml::image(Yii::app()->baseUrl . '/images/OccupyLove.mini.jpg','',array(
 									'style'=>'margin: 40px 0px 0px 10px'

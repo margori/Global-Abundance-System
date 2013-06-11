@@ -213,7 +213,16 @@
 							Yii::app()->createUrl('site/love')
 							) ?>
 		</div>
-		<div>
+		<div style="vertical-align: central">
+			<a href="<?= Yii::app()->createUrl('feed/needs') ?>">
+					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/feed.png" />
+					<?= Yii::t('global', 'needs') ?>
+			</a>
+			<a href="<?= Yii::app()->createUrl('feed/shares') ?>">
+					<img src="<?= Yii::app()->baseUrl ?>/images/icons/16x16/feed.png" />
+					<?= Yii::t('global', 'shares') ?>
+			</a>
+			<br/>
 			<a target="_blank" href="<?= Yii::app()->createUrl('../source.zip') ?>"><?= Yii::t('global', 'source') ?></a>
 			<a target="_blank" href="<?= ConfigurationModel::instance()->development_url ?>"><?= Yii::t('global', 'development') ?></a>
 			<a target="_blank"href="<?= ConfigurationModel::instance()->blog_url ?>">Blog</a>
