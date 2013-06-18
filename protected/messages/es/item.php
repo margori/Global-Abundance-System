@@ -7,7 +7,7 @@ return array (
 		'share'=> 'Contribución',
 		
 		'add items' => 'Necesidad - agregando contribución a solución',
-		'my needs' => 'Mis necesidades',
+		'my needs' => 'Mis neces.',
 		'my shares'=> 'Mis contrib.',
 
 		'tags' => 'Etiquetas:',

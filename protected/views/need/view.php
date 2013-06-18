@@ -91,7 +91,7 @@
 				
 				} else echo '&nbsp'; ?>
 		</div>
-		<div class="prepend-8 span-5">
+		<div class="prepend-7 span-6">
 			<?php  
 				if($solution['status'] == 1) // Draft
 					echo '<strong>';

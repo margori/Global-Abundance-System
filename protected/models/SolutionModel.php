@@ -22,7 +22,7 @@ class SolutionModel extends CFormModel
 	public function load($id)
 	{
 		$command = Yii::app()->db->createCommand();
-		$sql = "select *, coalesce(u.real_name, u.username) as user_name ";
+		$sql = "select s.*, coalesce(u.real_name, u.username) as user_name ";
 		
 		$sql .= " from solution s 
 			inner join user u
