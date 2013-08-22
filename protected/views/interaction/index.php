@@ -65,7 +65,7 @@
 				'style' => 'color: grey',
 				)) ?>
 		<?= CHtml::hiddenField('shared','1') ?>
-		<div class="span-5">
+		<div class="span-6">
 			<p>
 				<?= Yii::t('interaction', 'from') ?>
 				<?= CHtml::dropDownList('project', null, $projects, array('style' => 'width: 150px;')) ?>
@@ -73,9 +73,10 @@
 				<a href="<?= Yii::app()->createUrl('share/new') ?>"><?= Yii::t('interaction','advanced') ?></a>
 			</p>
 		</div>
-		<div class="right">
+		<div class="right" style="text-align: right">
 			<?= Yii::t('interaction','quantity'); ?>
 			<?= CHtml::textField('quantity', 1, array('style'=>'width:20px', 'maxlength'=>'2')) ?>
+			<br/>
 			<?= CHtml::submitButton(Yii::t('interaction','share'), array('name'=>'save',
 					'title'=>Yii::t('interaction', 'dont forget tags'))); ?>
 		</div>

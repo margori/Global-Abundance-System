@@ -47,7 +47,7 @@ return array (
 		'shared' => "shared",
 		'dont forget tags' => "Don\'t forget tags in description",
 		
-		'quantity' => 'Q',
+		'quantity' => 'Quant.',
 		'for' => 'for',
 		'from' => 'from',
 );

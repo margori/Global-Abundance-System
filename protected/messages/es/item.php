@@ -64,5 +64,10 @@ return array (
 		'use -' => "Use '-' para excluir esas etiquetas del resultado",
 
 		'missing emails' => '%s no tienen email definido todavía. Esperemos.',
+
+		'min_love_0' => 'Mostrar todas las necesidades y contribuciones, incluso de los que rompieron mi corazón.',
+		'min_love_1' => 'Mostrar todas las necesidades y contribuciones.',
+		'min_love_2' => 'Mostrar necesidades y contribuciones sólo de los que amo o estimo.',
+		'min_love_3' => 'Mostrat necesidades y contribuciones sólo de los que amo.',
 );
 ?>

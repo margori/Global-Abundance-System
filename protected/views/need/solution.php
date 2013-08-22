@@ -1,3 +1,9 @@
+<?php
+	$brokenUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-break.png';
+	$emptyUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-empty.png';
+	$halfUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-half.png';
+	$fullUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart.png';
+?>
 <h1><?= Yii::t('item', 'add items') ?></h1>
 <div class="span-22 box last">
 	<div class="span-18">		
@@ -38,17 +44,22 @@
 	?>
 </div>
 <?php
-	$thisUrl = 'need/addItem/' . $solution['id'] . '/' . $need['id'];
+	$thisUrl = 'need/solution/' . $solution['id'];
 	echo CHtml::beginForm($this->createUrl($thisUrl)) ?>
 <div class="push-2 span-19 border">
 	<div class="span-18 box border">
 		<div class="span-18">
 			<?= CHtml::label(Yii::t('item','tags'),false,array('class'=>'span-2')); ?>
 			<?= CHtml::textField('tags', $tags,array('class'=>'span-14') ) ?>
-			<?= CHtml::submitButton(Yii::t('item','filter')) ?>
+		<?= CHtml::submitButton(Yii::t('item','filter'), array('name'=>'filter')) ?>
 		</div>
 		<div class="prepend-1 span-12">
 			<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('item', 'my shares') ?>	
+			&nbsp;&nbsp;&nbsp;
+			<?= CHtml::radioButton('minLove', $minLove == 0, array('value' => 0)) . CHtml::image($brokenUrl) ?>
+			<?= CHtml::radioButton('minLove', $minLove == 1, array('value' => 1)) . CHtml::image($emptyUrl) ?>
+			<?= CHtml::radioButton('minLove', $minLove == 2, array('value' => 2)) . CHtml::image($halfUrl) ?>
+			<?= CHtml::radioButton('minLove', $minLove == 3, array('value' => 3)) . CHtml::image($fullUrl) ?>
 		</div>
 		<div class="span-3 last">
 			<?= Yii::t('global', 'show') . ' '
@@ -90,7 +101,8 @@
 	<?php foreach($shares as $share) { ?>
 	<div class="push-1 span-18" >
 		<div class="span-1" >
-			<?= $share['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png','', array('style'=>'margin: -2px;') ) : ''; ?>
+			<?= $share['love'] == 2 ? CHtml::image($halfUrl,'', array('style'=>'margin: -2px;') ) : ''; ?>
+			<?= $share['love'] == 3 ? CHtml::image($fullUrl,'', array('style'=>'margin: -2px;') ) : ''; ?>
 		</div>
 		<div class="span-16">
 			<?= CHtml::link($share['user_name'], $this->createUrl('user/view/' . $share['user_id'])) . ' ' . 

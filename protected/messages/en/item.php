@@ -79,5 +79,10 @@ return array (
 		'use -' => "Use '-' to exclude those tags from result",
 		
 		'missing emails' => "%s did not have email set yet. Let's wait.",
+		
+		'min_love_0' => 'Show all needs and shares, including those who have broken my heart.',
+		'min_love_1' => 'Show all needs and share.',
+		'min_love_2' => 'Show needs and shares, only whose I love or care',
+		'min_love_3' => 'Show needs and shares, only whose I love',
 );
 ?>

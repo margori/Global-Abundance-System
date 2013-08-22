@@ -27,6 +27,9 @@ class NeedController extends Controller
 
 			$sharpTags = ItemModel::sharpTags($_POST['tags']);
 			Yii::app()->user->setState('need tags', $sharpTags);
+
+			if (isset($_POST['minLove']))
+				Yii::app()->user->setState('minLove',$_POST['minLove']);
 		}
 	
 		if (isset($_GET['ps']))
@@ -37,12 +40,13 @@ class NeedController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 		
+		$minLove = Yii::app()->user->getState('minLove') ? Yii::app()->user->getState('minLove') : 1;
 		$options = Yii::app()->user->getState('need options');
 		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 		
 		$tags = Yii::app()->user->getState('need tags');		
-		$needCount = $model->browseCount($tags, 0, $options);  
+		$needCount = $model->browseCount($tags, 0, $minLove, $options);  
 		$pageCount = ceil($needCount / $pageSize);
 		if ($pageCurrent > $pageCount)
 		{
@@ -50,11 +54,12 @@ class NeedController extends Controller
 			$pageCurrent = 1;
 		}
 
-		$needs = $model->browse($tags, 0, $options, $pageCurrent, $pageSize);  
+		$needs = $model->browse($tags, 0, $minLove, $options, $pageCurrent, $pageSize);  
 		
 		$this->render('index',array(
 			'items'=>$needs,
-			'tags'=> $tags,				
+			'tags'=> $tags,	
+			'minLove' => $minLove,
 			'options'=> $options,
 			'pageCurrent' => $pageCurrent,
 			'pageSize' => $pageSize,
@@ -212,6 +217,9 @@ class NeedController extends Controller
 				$options .= 'mine';
 			
 			Yii::app()->user->setState('add item options',$options);
+
+			if (isset($_POST['minLove']))
+				Yii::app()->user->setState('minLove',$_POST['minLove']);
 		}
 
 		if (isset($_GET['ps']))
@@ -222,6 +230,7 @@ class NeedController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
+		$minLove = Yii::app()->user->getState('minLove') ? Yii::app()->user->getState('minLove') : 1;
 		$options = Yii::app()->user->getState('share options') ? Yii::app()->user->getState('share options') : '';
 		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
@@ -242,7 +251,7 @@ class NeedController extends Controller
 		$model = new ItemModel();
 		$tags = Yii::app()->request->getPost('tags');		
 		$sharpTags = $model->sharpTags($tags);
-		$shareCount = $model->browseCount($sharpTags, 0, $options, $needUserId);  
+		$shareCount = $model->browseCount($sharpTags, 0, $minLove, $options, $needUserId);  
 		$pageCount = ceil($shareCount / $pageSize);
 		if ($pageCurrent > $pageCount)
 		{
@@ -256,7 +265,7 @@ class NeedController extends Controller
 		if (isset($excludeId))
 			$excludeId = implode(', ', $excludeId);
 				
-		$shares = $model->browse($sharpTags, 1, $options, $pageCurrent, $pageSize, $needUserId, $excludeId);
+		$shares = $model->browse($sharpTags, 1, $minLove, $options, $pageCurrent, $pageSize, $needUserId, $excludeId);
 
 		$userId = Yii::app()->user->getState('user_id');	
 
@@ -265,6 +274,7 @@ class NeedController extends Controller
 			'solution' => $solution,
 			'shares'=> $shares,
 			'tags' => $sharpTags,
+			'minLove' => $minLove,
 			'options'=> $options,
 			'pageCurrent' => $pageCurrent,
 			'pageSize' => $pageSize,

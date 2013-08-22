@@ -1,3 +1,9 @@
+<?php
+	$brokenUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-break.png';
+	$emptyUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-empty.png';
+	$halfUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart-half.png';
+	$fullUrl = Yii::app()->baseUrl . '/images/icons/16x16/heart.png';
+?>
 <h1><?= Yii::t('item','shares') ?></h1>
 <div class="span-22 box">
 	<?php echo CHtml::beginForm($this->createUrl('./share')) ?>
@@ -9,6 +15,11 @@
 	<?php if (!Yii::app()->user->isGuest) { ?>
 	<div class="prepend-1 span-16">
 		<?= CHtml::checkBox('mine', substr_count($options, 'mine') > 0) . Yii::t('item', 'my shares') ?>	
+		&nbsp;&nbsp;&nbsp;
+		<?= CHtml::radioButton('minLove', $minLove == 0, array('value' => 0)) . CHtml::image($brokenUrl) ?>
+		<?= CHtml::radioButton('minLove', $minLove == 1, array('value' => 1)) . CHtml::image($emptyUrl) ?>
+		<?= CHtml::radioButton('minLove', $minLove == 2, array('value' => 2)) . CHtml::image($halfUrl) ?>
+		<?= CHtml::radioButton('minLove', $minLove == 3, array('value' => 3)) . CHtml::image($fullUrl) ?>
 	</div>
 	<?php } ?>
 	<div class="span-3 last">
@@ -53,13 +64,18 @@
 		echo Yii::t('item', 'no shares');
 	foreach($items as $item) { ?>
 <div class="span-1" style="text-align: right;">
-	<?= $item['love'] == 3 ? CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png' ) : '&nbsp;'; ?>
+	<? if ($item['love'] == 2)
+			echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart-half.png','' );
+		else if ($item['love'] == 3)
+			echo CHtml::image(Yii::app()->baseUrl . '/images/icons/16x16/heart.png','' );
+		else
+			echo '&nbsp;'; ?>
 </div>
 <div class="span-22 last append-bottom">
 	<div class="span-21">
 		<?php
 			echo CHtml::link($item['user_name'], $this->createUrl('user/view/' . $item['user_id'])); 
-			if ($item['project_name'])
+			if (isset($item['project_name']))
 				echo ' ' . Yii::t('interaction', 'from') . ' ' . CHtml::link($item['project_name'], $this->createUrl('project/' . $item['project_id']));
 			echo ' ' . Yii::t('item', 'user shares') . ' ' .
 				CHtml::link($item['description'], $this->createUrl('share/view/' . $item['id'])) ?>

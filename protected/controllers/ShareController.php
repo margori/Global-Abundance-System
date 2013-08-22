@@ -83,7 +83,7 @@ class ShareController extends Controller
 
 		if (isset($_GET['o']))
 			Yii::app()->user->setState('share options',$_GET['o']);
-
+		
 		if (isset($_POST['filter']))
 		{
 			Yii::app()->user->setState('pageCurrent', 1);
@@ -96,6 +96,9 @@ class ShareController extends Controller
 
 			$sharpTags = ItemModel::sharpTags($_POST['tags']);
 			Yii::app()->user->setState('share tags', $sharpTags);
+
+			if (isset($_POST['minLove']))
+				Yii::app()->user->setState('minLove',$_POST['minLove']);
 		}
 
 		if (isset($_GET['ps']))
@@ -106,12 +109,13 @@ class ShareController extends Controller
 		if (isset($_GET['p']))
 			Yii::app()->user->setState('pageCurrent', $_GET['p']); 
 
+		$minLove = Yii::app()->user->getState('minLove') ? Yii::app()->user->getState('minLove') : 1;
 		$options = Yii::app()->user->getState('share options') ? Yii::app()->user->getState('share options') : '';
 		$pageSize = Yii::app()->user->getState('pageSize') ? Yii::app()->user->getState('pageSize') : 10;
 		$pageCurrent = Yii::app()->user->getState('pageCurrent') ? Yii::app()->user->getState('pageCurrent') : 1;
 
 		$tags = Yii::app()->user->getState('share tags');		
-		$shareCount = $model->browseCount($tags, 1, $options);  
+		$shareCount = $model->browseCount($tags, 1, $minLove, $options);  
 		$pageCount = ceil($shareCount / $pageSize);
 		if ($pageCurrent > $pageCount)
 		{
@@ -119,11 +123,12 @@ class ShareController extends Controller
 			$pageCurrent = 1;
 		}
 
-		$shares = $model->browse($tags, 1, $options, $pageCurrent, $pageSize);
+		$shares = $model->browse($tags, 1, $minLove, $options, $pageCurrent, $pageSize);
 
 		$this->render('index',array(
 			'items'=>$shares,
 			'tags'=> $tags,				
+			'minLove' => $minLove,
 			'options'=> $options,
 			'pageCurrent' => $pageCurrent,
 			'pageSize' => $pageSize,

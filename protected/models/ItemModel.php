@@ -34,7 +34,7 @@ class ItemModel extends CFormModel
 		);
 	}
 	
-	public function browse($tags,$shared = 1, $options = '', $pageCurrent = 1, $pageSize = 10
+	public function browse($tags, $shared = 1, $minLove = 1, $options = '', $pageCurrent = 1, $pageSize = 10
 					, $includedUserId = null, $excludeId = null)
 	{
 		$sixMonthAgo = new DateTime('-6 month');
@@ -69,7 +69,7 @@ class ItemModel extends CFormModel
 		$sql .= "and i.shared = $shared ";
 		
 		if ($userId > 0)
-			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
+			$sql .= "and (coalesce(love_ab.love, 1) >= $minLove) and (coalesce(love_ba.love, 1) > 0) ";
 		
 		if ($includedUserId > 0)
 		{
@@ -113,7 +113,7 @@ class ItemModel extends CFormModel
 		return $items;
 	}
 
-	public function browseCount($tags,$shared = 1, $options = ''
+	public function browseCount($tags,$shared = 1, $minLove = 1, $options = ''
 					, $includedUserId = null, $excludeId = null)
 	{
 		$sixMonthAgo = new DateTime('-6 month');
@@ -125,11 +125,14 @@ class ItemModel extends CFormModel
 		
 		$sql = 'select count(*) ';
 		$sql .= 'from item i ';
+		
+		
 		if ($userId > 0)
 		{
 			$sql .= "left join user_heart love_ab on love_ab.from_user_id = $userId and love_ab.to_user_id = i.user_id ";
 			$sql .= "left join user_heart love_ba on love_ba.from_user_id = i.user_id and love_ba.to_user_id = $userId ";
 		}
+		
 		if ($includedUserId > 0)
 		{
 			$sql .= "left join user_heart love_ac on love_ac.from_user_id = $userId and love_ac.to_user_id = $includedUserId ";
@@ -142,8 +145,10 @@ class ItemModel extends CFormModel
 		$sql .= "and i.expiration_date >= curdate() ";
 		$sql .= "and i.creation_date >= '$sixMonthAgo' ";
 		$sql .= "and i.shared = $shared ";
+		
 		if ($userId > 0)
-			$sql .= 'and (love_ab.love > 0 or love_ab.love is null) and (love_ba.love > 0 or love_ba.love is null) ';
+			$sql .= "and (coalesce(love_ab.love, 1) >= $minLove) and (coalesce(love_ba.love, 1) > 0) ";
+		
 		if ($includedUserId > 0)
 		{
 			$sql .= 'and (love_ac.love > 0 or love_ac.love is null) and (love_ca.love > 0 or love_ca.love is null) ';

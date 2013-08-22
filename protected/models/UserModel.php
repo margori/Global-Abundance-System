@@ -97,24 +97,24 @@ class UserModel extends CFormModel
 		$this->about = $data['about'];
 		
 		$command = Yii::app()->db->createCommand();
-		$love = $command->select('love')
+		$hisLove = $command->select('love')
 						->from('user_heart')
 						->where('from_user_id = :from and to_user_id = :to')
 						->queryScalar(array(
 								'from'=>$id,
 								'to'=>Yii::app()->user->getState('user_id'),
 						));
-		$this->hisLove = $love == null ? 1 : $love;
+		$this->hisLove = $hisLove == null ? 1 : $hisLove;
 		
 		$command = Yii::app()->db->createCommand();
-		$love = $command->select('love')
+		$myLove = $command->select('love')
 						->from('user_heart')
 						->where('from_user_id = :from and to_user_id = :to')
 						->queryScalar(array(
 								'from'=>Yii::app()->user->getState('user_id'),
 								'to'=>$id,
 						));
-		$this->myLove = $love == null ? 1 : $love;
+		$this->myLove = $myLove == null ? 1 : $myLove;
 	}
 
 	public function save()
