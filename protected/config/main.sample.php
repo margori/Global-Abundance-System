@@ -69,30 +69,11 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
-		'custom title' => '', // Leave empty for default title
 		'languages' => array(
 				'en' => 'English',
 				'es' => 'Español',
 			),	
-		'default language'=>'en',
-
-		'development url'=>'https://github.com/margori/Global-Abundance-System',
-		'blog url'=>'http://gasystem.wordpress.com/',
-		'contact email'=>'gasdemo@yahoo.com',
-		'host name'=>'Localhost',
-		'host url'=>'http://localhost/',
-
 		'root user id'=>'1',
-
-		'notify emails'=>'yes', // yes or no
-		'smtp_server' => '*****',
-		'smtp_port' => 25,
-		'smtp_username' => '*****',
-		'smtp_password' => '*****',
-		'smtp_from_email' => '*****',
-		'smtp_from_name' => 'Global Abundance System',
-		'smtp_secure' => 'ssl',  // '','ssl','tls'
-		'smtp_timeout' => 20,  // seconds
 	),
 );
 ?>

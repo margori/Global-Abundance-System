@@ -4,7 +4,7 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.yiiframework.com/
- * @copyright Copyright &copy; 2008-2011 Yii Software LLC
+ * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
@@ -26,6 +26,7 @@
  *
  * When using CFileValidator with an active record, the following code is often used:
  * <pre>
+ *  $model->attribute = CUploadedFile::getInstance($model, "attribute");
  *  if($model->save())
  *  {
  *     // single upload
@@ -38,24 +39,23 @@
  *
  * You can use {@link CFileValidator} to validate the file attribute.
  *
- * In addition to the {@link message} property for setting a custom error message, 
+ * In addition to the {@link message} property for setting a custom error message,
  * CFileValidator has a few custom error messages you can set that correspond to different
  * validation scenarios. When the file is too large, you may use the {@link tooLarge} property
- * to define a custom error message. Similarly for {@link tooSmall}, {@link wrongType} and 
- * {@link tooMany}. The messages may contain additional placeholders that will be replaced 
- * with the actual content. In addition to the "{attribute}" placeholder, recognized by all 
- * validators (see {@link CValidator}), CFileValidator allows for the following placeholders 
+ * to define a custom error message. Similarly for {@link tooSmall}, {@link wrongType} and
+ * {@link tooMany}. The messages may contain additional placeholders that will be replaced
+ * with the actual content. In addition to the "{attribute}" placeholder, recognized by all
+ * validators (see {@link CValidator}), CFileValidator allows for the following placeholders
  * to be specified:
  * <ul>
  * <li>{file}: replaced with the name of the file.</li>
- * <li>{limit}: when using {@link tooLarge}, replaced with {@link maxSize}; 
- * when using {@link tooSmall}, replaced with {@link minSize}; and when using {@link tooMany} 
+ * <li>{limit}: when using {@link tooLarge}, replaced with {@link maxSize};
+ * when using {@link tooSmall}, replaced with {@link minSize}; and when using {@link tooMany}
  * replaced with {@link maxFiles}.</li>
  * <li>{extensions}: when using {@link wrongType}, it will be replaced with the allowed extensions.</li>
  * </ul>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id$
  * @package system.validators
  * @since 1.0
  */
@@ -130,6 +130,12 @@ class CFileValidator extends CValidator
 	 * limit.
 	 */
 	public $tooMany;
+	/**
+	 * @var boolean whether attributes listed with this validator should be considered safe for massive assignment.
+	 * For this validator it defaults to false.
+	 * @since 1.1.12
+	 */
+	public $safe=false;
 
 	/**
 	 * Set the attribute and then validates using {@link validateFile}.
@@ -173,24 +179,25 @@ class CFileValidator extends CValidator
 	 * @param CModel $object the object being validated
 	 * @param string $attribute the attribute being validated
 	 * @param CUploadedFile $file uploaded file passed to check against a set of rules
+	 * @throws CException if failed to upload the file
 	 */
 	protected function validateFile($object, $attribute, $file)
 	{
 		if(null===$file || ($error=$file->getError())==UPLOAD_ERR_NO_FILE)
 			return $this->emptyAttribute($object, $attribute);
-		else if($error==UPLOAD_ERR_INI_SIZE || $error==UPLOAD_ERR_FORM_SIZE || $this->maxSize!==null && $file->getSize()>$this->maxSize)
+		elseif($error==UPLOAD_ERR_INI_SIZE || $error==UPLOAD_ERR_FORM_SIZE || $this->maxSize!==null && $file->getSize()>$this->maxSize)
 		{
 			$message=$this->tooLarge!==null?$this->tooLarge : Yii::t('yii','The file "{file}" is too large. Its size cannot exceed {limit} bytes.');
 			$this->addError($object,$attribute,$message,array('{file}'=>$file->getName(), '{limit}'=>$this->getSizeLimit()));
 		}
-		else if($error==UPLOAD_ERR_PARTIAL)
+		elseif($error==UPLOAD_ERR_PARTIAL)
 			throw new CException(Yii::t('yii','The file "{file}" was only partially uploaded.',array('{file}'=>$file->getName())));
-		else if($error==UPLOAD_ERR_NO_TMP_DIR)
+		elseif($error==UPLOAD_ERR_NO_TMP_DIR)
 			throw new CException(Yii::t('yii','Missing the temporary folder to store the uploaded file "{file}".',array('{file}'=>$file->getName())));
-		else if($error==UPLOAD_ERR_CANT_WRITE)
+		elseif($error==UPLOAD_ERR_CANT_WRITE)
 			throw new CException(Yii::t('yii','Failed to write the uploaded file "{file}" to disk.',array('{file}'=>$file->getName())));
-		else if(defined('UPLOAD_ERR_EXTENSION') && $error==UPLOAD_ERR_EXTENSION)  // available for PHP 5.2.0 or above
-			throw new CException(Yii::t('yii','File upload was stopped by extension.'));
+		elseif(defined('UPLOAD_ERR_EXTENSION') && $error==UPLOAD_ERR_EXTENSION)  // available for PHP 5.2.0 or above
+			throw new CException(Yii::t('yii','A PHP extension stopped the file upload.'));
 
 		if($this->minSize!==null && $file->getSize()<$this->minSize)
 		{
@@ -219,7 +226,7 @@ class CFileValidator extends CValidator
 				if($info=finfo_open(defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME))
 					$mimeType=finfo_file($info,$file->getTempName());
 			}
-			else if(function_exists('mime_content_type'))
+			elseif(function_exists('mime_content_type'))
 				$mimeType=mime_content_type($file->getTempName());
 			else
 				throw new CException(Yii::t('yii','In order to use MIME-type validation provided by CFileValidator fileinfo PECL extension should be installed.'));
@@ -281,7 +288,7 @@ class CFileValidator extends CValidator
 	 * (was private before) since 1.1.11.
 	 *
 	 * @param string $sizeStr the size string to convert.
-	 * @return int the byte count in the given size string.
+	 * @return integer the byte count in the given size string.
 	 * @since 1.1.11
 	 */
 	public function sizeToBytes($sizeStr)

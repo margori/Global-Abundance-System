@@ -4,7 +4,7 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.yiiframework.com/
- * @copyright Copyright &copy; 2008-2011 Yii Software LLC
+ * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
@@ -44,7 +44,6 @@
  * this method will call {@link CModel::getAttributeLabel} to determine the label.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id$
  * @package system.web.form
  * @since 1.1
  */
@@ -74,7 +73,7 @@ class CFormInputElement extends CFormElement
 
 	/**
 	 * @var string the type of this input. This can be a widget class name, a path alias of a widget class name,
-	 * or a input type alias (text, hidden, password, textarea, file, radio, checkbox, listbox, dropdownlist, checkboxlist, or radiolist).
+	 * or an input type alias (text, hidden, password, textarea, file, radio, checkbox, listbox, dropdownlist, checkboxlist, or radiolist).
 	 * If a widget class, it must extend from {@link CInputWidget} or (@link CJuiInputWidget).
 	 */
 	public $type;
@@ -180,7 +179,7 @@ class CFormInputElement extends CFormElement
 			'{label}'=>$this->renderLabel(),
 			'{input}'=>$this->renderInput(),
 			'{hint}'=>$this->renderHint(),
-			'{error}'=>$this->getParent()->showErrorSummary ? '' : $this->renderError(),
+			'{error}'=>!$this->getParent()->showErrors ? '' : $this->renderError(),
 		);
 		return strtr($this->layout,$output);
 	}
